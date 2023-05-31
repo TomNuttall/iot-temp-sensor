@@ -1,0 +1,132 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'Static website with CDN'
+
+Parameters:
+  ProjectPrefix:
+    Type: 'String'
+    Default: 'demo'
+    Description: 'Name of Project Prefix'
+  ProjectName:
+    Type: 'String'
+    Default: 'iot-dashboard'
+    Description: 'Name of Project'
+  ProjectRepo:
+    Type: 'String'
+    Default: 'TomNuttall/iot-temp-sensor'
+    Description: 'Repo Path i.e GitHubUser/RepoName'
+  SubDomainName:
+    Type: 'String'
+    Default: 'iot'
+    Description: 'Subdomain path'
+
+Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub '${ProjectPrefix}-bucket-${ProjectName}'
+      WebsiteConfiguration:
+        IndexDocument: 'index.html'
+
+  CDN:
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        Comment: !Sub '${ProjectPrefix}-bucket-${ProjectName}'
+        Aliases:
+          - !Sub '${SubDomainName}.tomnuttall.dev'
+        ViewerCertificate:
+          AcmCertificateArn: !Sub 'arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/a6c5158d-80d1-45f7-a560-749e794ca06c'
+          MinimumProtocolVersion: 'TLSv1.2_2021'
+          SslSupportMethod: 'sni-only'
+        Origins:
+          - Id: !Sub '${ProjectPrefix}-bucket-${ProjectName}'
+            DomainName: !Sub '${ProjectPrefix}-bucket-${ProjectName}.s3.${AWS::Region}.amazonaws.com'
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+            OriginAccessControlId: !GetAtt CDNOriginAccessControl.Id
+        DefaultCacheBehavior:
+          CachePolicyId: '658327ea-f89d-4fab-a63d-7e88639e58f6' # Aws managed cache policy
+          Compress: true
+          TargetOriginId: !Ref S3Bucket
+          ViewerProtocolPolicy: 'redirect-to-https'
+          AllowedMethods:
+            - GET
+            - HEAD
+        DefaultRootObject: index.html
+        Enabled: true
+    DependsOn:
+      - S3Bucket
+      - CDNOriginAccessControl
+
+  RecordSet:
+    Type: 'AWS::Route53::RecordSet'
+    Properties:
+      HostedZoneName: 'tomnuttall.dev.'
+      Name: !Sub '${SubDomainName}.tomnuttall.dev'
+      Type: 'A'
+      AliasTarget:
+        DNSName: !GetAtt CDN.DomainName
+        HostedZoneId: Z2FDTNDATAQYW2
+    DependsOn:
+      - CDN
+
+  CDNOriginAccessControl:
+    Type: 'AWS::CloudFront::OriginAccessControl'
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub '${ProjectPrefix}-oac-${ProjectName}'
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  S3BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref S3Bucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Action: 's3:GetObject'
+            Resource: !Sub 'arn:aws:s3:::${S3Bucket}/*'
+            Principal:
+              Service: 'cloudfront.amazonaws.com'
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${CDN}'
+    DependsOn:
+      - CDN
+
+  GitHubActionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectPrefix}-role-${ProjectName}-s3'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Federated:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com'
+            Action:
+              - 'sts:AssumeRoleWithWebIdentity'
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: 'sts.amazonaws.com'
+              StringLike:
+                token.actions.githubusercontent.com:sub: !Sub 'repo:${ProjectRepo}:*'
+      Policies:
+        - PolicyName: !Sub '${ProjectPrefix}-policy-${ProjectName}-s3'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action: 's3:ListBucket'
+                Resource: !Sub arn:aws:s3:::${S3Bucket}
+              - Effect: 'Allow'
+                Action:
+                  - 's3:DeleteObject'
+                  - 's3:GetObject'
+                  - 's3:PutObject'
+                  - 's3:PutObjectAcl'
+                Resource: !Sub arn:aws:s3:::${S3Bucket}/*
