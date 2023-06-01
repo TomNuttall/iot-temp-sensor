@@ -10,10 +10,16 @@ Parameters:
     Type: String
     Default: 'iot-backend'
     Description: 'Name of Project'
+  ProjectRepo:
+    Type: 'String'
+    Default: 'TomNuttall/iot-temp-sensor'
+    Description: 'Repo Path i.e GitHubUser/RepoName'
   SubDomainName:
     Type: 'String'
-    Default: 'api.iot'
     Description: 'Subdomain path'
+  HostedZoneId:
+    Type: 'String'
+    Description: 'Domain hosted id'
 
 Resources:
   DynamoDBTable:
@@ -120,7 +126,7 @@ Resources:
             Statement:
               - Effect: 'Allow'
                 Action: 'dynamodb:Scan'
-                Resource: '*' #!GetAtt DynamoDBTable.Arn
+                Resource: !GetAtt DynamoDBTable.Arn
               - Effect: 'Allow'
                 Action: logs:*
                 Resource: !GetAtt LambdaLogGroup.Arn
@@ -142,16 +148,16 @@ Resources:
   ApiCertificate:
     Type: 'AWS::CertificateManager::Certificate'
     Properties:
-      DomainName: !Sub '${SubDomainName}.tomnuttall.dev'
+      DomainName: !Ref SubDomainName
       DomainValidationOptions:
-        - DomainName: !Sub '${SubDomainName}.tomnuttall.dev'
-          HostedZoneId: 'Z101113538JEKZU2FHGNL'
+        - DomainName: !Ref SubDomainName
+          HostedZoneId: !Ref HostedZoneId
       ValidationMethod: DNS
 
   ApiDomain:
     Type: 'AWS::ApiGatewayV2::DomainName'
     Properties:
-      DomainName: !Sub '${SubDomainName}.tomnuttall.dev'
+      DomainName: !Ref SubDomainName
       DomainNameConfigurations:
         - EndpointType: 'REGIONAL'
           CertificateArn: !Ref ApiCertificate
@@ -162,7 +168,7 @@ Resources:
     Type: 'AWS::ApiGatewayV2::ApiMapping'
     Properties:
       ApiId: !Ref Api
-      DomainName: !Sub '${SubDomainName}.tomnuttall.dev'
+      DomainName: !Ref SubDomainName
       Stage: !Ref ApiStage
     DependsOn:
       - Api
@@ -172,8 +178,8 @@ Resources:
   RecordSet:
     Type: 'AWS::Route53::RecordSet'
     Properties:
-      HostedZoneName: 'tomnuttall.dev.'
-      Name: !Sub '${SubDomainName}.tomnuttall.dev'
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref SubDomainName
       Type: 'A'
       AliasTarget:
         DNSName: !GetAtt ApiDomain.RegionalDomainName
@@ -229,3 +235,32 @@ Resources:
       StageName: 'dev'
     DependsOn:
       - Api
+
+  GitHubActionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectPrefix}-role-${ProjectName}-github-lambda'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Federated:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com'
+            Action:
+              - 'sts:AssumeRoleWithWebIdentity'
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: 'sts.amazonaws.com'
+              StringLike:
+                token.actions.githubusercontent.com:sub: !Sub 'repo:${ProjectRepo}:*'
+      Policies:
+        - PolicyName: !Sub '${ProjectPrefix}-policy-${ProjectName}-github-lambda'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action: 'lambda:UpdateFunctionCode'
+                Resource: !GetAtt Lambda.Arn
+    DependsOn:
+      - Lambda
