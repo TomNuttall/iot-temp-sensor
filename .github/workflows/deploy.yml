@@ -53,7 +53,7 @@ jobs:
           aws-region: eu-west-2
 
       - name: Zip lambda package
-        run: zip -r lambda_package.zip ./backend/lambda
+        run: zip -rj lambda_package.zip ./backend/lambda
 
       - name: Deploy lambda
         run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA }} --zip-file fileb://lambda_package.zip
