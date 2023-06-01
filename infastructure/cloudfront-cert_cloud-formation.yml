@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'us-east-1 cert for Cloudfront'
+
+Parameters:
+  SubDomainName:
+    Type: 'String'
+    Description: 'Name of Project Subdomain'
+  HostedZoneId:
+    Type: 'String'
+    Description: 'Domain hosted id'
+
+Resources:
+  ApiCertificate:
+    Type: 'AWS::CertificateManager::Certificate'
+    Properties:
+      DomainName: !Ref SubDomainName
+      DomainValidationOptions:
+        - DomainName: !Ref SubDomainName
+          HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS

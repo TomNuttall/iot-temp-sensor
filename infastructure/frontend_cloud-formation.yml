@@ -16,8 +16,13 @@ Parameters:
     Description: 'Repo Path i.e GitHubUser/RepoName'
   SubDomainName:
     Type: 'String'
-    Default: 'iot'
-    Description: 'Subdomain path'
+    Description: 'Name of Project Subdomain'
+  CertificateArn:
+    Type: 'String'
+    Description: 'Subdomain cert arn'
+  HostedZoneId:
+    Type: 'String'
+    Description: 'Domain hosted id'
 
 Resources:
   S3Bucket:
@@ -33,9 +38,9 @@ Resources:
       DistributionConfig:
         Comment: !Sub '${ProjectPrefix}-bucket-${ProjectName}'
         Aliases:
-          - !Sub '${SubDomainName}.tomnuttall.dev'
+          - !Ref SubDomainName
         ViewerCertificate:
-          AcmCertificateArn: !Sub 'arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/a6c5158d-80d1-45f7-a560-749e794ca06c'
+          AcmCertificateArn: !Ref CertificateArn
           MinimumProtocolVersion: 'TLSv1.2_2021'
           SslSupportMethod: 'sni-only'
         Origins:
@@ -61,8 +66,8 @@ Resources:
   RecordSet:
     Type: 'AWS::Route53::RecordSet'
     Properties:
-      HostedZoneName: 'tomnuttall.dev.'
-      Name: !Sub '${SubDomainName}.tomnuttall.dev'
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref SubDomainName
       Type: 'A'
       AliasTarget:
         DNSName: !GetAtt CDN.DomainName
@@ -100,7 +105,7 @@ Resources:
   GitHubActionRole:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub '${ProjectPrefix}-role-${ProjectName}-s3'
+      RoleName: !Sub '${ProjectPrefix}-role-${ProjectName}-github-s3'
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -116,7 +121,7 @@ Resources:
               StringLike:
                 token.actions.githubusercontent.com:sub: !Sub 'repo:${ProjectRepo}:*'
       Policies:
-        - PolicyName: !Sub '${ProjectPrefix}-policy-${ProjectName}-s3'
+        - PolicyName: !Sub '${ProjectPrefix}-policy-${ProjectName}-github-s3'
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
