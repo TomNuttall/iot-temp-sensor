@@ -33,15 +33,14 @@ jobs:
       - name: Build
         run: yarn build
         working-directory: ./dashboard
-        
 
-      - name: Configure AWS Credentials
+      - name: Configure AWS Credentials for S3 Access
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE }}
+          role-to-assume: ${{ secrets.AWS_BUCKET_ROLE }}
           role-duration-seconds: 900
           aws-region: eu-west-2
 
-      - name: Deploy static site to S3 bucket 
+      - name: Deploy static site to S3 bucket
         run: aws s3 sync ./dist/ ${{ secrets.AWS_BUCKET }} --delete
         working-directory: ./dashboard
