@@ -44,3 +44,16 @@ jobs:
       - name: Deploy static site to S3 bucket
         run: aws s3 sync ./dist/ ${{ secrets.AWS_BUCKET }} --delete
         working-directory: ./dashboard
+
+      - name: Configure AWS Credentials for Lambda Access
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_LAMBDA_ROLE }}
+          role-duration-seconds: 900
+          aws-region: eu-west-2
+
+      - name: Zip lambda package
+        run: zip -r lambda_package.zip ./backend/lambda
+
+      - name: Deploy lambda
+        run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA }} --zip-file fileb://lambda_package.zip
