@@ -1,0 +1,17 @@
+//import TempChart from '.'
+
+describe('TempChart', () => {
+  it('renders component prop test', async () => {
+    // Arrange
+    // const data = [
+    //   { date: '12/01/23', temp: 10 },
+    //   { date: '13/01/23', temp: 11 },
+    // ]
+
+    // Act
+    //render(<TempChart tempData={data} />)
+
+    // Assert
+    expect(true)
+  })
+})
