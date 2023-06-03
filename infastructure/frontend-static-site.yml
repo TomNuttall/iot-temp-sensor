@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: 'Static website with CDN'
+Description: 'Cloudfront and S3 website'
 
 Parameters:
   ProjectPrefix:

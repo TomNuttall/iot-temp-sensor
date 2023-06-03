@@ -1,0 +1,68 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'IoT thing'
+
+Parameters:
+  ThingName:
+    Type: 'String'
+    Default: 'esp32thing'
+    Description: 'Name of Thing'
+  TopicName:
+    Type: 'String'
+    Default: 'esp32'
+    Description: 'Name of Topic'
+  IoTCertificateArn:
+    Type: 'String'
+    Description: 'Certificate Arn'
+
+Resources:
+  IoTThing:
+    Type: 'AWS::IoT::Thing'
+    Properties:
+      ThingName: !Ref ThingName
+
+  IoTPrincipalAttachment:
+    Type: AWS::IoT::ThingPrincipalAttachment
+    Properties:
+      ThingName: !Ref ThingName
+      Principal: !Ref IoTCertificateArn
+    DependsOn:
+      - IoTThing
+
+  IoTPolicy:
+    Type: 'AWS::IoT::Policy'
+    Properties:
+      PolicyName: !Sub '${ThingName}-policy'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Action:
+              - 'iot:Connect'
+            Resource:
+              - !Sub 'arn:aws:iot:${AWS::Region}:${AWS::AccountId}:client/${ThingName}'
+          - Effect: 'Allow'
+            Action:
+              - 'iot:Publish'
+            Resource:
+              - !Sub 'arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topic/${TopicName}/pub'
+          - Effect: 'Allow'
+            Action:
+              - 'iot:Receive'
+            Resource:
+              - !Sub 'arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topic/${TopicName}/sub'
+          - Effect: 'Allow'
+            Action:
+              - 'iot:Subscribe'
+            Resource:
+              - !Sub 'arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topicFilter/${TopicName}/sub'
+    DependsOn:
+      - IoTPrincipalAttachment
+      - IoTThing
+
+  IoTPolicyPrincipalAttachment:
+    Type: 'AWS::IoT::PolicyPrincipalAttachment'
+    Properties:
+      PolicyName: !Ref IoTPolicy
+      Principal: !Ref IoTCertificateArn
+    DependsOn:
+      - IoTPolicy

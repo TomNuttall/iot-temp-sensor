@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: 'API Gateway, lambda, iotrule and dynamodb table'
+Description: 'API Gateway, Lambda, IoT Rule and DynamoDB'
 
 Parameters:
   ProjectPrefix:
@@ -40,11 +40,11 @@ Resources:
   IotTopicRule:
     Type: 'AWS::IoT::TopicRule'
     Properties:
-      RuleName: tempSensor
+      RuleName: m35temp
       TopicRulePayload:
         Description: !Sub '${ProjectPrefix}-topicrule-${ProjectName}'
         RuleDisabled: false
-        Sql: SELECT temp FROM 'tempSensor'
+        Sql: SELECT temp FROM 'm35temp'
         Actions:
           - DynamoDB:
               HashKeyField: 'time'
