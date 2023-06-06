@@ -6,7 +6,11 @@ const Home = () => {
 
   useEffect(() => {
     const fetchTempData = async () => {
-      const response = await fetch('https://api.iot.tomnuttall.dev')
+      const response = await fetch(
+        process.env.NODE_ENV !== 'production'
+          ? 'http://localhost:3000/dev'
+          : 'https://api.iot.tomnuttall.dev',
+      )
       const jsonData = await response.json()
       setTempData(jsonData)
     }
