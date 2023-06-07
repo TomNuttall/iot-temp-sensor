@@ -10,10 +10,21 @@ const client = process.env.IS_OFFLINE
 const dynamo = DynamoDBDocumentClient.from(client)
 
 export const handler = async (event) => {
-  const query = event.queryStringParameters // Dict
+  const query = event.queryStringParameters
+  const filterTimeMin = query && 'from' in query ? Number(query['from']) : 0
+  const filterTimeMax =
+    query && 'to' in query ? Number(query['to']) : new Date().valueOf()
 
   const res = await dynamo.send(
-    new ScanCommand({ TableName: 'demo-dbtable-iot-backend' }),
+    new ScanCommand({
+      TableName: 'demo-dbtable-iot-backend',
+      FilterExpression: '#time BETWEEN :filterTimeMin AND :filterTimeMax',
+      ExpressionAttributeNames: { '#time': 'time' },
+      ExpressionAttributeValues: {
+        ':filterTimeMin': filterTimeMin,
+        ':filterTimeMax': filterTimeMax,
+      },
+    }),
   )
 
   const items = res.Items.map((x) => {

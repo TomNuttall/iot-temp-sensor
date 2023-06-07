@@ -16,30 +16,5 @@ functions:
     events:
       - http:
           method: GET
-          path: /
+          path: /temps
           cors: true
-    role: LambdaRole
-
-resources:
-  Resources:
-    LambdaRole:
-      Type: 'AWS::IAM::Role'
-      Properties:
-        RoleName: 'lambda-test'
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: 'Allow'
-              Principal:
-                Service:
-                  - 'lambda.amazonaws.com'
-              Action:
-                - 'sts:AssumeRole'
-        Policies:
-          - PolicyName: 'policy-lambda-test'
-            PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-                - Effect: 'Allow'
-                  Action: 'dynamodb:*'
-                  Resource: '*'
