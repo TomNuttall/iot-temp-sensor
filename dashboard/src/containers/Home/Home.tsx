@@ -1,25 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { TempData, fetchTempData } from '../../helpers/tempApi'
+import { DateRangeOptions } from '../../components/DateRangePicker/DateRangePicker'
+import DateRangePicker from '../../components/DateRangePicker'
+import SummaryOverview from '../../components/SummaryOverview'
 import TempChart from '../../components/TempChart'
 
-const Home = () => {
-  const [tempData, setTempData] = useState([])
+export const Home = () => {
+  const [tempData, setTempData] = useState<TempData[]>([])
+  const [rangeOption, setRangeOption] = useState<DateRangeOptions>('Today')
 
-  useEffect(() => {
-    const fetchTempData = async () => {
-      const response = await fetch(
-        process.env.NODE_ENV !== 'production'
-          ? 'http://localhost:3000/dev'
-          : 'https://api.iot.tomnuttall.dev',
-      )
-      const jsonData = await response.json()
-      setTempData(jsonData)
-    }
-
-    fetchTempData()
-  }, [])
+  const onDateChange = async (
+    from: number,
+    to: number,
+    rangeOption: DateRangeOptions,
+  ) => {
+    const data = await fetchTempData(from, to)
+    setTempData(data)
+    setRangeOption(rangeOption)
+  }
 
   return (
     <>
+      <DateRangePicker onDateChange={onDateChange} />
+      <SummaryOverview tempData={tempData} rangeOption={rangeOption} />
       <TempChart tempData={tempData} />
     </>
   )

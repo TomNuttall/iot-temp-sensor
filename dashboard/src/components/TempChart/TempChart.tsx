@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
+import { TempData } from '../../helpers/tempApi'
 import './TempChart.css'
 
 ChartJS.register(
@@ -20,11 +21,6 @@ ChartJS.register(
   Tooltip,
   Legend,
 )
-
-interface TempData {
-  date: string
-  temp: string
-}
 
 interface TempChartProps {
   tempData: TempData[]
@@ -48,11 +44,12 @@ const TempChart = ({ tempData }: TempChartProps) => {
     },
   }
 
+  console.log(tempData.at(0), tempData.at(-1))
   const data = {
-    labels: tempData.map((x) => x.date),
+    labels: tempData.map((x) => new Date(x.time).toLocaleTimeString()),
     datasets: [
       {
-        label: 'Dataset 1',
+        label: 'Temp',
         data: tempData.map((x) => x.temp),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
