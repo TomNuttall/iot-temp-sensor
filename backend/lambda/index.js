@@ -32,9 +32,16 @@ export const handler = async (event) => {
       time,
       payload: { temp },
     } = x
-    const date = new Date(Number(time))
-    return { date, temp }
-  }).sort((a, b) => a.date - b.date)
+    return { time, temp }
+  }).sort((a, b) => {
+    if (a.time > b.time) {
+      return 1
+    } else if (a.time < b.time) {
+      return -1
+    } else {
+      return 0
+    }
+  })
 
   const response = {
     statusCode: 200,
