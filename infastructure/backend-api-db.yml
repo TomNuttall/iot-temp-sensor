@@ -28,7 +28,7 @@ Resources:
       TableName: !Sub '${ProjectPrefix}-dbtable-${ProjectName}'
       AttributeDefinitions:
         - AttributeName: 'time'
-          AttributeType: 'S'
+          AttributeType: 'N'
       KeySchema:
         - AttributeName: 'time'
           KeyType: 'HASH'
@@ -40,15 +40,15 @@ Resources:
   IotTopicRule:
     Type: 'AWS::IoT::TopicRule'
     Properties:
-      RuleName: m35temp
+      RuleName: 'esp32'
       TopicRulePayload:
         Description: !Sub '${ProjectPrefix}-topicrule-${ProjectName}'
         RuleDisabled: false
-        Sql: SELECT temp FROM 'm35temp'
+        Sql: SELECT temp FROM 'esp32/pub'
         Actions:
           - DynamoDB:
               HashKeyField: 'time'
-              HashKeyType: STRING
+              HashKeyType: NUMBER
               HashKeyValue: '${timestamp()}.'
               PayloadField: 'payload'
               TableName: !Sub '${ProjectPrefix}-dbtable-${ProjectName}'
@@ -211,7 +211,7 @@ Resources:
     Type: 'AWS::ApiGatewayV2::Route'
     Properties:
       ApiId: !Ref Api
-      RouteKey: 'GET /'
+      RouteKey: 'GET /temps'
       Target: !Sub 'integrations/${ApiIntegration}'
     DependsOn:
       - Api
