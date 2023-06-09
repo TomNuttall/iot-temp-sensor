@@ -44,7 +44,6 @@ const TempChart = ({ tempData }: TempChartProps) => {
     },
   }
 
-  console.log(tempData.at(0), tempData.at(-1))
   const data = {
     labels: tempData.map((x) => new Date(x.time).toLocaleTimeString()),
     datasets: [

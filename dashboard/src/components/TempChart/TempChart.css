@@ -1,4 +1,7 @@
 .temp-chart {
+  display: flex;
+  justify-content: center;
+
   width: 90vw;
-  height: 90vh;
+  height: 70vh;
 }
