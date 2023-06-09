@@ -1,4 +1,5 @@
-import { subDays, subHours } from 'date-fns'
+import { useEffect } from 'react'
+import { subDays, subHours, subMinutes } from 'date-fns'
 import './DateRangePicker.css'
 
 export type DateRangeOptions =
@@ -17,12 +18,17 @@ interface DateRangeProps {
 }
 
 const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
+  useEffect(() => {
+    dateSelect('Today')
+  }, [])
+
   const dateSelect = (rangeOption: DateRangeOptions) => {
     let to = new Date()
     let from = new Date()
 
     switch (rangeOption) {
       case 'Today':
+        to = subMinutes(to, to.getMinutes())
         from = subHours(from, from.getHours())
         break
 
@@ -32,6 +38,7 @@ const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
         break
 
       case 'LastWeek':
+        to = subMinutes(to, to.getMinutes())
         from = subDays(from, 7)
         break
 
@@ -41,6 +48,7 @@ const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
         break
 
       case 'All':
+        to = subMinutes(to, to.getMinutes())
         from = new Date(0)
         break
     }
