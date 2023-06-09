@@ -211,7 +211,7 @@ Resources:
     Type: 'AWS::ApiGatewayV2::Route'
     Properties:
       ApiId: !Ref Api
-      RouteKey: 'GET /temps'
+      RouteKey: 'GET /'
       Target: !Sub 'integrations/${ApiIntegration}'
     DependsOn:
       - Api

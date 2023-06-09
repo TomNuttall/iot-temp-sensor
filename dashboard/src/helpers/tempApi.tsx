@@ -10,8 +10,8 @@ export const fetchTempData = async (
   const response = await fetch(
     `${
       process.env.NODE_ENV !== 'production'
-        ? 'http://localhost:3000/dev/temps'
-        : 'https://api.iot.tomnuttall.dev/temps'
+        ? 'http://localhost:3000/dev'
+        : 'https://api.iot.tomnuttall.dev'
     }?from=${from}&to=${to}`,
   )
   const data = await response.json()
