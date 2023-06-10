@@ -1,10 +1,8 @@
-import { TempData } from '../../helpers/tempApi'
-import { DateRangeOptions } from '../DateRangePicker/DateRangePicker'
+import { TempData } from '../../lib/tempApi'
 import './SummaryOverview.css'
 
 interface SummaryOverviewProps {
   tempData: TempData[]
-  rangeOption: DateRangeOptions
 }
 
 const SummaryOverview = ({ tempData }: SummaryOverviewProps) => {
@@ -18,10 +16,10 @@ const SummaryOverview = ({ tempData }: SummaryOverviewProps) => {
   return (
     <div className="summary-overview">
       <div className="summary-overview__label summary-overview__min">
-        {`Min ${min?.temp.toFixed(2)}`}
+        {`Min ${min?.temp ? min.temp.toFixed(2) : 0}`}
       </div>
       <div className="summary-overview__label summary-overview__max">
-        {`Max ${max?.temp.toFixed(2)}`}
+        {`Max ${max?.temp ? max.temp.toFixed(2) : 0}`}
       </div>
     </div>
   )

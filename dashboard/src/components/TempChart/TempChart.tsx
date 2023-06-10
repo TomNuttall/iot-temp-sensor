@@ -9,7 +9,8 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import { TempData } from '../../helpers/tempApi'
+import { TempData } from '../../lib/tempApi'
+import { DateRangeOptions } from '../DateRangePicker/DateRangePicker'
 import './TempChart.css'
 
 ChartJS.register(
@@ -22,28 +23,29 @@ ChartJS.register(
   Legend,
 )
 
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    title: {
+      display: false,
+    },
+    scales: {
+      y: {
+        display: false,
+      },
+    },
+  },
+}
+
 interface TempChartProps {
   tempData: TempData[]
+  rangeOption: DateRangeOptions
 }
 
 const TempChart = ({ tempData }: TempChartProps) => {
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      },
-      scales: {
-        y: {
-          display: false,
-        },
-      },
-    },
-  }
-
   const data = {
     labels: tempData.map((x) => new Date(x.time).toLocaleTimeString()),
     datasets: [
@@ -57,7 +59,7 @@ const TempChart = ({ tempData }: TempChartProps) => {
   }
 
   return (
-    <div className="temp-chart">
+    <div className="temp-chart" data-testid="temp-chart">
       <Line options={options} data={data} />
     </div>
   )

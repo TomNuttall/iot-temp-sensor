@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TempData, fetchTempData } from '../../helpers/tempApi'
+import { TempData, TempApi } from '../../lib/tempApi'
 import { DateRangeOptions } from '../../components/DateRangePicker/DateRangePicker'
 import DateRangePicker from '../../components/DateRangePicker'
 import SummaryOverview from '../../components/SummaryOverview'
@@ -14,17 +14,24 @@ export const Home = () => {
     to: number,
     rangeOption: DateRangeOptions,
   ) => {
-    const data = await fetchTempData(from, to)
+    const data = await TempApi.get(from, to)
+
     setTempData(data)
     setRangeOption(rangeOption)
   }
 
   return (
-    <>
+    <div data-testid="home">
       <DateRangePicker onDateChange={onDateChange} />
-      <SummaryOverview tempData={tempData} rangeOption={rangeOption} />
-      <TempChart tempData={tempData} />
-    </>
+      {tempData.length > 0 ? (
+        <>
+          <SummaryOverview tempData={tempData} />
+          <TempChart tempData={tempData} rangeOption={rangeOption} />
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
   )
 }
 
