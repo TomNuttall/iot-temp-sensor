@@ -23,14 +23,8 @@ export const Home = () => {
   return (
     <div data-testid="home">
       <DateRangePicker onDateChange={onDateChange} />
-      {tempData.length > 0 ? (
-        <>
-          <SummaryOverview tempData={tempData} />
-          <TempChart tempData={tempData} rangeOption={rangeOption} />
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <SummaryOverview tempData={tempData} />
+      <TempChart tempData={tempData} rangeOption={rangeOption} />
     </div>
   )
 }
