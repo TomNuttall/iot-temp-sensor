@@ -5,6 +5,7 @@ import {
   vi,
   beforeAll,
   afterAll,
+  beforeEach,
   afterEach,
 } from 'vitest'
 import createFetchMock from 'vitest-fetch-mock'
@@ -14,13 +15,21 @@ import Home from './Home'
 
 describe('Home', () => {
   const fetchMocker = createFetchMock(vi)
+  const date = new Date(2023, 11, 6, 12, 0, 0, 0)
 
   const minTemp: TempData = { temp: 0, time: 1 }
   const maxTemp: TempData = { temp: 20, time: 2 }
   const mocks: TempData[] = [minTemp, maxTemp]
 
   beforeAll(() => fetchMocker.enableMocks())
-  afterEach(() => fetchMocker.resetMocks())
+  beforeEach(() => {
+    vi.useFakeTimers({ shouldAdvanceTime: true, toFake: ['Date'] })
+    vi.setSystemTime(date)
+  })
+  afterEach(() => {
+    fetchMocker.resetMocks()
+    vi.useRealTimers()
+  })
   afterAll(() => fetchMocker.disableMocks())
 
   it('renders correctly with call to api', async () => {

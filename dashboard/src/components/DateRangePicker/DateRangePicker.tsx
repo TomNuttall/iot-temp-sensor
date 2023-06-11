@@ -5,6 +5,7 @@ import './DateRangePicker.css'
 export type DateRangeOptions =
   | 'Today'
   | 'Yesterday'
+  | 'Last 3 Days'
   | 'LastWeek'
   | 'PreviousWeek'
   | 'All'
@@ -37,6 +38,11 @@ const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
         from = subDays(to, 1)
         break
 
+      case 'Last 3 Days':
+        to = subHours(to, to.getHours())
+        from = subDays(to, 3)
+        break
+
       case 'LastWeek':
         to = subMinutes(to, to.getMinutes())
         from = subDays(from, 7)
@@ -60,6 +66,7 @@ const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
     <div className="date-range-picker">
       <button onClick={() => dateSelect('Today')}>Today</button>
       <button onClick={() => dateSelect('Yesterday')}>Yesterday</button>
+      <button onClick={() => dateSelect('Last 3 Days')}>Last 3 Days</button>
       <button onClick={() => dateSelect('LastWeek')}>Last Week</button>
       <button onClick={() => dateSelect('PreviousWeek')}>Previous Week</button>
       <button onClick={() => dateSelect('All')}>All</button>
