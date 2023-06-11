@@ -1,12 +1,24 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient, ScanCommand } from '@aws-sdk/lib-dynamodb'
 
-const client = process.env.IS_OFFLINE
-  ? new DynamoDBClient({
+const createClient = () => {
+  if (process.env.MOCK_DYNAMODB_ENDPOINT) {
+    return new DynamoDBClient({
+      region: 'local',
+      endpoint: process.env.MOCK_DYNAMODB_ENDPOINT,
+    })
+  }
+  if (process.env.IS_OFFLINE) {
+    return new DynamoDBClient({
       region: 'localhost',
       endpoint: 'http://localhost:8000',
     })
-  : new DynamoDBClient()
+  } else {
+    return new DynamoDBClient()
+  }
+}
+
+const client = createClient()
 const dynamo = DynamoDBDocumentClient.from(client)
 
 export const handler = async (event) => {
