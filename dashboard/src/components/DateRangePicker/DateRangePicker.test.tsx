@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { subHours, subMinutes } from 'date-fns'
+import { startOfDay, startOfHour } from 'date-fns'
 import userEvent from '@testing-library/user-event'
 import DateRangePicker from '.'
 
@@ -46,8 +46,8 @@ describe('DateRangePicker', () => {
     // Act
     render(<DateRangePicker onDateChange={mock} />)
 
-    const from = subHours(date, date.getHours()).valueOf()
-    const to = subMinutes(date, date.getMinutes()).valueOf()
+    const from = startOfDay(date).valueOf()
+    const to = startOfHour(date).valueOf()
     expect(mock).toBeCalledWith(from, to, 'Today')
   })
 

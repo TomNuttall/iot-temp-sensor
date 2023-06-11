@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { subDays, subHours, subMinutes } from 'date-fns'
+import { startOfDay, startOfHour, subDays } from 'date-fns'
 import './DateRangePicker.css'
 
 export type DateRangeOptions =
@@ -7,7 +7,6 @@ export type DateRangeOptions =
   | 'Yesterday'
   | 'Last 3 Days'
   | 'LastWeek'
-  | 'PreviousWeek'
   | 'All'
 
 interface DateRangeProps {
@@ -29,32 +28,27 @@ const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
 
     switch (rangeOption) {
       case 'Today':
-        to = subMinutes(to, to.getMinutes())
-        from = subHours(from, from.getHours())
+        to = startOfHour(to)
+        from = startOfDay(from)
         break
 
       case 'Yesterday':
-        to = subHours(to, to.getHours())
-        from = subDays(to, 1)
+        to = startOfDay(to)
+        from = startOfDay(subDays(from, 1))
         break
 
       case 'Last 3 Days':
-        to = subHours(to, to.getHours())
-        from = subDays(to, 3)
+        to = startOfHour(to)
+        from = startOfDay(subDays(from, 2))
         break
 
       case 'LastWeek':
-        to = subMinutes(to, to.getMinutes())
-        from = subDays(from, 7)
-        break
-
-      case 'PreviousWeek':
-        to = subDays(to, 7)
-        from = subDays(from, 14)
+        to = startOfHour(to)
+        from = startOfDay(subDays(from, 6))
         break
 
       case 'All':
-        to = subMinutes(to, to.getMinutes())
+        to = startOfHour(to)
         from = new Date(0)
         break
     }
@@ -68,7 +62,6 @@ const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
       <button onClick={() => dateSelect('Yesterday')}>Yesterday</button>
       <button onClick={() => dateSelect('Last 3 Days')}>Last 3 Days</button>
       <button onClick={() => dateSelect('LastWeek')}>Last Week</button>
-      <button onClick={() => dateSelect('PreviousWeek')}>Previous Week</button>
       <button onClick={() => dateSelect('All')}>All</button>
     </div>
   )
