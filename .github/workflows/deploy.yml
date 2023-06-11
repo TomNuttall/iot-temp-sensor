@@ -22,15 +22,15 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install
+      - name: Install Dashboard
         run: yarn install
         working-directory: ./dashboard
 
-      - name: Test
+      - name: Test Dashboard
         run: yarn test
         working-directory: ./dashboard
 
-      - name: Build
+      - name: Build Dashboard
         run: yarn build
         working-directory: ./dashboard
 
@@ -52,8 +52,16 @@ jobs:
           role-duration-seconds: 900
           aws-region: eu-west-2
 
+      - name: Install Backend
+        run: yarn install
+        working-directory: ./backend
+
+      - name: Test Backend
+        run: yarn test
+        working-directory: ./backend
+
       - name: Zip lambda package
-        run: zip -rj lambda_package.zip ./backend/lambda
+        run: zip -rj lambda_package.zip ./backend/src/lambda
 
       - name: Deploy lambda
         run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA }} --zip-file fileb://lambda_package.zip
