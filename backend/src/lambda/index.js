@@ -55,10 +55,15 @@ export const handler = async (event) => {
     }
   })
 
+  const responseHeaders = {
+    'content-Type': 'application/json',
+    'cache-control': 'max-age=31536000',
+  }
+
   const response = {
     statusCode: 200,
     body: JSON.stringify(items),
-    headers: { 'content-type': 'application/json' },
+    headers: responseHeaders,
   }
 
   return response
