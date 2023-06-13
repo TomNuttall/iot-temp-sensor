@@ -1,15 +1,18 @@
-# iot-temp-sensor
+# IoT Temp Sensor
 
 **Demo project to help learn more about AWS**
+
+## Demo
+https://iot.tomnuttall.dev
+
+## Project Overview
 <img
   src='./docs/aws_architecture-diagram.svg'
   raw=true
   alt='AWS Architecture Diagram'
-  height="200px"
+  height="500px"
   width="auto"
 />
-
-## Project Overview
 
 - Data Source
   - Esp32 microcontroller connected to a temperature sensor
@@ -24,12 +27,8 @@
 
 ## Deployment
 
-- Cloudformation templates used to deploy infastructure on AWS
-- Github action runs on push to main branch and will deploy dashboard to s3 bucket and deploy lambda package
-
-## Demo
-
-https://iot.tomnuttall.dev
+- CloudFormation templates used to deploy infastructure on AWS
+- GitHub action runs on push to main branch and will deploy dashboard to s3 bucket and deploy lambda package
 
 ## Usage
 
@@ -48,4 +47,10 @@ Can connect to localhost api or live api.
 
 ```shell
 yarn dev
+```
+
+## Testing
+Unit tests included for dashboard and backend
+```shell
+yarn test
 ```
