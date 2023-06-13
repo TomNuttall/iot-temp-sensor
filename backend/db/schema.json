@@ -1,0 +1,6 @@
+{
+  "TableName": "demo-dbtable-iot-backend",
+  "KeySchema": [{ "AttributeName": "time", "KeyType": "HASH" }],
+  "AttributeDefinitions": [{ "AttributeName": "time", "AttributeType": "N" }],
+  "ProvisionedThroughput": { "ReadCapacityUnits": 1, "WriteCapacityUnits": 1 }
+}

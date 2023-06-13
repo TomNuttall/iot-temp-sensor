@@ -1,17 +1,12 @@
-# docker.yml
+# docker-compose.yml
 version: '3'
 services:
   dynamodb:
     image: amazon/dynamodb-local
     container_name: app-dynamodb
-    hostname: app-dynamodb
-    volumes:
-      - app_dynamodb:/home/dynamodblocal
-    working_dir: /home/dynamodblocal
     ports:
       - '8000:8000'
-    command: '-jar DynamoDBLocal.jar -sharedDb -dbPath .'
-    restart: unless-stopped
+    command: '-jar DynamoDBLocal.jar -inMemory -sharedDb'
 
   dynamodb_admin:
     image: aaronshaf/dynamodb-admin
@@ -22,8 +17,3 @@ services:
       - DYNAMO_ENDPOINT=http://dynamodb:8000
     depends_on:
       - dynamodb
-    restart: unless-stopped
-
-volumes:
-  app_dynamodb:
-    driver: local
