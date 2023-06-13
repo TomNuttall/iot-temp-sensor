@@ -12,9 +12,11 @@ https://iot.tomnuttall.dev
   - Every 30 mins average temperature sent to AWS IoT Core
   - IoT Topic Rule adds message to DynamoDB table
 - Backend
-  - API Gateway with lambda integration reads DynamoDB table and returns data
+  - API Gateway with Lambda integration reads DynamoDB table and returns data
+  - Docker and serverless offline used for local development
 - Frontend
   - React dashboard calls API with query string date range to display temperature data
+  - ChartJs used for displaying graphs
   - Deployed to S3 bucket and uses CloudFront
  
 <img
@@ -33,7 +35,7 @@ https://iot.tomnuttall.dev
 
 ### backend
 
-Uses docker compose to run local DynamoDB and serverless offline for local Lambda/API Gateway.
+Uses docker amazon/dynamodb-local docker image to run local DynamoDB and serverless offline for local Lambda/API Gateway.
 
 ```shell
 yarn local-db
