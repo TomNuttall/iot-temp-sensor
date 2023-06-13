@@ -6,14 +6,6 @@
 https://iot.tomnuttall.dev
 
 ## Project Overview
-<img
-  src='./docs/aws_architecture-diagram.svg'
-  raw=true
-  alt='AWS Architecture Diagram'
-  height="500px"
-  width="auto"
-/>
-
 - Data Source
   - Esp32 microcontroller connected to a temperature sensor
   - Reads temperature once a minute
@@ -24,7 +16,14 @@ https://iot.tomnuttall.dev
 - Frontend
   - React dashboard calls API with query string date range to display temperature data
   - Deployed to S3 bucket and uses CloudFront
-
+ 
+<img
+  src='./docs/aws_architecture-diagram.svg'
+  raw=true
+  alt='AWS Architecture Diagram'
+  height="500px"
+  width="auto"
+/>
 ## Deployment
 
 - CloudFormation templates used to deploy infastructure on AWS
