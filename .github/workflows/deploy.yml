@@ -51,7 +51,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.AWS_BUCKET_ROLE }}
-          role-duration-seconds: 30
+          role-duration-seconds: 900
           aws-region: eu-west-2
 
       - name: Deploy static site to S3 bucket
@@ -62,7 +62,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.AWS_LAMBDA_ROLE }}
-          role-duration-seconds: 30
+          role-duration-seconds: 900
           aws-region: eu-west-2
 
       - name: Deploy lambda
