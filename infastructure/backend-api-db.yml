@@ -59,7 +59,7 @@ Resources:
               HashKeyValue: '${parse_time("dd-MM-YYYY", timestamp())}'
               RangeKeyField: 'time'
               RangeKeyType: NUMBER
-              RangeKeyValue: '${timestamp()}.'
+              RangeKeyValue: '${timestamp()}'
               PayloadField: 'payload'
               TableName: !Sub '${ProjectPrefix}-db-${ProjectName}'
               RoleArn: !GetAtt IoTRole.Arn
@@ -135,7 +135,7 @@ Resources:
             Version: '2012-10-17'
             Statement:
               - Effect: 'Allow'
-                Action: 'dynamodb:Scan'
+                Action: 'dynamodb:Query'
                 Resource: !GetAtt DynamoDBTable.Arn
               - Effect: 'Allow'
                 Action: logs:*
