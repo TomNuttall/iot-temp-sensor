@@ -3,7 +3,7 @@ import {
   CreateTableCommand,
   PutItemCommand,
 } from '@aws-sdk/client-dynamodb'
-import { startOfHour, subHours } from 'date-fns'
+import { startOfHour, subHours, format } from 'date-fns'
 import table_schema from './schema.json' assert { type: 'json' }
 
 const client = new DynamoDBClient({
@@ -21,18 +21,20 @@ const random = (max) => {
 
 const populateTable = async () => {
   const now = startOfHour(new Date())
-  const numReadings = 24 * 7
-  const promises = [...Array(numReadings)].map((_, index) =>
-    client.send(
+  const numReadings = 24 * 60
+  const promises = [...Array(numReadings)].map((_, index) => {
+    const timestamp = subHours(now, index)
+    return client.send(
       new PutItemCommand({
         TableName: table_schema.TableName,
         Item: {
-          time: { N: subHours(now, index).valueOf() },
+          date: { S: format(timestamp, 'dd/MM/yyyy') },
+          time: { N: timestamp.valueOf() },
           payload: { M: { temp: { N: random(30) } } },
         },
       }),
-    ),
-  )
+    )
+  })
 
   await Promise.all(promises)
 }

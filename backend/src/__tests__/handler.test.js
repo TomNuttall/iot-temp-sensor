@@ -14,7 +14,12 @@ describe('lambda', () => {
 
   it('checks query string parameters', async () => {
     // Arrange
-    const event = { queryStringParameters: { from: 10, to: 20 } }
+    const event = {
+      queryStringParameters: {
+        from: String(0),
+        to: String(new Date().valueOf()),
+      },
+    }
 
     // Act
     const res = await handler(event)

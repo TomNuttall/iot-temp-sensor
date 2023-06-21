@@ -1,5 +1,5 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocumentClient, ScanCommand } from '@aws-sdk/lib-dynamodb'
+import { DynamoDBDocumentClient, QueryCommand } from '@aws-sdk/lib-dynamodb'
 
 const createClient = () => {
   if (process.env.MOCK_DYNAMODB_ENDPOINT) {
@@ -23,36 +23,38 @@ const dynamo = DynamoDBDocumentClient.from(client)
 
 export const handler = async (event) => {
   const query = event.queryStringParameters
-  const filterTimeMin = query && 'from' in query ? Number(query['from']) : 0
-  const filterTimeMax =
-    query && 'to' in query ? Number(query['to']) : new Date().valueOf()
 
-  const res = await dynamo.send(
-    new ScanCommand({
-      TableName: 'demo-dbtable-iot-backend',
-      FilterExpression: '#time BETWEEN :filterTimeMin AND :filterTimeMax',
-      ExpressionAttributeNames: { '#time': 'time' },
-      ExpressionAttributeValues: {
-        ':filterTimeMin': filterTimeMin,
-        ':filterTimeMax': filterTimeMax,
-      },
-    }),
-  )
+  const recordDateStart = new Date('05/12/2023')
+  let dateFrom = query?.from ? new Date(Number(query.from)) : new Date()
+  if (dateFrom < recordDateStart) {
+    dateFrom = recordDateStart
+  }
+  const dateTo = query?.to ? new Date(Number(query.to)) : new Date()
 
-  const items = res.Items.map((x) => {
+  const results = []
+  while (dateFrom < dateTo) {
+    const res = await dynamo.send(
+      new QueryCommand({
+        TableName: 'demo-db-iot-backend',
+        KeyConditionExpression: '#date = :queryDate',
+        ExpressionAttributeNames: { '#date': 'date' },
+        ExpressionAttributeValues: {
+          ':queryDate': dateFrom.toLocaleDateString('en-GB'),
+        },
+      }),
+    )
+
+    results.push(...res.Items)
+    dateFrom.setDate(dateFrom.getDate() + 1)
+  }
+
+  console.log(results.length)
+  const items = results?.map((x) => {
     const {
       time,
       payload: { temp },
     } = x
     return { time, temp }
-  }).sort((a, b) => {
-    if (a.time > b.time) {
-      return 1
-    } else if (a.time < b.time) {
-      return -1
-    } else {
-      return 0
-    }
   })
 
   const responseHeaders = {
