@@ -7,7 +7,6 @@ export type DateRangeOptions =
   | 'Yesterday'
   | 'Last 3 Days'
   | 'LastWeek'
-  | 'All'
 
 interface DateRangeProps {
   onDateChange: (
@@ -46,11 +45,6 @@ const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
         to = startOfHour(to)
         from = startOfDay(subDays(from, 6))
         break
-
-      case 'All':
-        to = startOfHour(to)
-        from = new Date(0)
-        break
     }
 
     onDateChange(from.valueOf(), to.valueOf(), rangeOption)
@@ -62,7 +56,6 @@ const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
       <button onClick={() => dateSelect('Yesterday')}>Yesterday</button>
       <button onClick={() => dateSelect('Last 3 Days')}>Last 3 Days</button>
       <button onClick={() => dateSelect('LastWeek')}>Last Week</button>
-      <button onClick={() => dateSelect('All')}>All</button>
     </div>
   )
 }
