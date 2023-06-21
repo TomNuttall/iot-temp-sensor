@@ -48,7 +48,6 @@ export const handler = async (event) => {
     dateFrom.setDate(dateFrom.getDate() + 1)
   }
 
-  console.log(results.length)
   const items = results?.map((x) => {
     const {
       time,
