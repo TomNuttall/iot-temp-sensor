@@ -25,17 +25,23 @@ Resources:
   DynamoDBTable:
     Type: 'AWS::DynamoDB::Table'
     Properties:
-      TableName: !Sub '${ProjectPrefix}-dbtable-${ProjectName}'
+      TableName: !Sub '${ProjectPrefix}-db-${ProjectName}'
       AttributeDefinitions:
+        - AttributeName: 'date'
+          AttributeType: 'S'
         - AttributeName: 'time'
           AttributeType: 'N'
       KeySchema:
-        - AttributeName: 'time'
+        - AttributeName: 'date'
           KeyType: 'HASH'
+        - AttributeName: 'time'
+          KeyType: 'RANGE'
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
       DeletionProtectionEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
 
   IotTopicRule:
     Type: 'AWS::IoT::TopicRule'
@@ -44,14 +50,18 @@ Resources:
       TopicRulePayload:
         Description: !Sub '${ProjectPrefix}-topicrule-${ProjectName}'
         RuleDisabled: false
+        AwsIotSqlVersion: '2016-03-23'
         Sql: SELECT temp FROM 'esp32/pub'
         Actions:
           - DynamoDB:
-              HashKeyField: 'time'
-              HashKeyType: NUMBER
-              HashKeyValue: '${timestamp()}.'
+              HashKeyField: 'date'
+              HashKeyType: STRING
+              HashKeyValue: '${parse_time("dd-MM-YYYY", timestamp())}'
+              RangeKeyField: 'time'
+              RangeKeyType: NUMBER
+              RangeKeyValue: '${timestamp()}.'
               PayloadField: 'payload'
-              TableName: !Sub '${ProjectPrefix}-dbtable-${ProjectName}'
+              TableName: !Sub '${ProjectPrefix}-db-${ProjectName}'
               RoleArn: !GetAtt IoTRole.Arn
     DependsOn:
       - IoTRole
