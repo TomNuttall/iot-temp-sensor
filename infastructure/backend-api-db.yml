@@ -56,7 +56,7 @@ Resources:
           - DynamoDB:
               HashKeyField: 'date'
               HashKeyType: STRING
-              HashKeyValue: '${parse_time("dd-MM-YYYY", timestamp())}'
+              HashKeyValue: '${parse_time("dd/MM/YYYY", timestamp())}'
               RangeKeyField: 'time'
               RangeKeyType: NUMBER
               RangeKeyValue: '${timestamp()}'
