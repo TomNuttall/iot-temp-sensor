@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { startOfDay, startOfHour, subDays } from 'date-fns'
+import { zonedTimeToUtc } from 'date-fns-tz'
 import './DateRangePicker.css'
 
 export type DateRangeOptions =
@@ -47,6 +48,8 @@ const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
         break
     }
 
+    from = zonedTimeToUtc(from, 'Etc/UTC')
+    to = zonedTimeToUtc(to, 'Etc/UTC')
     onDateChange(from.valueOf(), to.valueOf(), rangeOption)
   }
 
