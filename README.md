@@ -27,14 +27,6 @@
 - CloudFormation templates for AWS infastructure
 - GitHub actions to deploy frontend and backend changes on main branch push
 
-<img
-  src='./docs/aws_architecture-diagram.svg'
-  raw=true
-  alt='AWS Architecture Diagram'
-  height="500px"
-  width="auto"
-/>
-
 ## Demo
 
 https://iot.tomnuttall.dev
