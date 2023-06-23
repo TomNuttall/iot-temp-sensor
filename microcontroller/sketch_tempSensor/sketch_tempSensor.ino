@@ -152,8 +152,6 @@ void commsTask(void* pvParameters) {
   awsSetup();
 
   while (true) {
-    awsConnect();
-
     {
       std::unique_lock<std::mutex> lock (Mutex);
       float avgTemp = 0.0;
@@ -164,13 +162,13 @@ void commsTask(void* pvParameters) {
     }
 
     StaticJsonDocument<200> doc;
-    doc["time"] = millis();
     doc["temp"] = avgTemp;
     char jsonBuffer[512];
     serializeJson(doc, jsonBuffer); 
-    Serial.println("Published msg");
-
+    
+    awsConnect();
     client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+    Serial.println("Published msg");
 
     delay(PUBLISH_READING_DELAY);
   }
