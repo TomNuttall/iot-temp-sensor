@@ -29,52 +29,9 @@ https://iot.tomnuttall.dev
   width="auto"
 />
 
-## Deployment
-
-- CloudFormation templates used to deploy infastructure on AWS
-- GitHub action runs on push to main branch and will deploy dashboard to s3 bucket and deploy lambda package
-
 ## Usage
 
-### backend
-
-Uses docker amazon/dynamodb-local docker image to run local DynamoDB and serverless offline for local Lambda/API Gateway.
-
-```shell
-yarn local-db
-yarn dev
-```
-
-Can inspect local-db table in browser
-
-```
-http://localhost:8001
-```
-
-Can test api in browser or curl
-
-```
-curl http://localhost:3000/dev?from=0
-```
-
-### dashboard
-
-Can connect to localhost api or live api.
-
-```shell
-yarn dev
-```
-
-Can test frontend in browser
-
-```
-http://localhost:5173
-```
-
-## Testing
-
-Unit tests included for dashboard and backend
-
-```shell
-yarn test
-```
+- [backend](backend/README.md)
+- [dashboard](dashboard/README.md)
+- [infastructre](infastructure/README.md)
+- [microcontroller](microcontroller/README.md)
