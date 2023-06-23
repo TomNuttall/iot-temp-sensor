@@ -16,11 +16,12 @@ Some additional libraries are required
   alt='Circuit Diagram'
   height="300px"
   width="auto"
+  style={background-color: white}
 />
 
 ## Certificate
 
-This can't be generated in CloudFormation and must be done in the AWS Console or CLI \
+This can't be generated in CloudFormation and must be done in the AWS Console or CLI.
 
 - [AWS IoT Certificate Guide](https://docs.aws.amazon.com/iot/latest/developerguide/device-certs-create.html)
 
