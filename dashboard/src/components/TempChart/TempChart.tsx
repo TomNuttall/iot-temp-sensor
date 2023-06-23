@@ -11,6 +11,7 @@ import {
 import { Line } from 'react-chartjs-2'
 import { TempData } from '../../lib/tempApi'
 import { DateRangeOptions } from '../DateRangePicker/DateRangePicker'
+import { zonedTimeToUtc } from 'date-fns-tz'
 import './TempChart.css'
 
 ChartJS.register(
@@ -46,8 +47,9 @@ interface TempChartProps {
 }
 
 const TempChart = ({ tempData }: TempChartProps) => {
+  const labels = tempData.map((x) => new Date(x.time).getUTCHours())
   const data = {
-    labels: tempData.map((x) => new Date(x.time).toLocaleTimeString()),
+    labels: labels,
     datasets: [
       {
         label: 'Temp',
