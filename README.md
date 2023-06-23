@@ -3,9 +3,11 @@
 **Demo project to help learn more about AWS**
 
 ## Demo
+
 https://iot.tomnuttall.dev
 
 ## Project Overview
+
 - Data Source
   - Esp32 microcontroller connected to a temperature sensor
   - Reads temperature once a minute
@@ -18,7 +20,7 @@ https://iot.tomnuttall.dev
   - React dashboard calls API with query string date range to display temperature data
   - ChartJs used for displaying graphs
   - Deployed to S3 bucket and uses CloudFront
- 
+
 <img
   src='./docs/aws_architecture-diagram.svg'
   raw=true
@@ -26,6 +28,7 @@ https://iot.tomnuttall.dev
   height="500px"
   width="auto"
 />
+
 ## Deployment
 
 - CloudFormation templates used to deploy infastructure on AWS
@@ -42,6 +45,18 @@ yarn local-db
 yarn dev
 ```
 
+Can inspect local-db table in browser
+
+```
+http://localhost:8001
+```
+
+Can test api in browser or curl
+
+```
+curl http://localhost:3000/dev?from=0
+```
+
 ### dashboard
 
 Can connect to localhost api or live api.
@@ -50,8 +65,16 @@ Can connect to localhost api or live api.
 yarn dev
 ```
 
+Can test frontend in browser
+
+```
+http://localhost:5173
+```
+
 ## Testing
+
 Unit tests included for dashboard and backend
+
 ```shell
 yarn test
 ```
