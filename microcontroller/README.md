@@ -16,7 +16,7 @@ Some additional libraries are required
   alt='Circuit Diagram'
   height="300px"
   width="auto"
-  style={background-color: white}
+  style="background-color: white"
 />
 
 ## Certificate
