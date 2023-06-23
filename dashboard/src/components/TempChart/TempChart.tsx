@@ -11,7 +11,6 @@ import {
 import { Line } from 'react-chartjs-2'
 import { TempData } from '../../lib/tempApi'
 import { DateRangeOptions } from '../DateRangePicker/DateRangePicker'
-import { zonedTimeToUtc } from 'date-fns-tz'
 import './TempChart.css'
 
 ChartJS.register(
