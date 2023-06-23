@@ -8,6 +8,16 @@
 
 Some additional libraries are required
 
+## Circuit Diagram
+
+<img
+  src='../docs/esp32_circuit-diagram.svg'
+  raw=true
+  alt='Circuit Diagram'
+  height="300px"
+  width="auto"
+/>
+
 ## Certificate
 
 This can't be generated in CloudFormation and must be done in the AWS Console or CLI \
