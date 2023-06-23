@@ -1,5 +1,15 @@
 # infastructure
 
+## Architecture Diagram
+
+<img
+  src='../docs/aws_architecture-diagram.svg'
+  raw=true
+  alt='AWS Architecture Diagram'
+  height="500px"
+  width="auto"
+/>
+
 ## Deployment
 
 - CloudFormation templates used to deploy infastructure on AWS
