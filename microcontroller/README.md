@@ -1,12 +1,28 @@
 # microcontroller
 
-## Requirements
+- 1st Core runs temperature sensor readings
+- 2nd Core runs MQTT message publishing
+
+## Hardware
 
 - [ESP32](https://www.az-delivery.uk/products/esp32-d1-r32-board)
 - [Temperature Sensor](https://thepihut.com/products/waterproof-ds18b20-digital-temperature-sensor-extras)
+
+## Requirements
+
 - [Arduino IDE](https://www.arduino.cc/en/software)
+- [ESP32 Driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers)
+
+Board Manager
+
+- [esp32 Board Manager](https://dl.espressif.com/dl/package_esp32_index.json)
 
 Some additional libraries are required
+
+- [Onewire](https://www.arduino.cc/reference/en/libraries/onewire/)
+- [DallasTemperature](https://www.arduino.cc/reference/en/libraries/dallastemperature/)
+- [MQTT](https://www.arduino.cc/reference/en/libraries/mqtt/)
+- [ArduinoJson](https://www.arduino.cc/reference/en/libraries/arduinojson/)
 
 ## Circuit Diagram
 
@@ -21,13 +37,14 @@ Some additional libraries are required
 
 ## Certificate
 
-This can't be generated in CloudFormation and must be done in the AWS Console or CLI.
+This can't be generated in CloudFormation and must be done in the AWS Console or CLI and downloaded once.
 
 - [AWS IoT Certificate Guide](https://docs.aws.amazon.com/iot/latest/developerguide/device-certs-create.html)
 
 ### Defines
 
-Create a lib\defs.h file with WIFI details, AWS IoT endpoint and AWS IoT certificate details.
+- Create a lib\defs.h file in sketch folder
+- Add in WIFI details, AWS IoT endpoint and AWS IoT certificate details.
 
 ```cpp
 #ifndef DEFS_H
@@ -35,10 +52,14 @@ Create a lib\defs.h file with WIFI details, AWS IoT endpoint and AWS IoT certifi
 
 #include <pgmspace.h>
 
-static const char *WIFI_SSID = "";
-static const char *WIFI_PASSWORD = "";
+// WIFI
+static const char WIFI_SSID[] = "";
+static const char WIFI_PASSWORD[] = "";
 
-const char AWS_IOT_ENDPOINT[] = "";
+// AWS IOT
+static const char IOT_THINGNAME[] = "";
+static const char IOT_PUBLISH_TOPIC[] = "";
+static const char IOT_ENDPOINT[] = "";
 
 // Amazon Root CA 1
 static const char AWS_CERT_CA[] PROGMEM = R"EOF(
@@ -63,4 +84,8 @@ static const char AWS_CERT_PRIVATE[] PROGMEM = R"KEY(
 
 ## Upload Sketch
 
-Connect device
+- Connect device with a usb data cable.
+- Select the 'ESP32 Dev Module' board in tools.
+- Change upload speed to 115200.
+- Can then upload and flash the esp32.
+- Serial Monitor in ArduinoIDE can be used for monitoring logs.
