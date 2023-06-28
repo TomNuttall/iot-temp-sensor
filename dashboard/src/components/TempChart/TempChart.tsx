@@ -46,7 +46,7 @@ interface TempChartProps {
 }
 
 const TempChart = ({ tempData }: TempChartProps) => {
-  const labels = tempData.map((x) => new Date(x.time).getUTCHours())
+  const labels = tempData.map((x) => new Date(x.time).getHours())
   const data = {
     labels: labels,
     datasets: [
