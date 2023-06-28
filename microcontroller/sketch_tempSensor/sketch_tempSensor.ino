@@ -14,7 +14,7 @@
 static const int ONE_WIRE_PIN = 18;
 static const int TEMP_READING_DELAY = 60 * 1000;
 static const int READING_POOL_SIZE = 30;
-static const int PUBLISH_READING_DELAY = (TEMP_READING_DELAY) * READING_POOL_SIZE;
+static const int PUBLISH_READING_DELAY = TEMP_READING_DELAY * READING_POOL_SIZE;
 static const int MAX_RETRY_COUNT = 50;
 
 // Globals
@@ -175,10 +175,11 @@ void commsTask(void* pvParameters) {
     char date[11];
     unsigned long timeStamp = 0;
     getTime(date, timeStamp);
+    unsigned long long msTimeStamp = (unsigned long long)timeStamp * (unsigned long long)1000;
 
     StaticJsonDocument<200> doc;
     doc["date"] = date;
-    doc["time"] = timeStamp;
+    doc["time"] = msTimeStamp;
     doc["temp"] = avgTemp;
     char jsonBuffer[512];
     serializeJson(doc, jsonBuffer); 
