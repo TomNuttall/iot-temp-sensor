@@ -46,23 +46,18 @@ Resources:
   IotTopicRule:
     Type: 'AWS::IoT::TopicRule'
     Properties:
-      RuleName: 'esp32'
+      RuleName: 'demotemp'
       TopicRulePayload:
         Description: !Sub '${ProjectPrefix}-topicrule-${ProjectName}'
         RuleDisabled: false
         AwsIotSqlVersion: '2016-03-23'
-        Sql: SELECT temp FROM 'esp32/pub'
+        Sql: SELECT date, time, temp FROM 'demotemp/pub'
         Actions:
-          - DynamoDB:
-              HashKeyField: 'date'
-              HashKeyType: STRING
-              HashKeyValue: '${parse_time("dd/MM/YYYY", timestamp())}'
-              RangeKeyField: 'time'
-              RangeKeyType: NUMBER
-              RangeKeyValue: '${timestamp()}'
-              PayloadField: 'payload'
-              TableName: !Sub '${ProjectPrefix}-db-${ProjectName}'
+          - DynamoDBv2:
+              PutItem:
+                TableName: !Sub '${ProjectPrefix}-db-${ProjectName}'
               RoleArn: !GetAtt IoTRole.Arn
+
     DependsOn:
       - IoTRole
 
