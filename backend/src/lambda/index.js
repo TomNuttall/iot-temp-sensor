@@ -48,11 +48,8 @@ export const handler = async (event) => {
     dateFrom.setDate(dateFrom.getDate() + 1)
   }
 
-  const items = results?.map((x) => {
-    const {
-      time,
-      payload: { temp },
-    } = x
+  const items = results?.map((item) => {
+    const { time, temp } = item
     return { time, temp }
   })
 

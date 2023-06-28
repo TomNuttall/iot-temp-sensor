@@ -30,7 +30,7 @@ const populateTable = async () => {
         Item: {
           date: { S: format(timestamp, 'dd/MM/yyyy') },
           time: { N: timestamp.valueOf() },
-          payload: { M: { temp: { N: random(30) } } },
+          temp: { N: random(30) },
         },
       }),
     )
