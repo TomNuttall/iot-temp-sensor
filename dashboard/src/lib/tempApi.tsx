@@ -9,8 +9,12 @@ export const TempApiEndpoints = {
 }
 
 export class TempApi {
-  public static isLocalHost(): boolean {
-    return process.env.NODE_ENV !== 'production'
+  public static useLocalHost(): boolean {
+    const prod =
+      process.env.NODE_ENV === 'production' ||
+      import.meta.env?.VITE_USE_LOCALHOST === 'false'
+
+    return !prod
   }
 
   public static async get(
@@ -20,7 +24,9 @@ export class TempApi {
     const response = await fetch(
       encodeURI(
         `${
-          TempApi.isLocalHost() ? TempApiEndpoints.local : TempApiEndpoints.live
+          TempApi.useLocalHost()
+            ? TempApiEndpoints.local
+            : TempApiEndpoints.live
         }?from=${from}&to=${to}`,
       ),
     )

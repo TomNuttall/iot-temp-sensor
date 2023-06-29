@@ -1,6 +1,15 @@
 # dashboard
 
+## Env
+
+Copy and rename .env.example to .env.
 Can connect to localhost api or live api.
+
+```bash
+VITE_USE_LOCALHOST=true
+```
+
+## Run
 
 ```bash
 yarn dev
@@ -8,13 +17,9 @@ yarn dev
 
 Can test frontend in browser
 
-```
-http://localhost:5173
-```
+- [LocalHost](http://localhost:5173)
 
-## Testing
-
-Unit Test
+## Test
 
 ```bash
 yarn test

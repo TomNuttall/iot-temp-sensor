@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { DateRangeOptions } from '../DateRangePicker/DateRangePicker'
-import { TempData } from '../../lib/tempApi'
+import { TempData } from '../../lib/TempApi'
 import TempChart from './TempChart'
 
 describe('TempChart', () => {

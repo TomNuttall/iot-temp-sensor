@@ -8,7 +8,7 @@ import {
   afterEach,
 } from 'vitest'
 import createFetchMock from 'vitest-fetch-mock'
-import { TempApi, TempData } from './tempApi'
+import { TempApi, TempData } from './TempApi'
 
 describe('TempApi', () => {
   const fetchMocker = createFetchMock(vi)

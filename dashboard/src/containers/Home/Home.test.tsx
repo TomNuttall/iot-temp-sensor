@@ -10,7 +10,7 @@ import {
 } from 'vitest'
 import createFetchMock from 'vitest-fetch-mock'
 import { render, screen, act } from '@testing-library/react'
-import { TempData } from '../../lib/tempApi'
+import { TempData } from '../../lib/TempApi'
 import Home from './Home'
 
 describe('Home', () => {

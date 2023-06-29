@@ -1,4 +1,4 @@
-import { TempData } from '../../lib/tempApi'
+import { TempData } from '../../lib/TempApi'
 import './SummaryOverview.css'
 
 interface SummaryOverviewProps {

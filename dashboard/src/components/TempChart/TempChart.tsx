@@ -9,7 +9,7 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import { TempData } from '../../lib/tempApi'
+import { TempData } from '../../lib/TempApi'
 import { DateRangeOptions } from '../DateRangePicker/DateRangePicker'
 import './TempChart.css'
 
