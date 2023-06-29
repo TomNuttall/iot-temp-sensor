@@ -1,5 +1,11 @@
 # backend
 
+## Requirements
+
+- [Docker](https://www.docker.com)
+
+## Run
+
 Uses docker amazon/dynamodb-local docker image to run local DynamoDB and serverless offline for local Lambda/API Gateway.
 
 ```bash
@@ -19,7 +25,7 @@ Can test api in browser or curl
 curl http://localhost:3000/dev?from=0
 ```
 
-## Testing
+## Test
 
 Unit tests
 
