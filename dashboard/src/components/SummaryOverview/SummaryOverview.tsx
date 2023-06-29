@@ -1,14 +1,16 @@
-import { TempData } from '../../lib/TempApi'
+import { TemperatureData } from '../../lib/IoTApi'
 import './SummaryOverview.css'
 
 interface SummaryOverviewProps {
-  tempData: TempData[]
+  tempData: TemperatureData[]
 }
 
 const SummaryOverview = ({ tempData }: SummaryOverviewProps) => {
-  const temps = tempData?.slice()?.sort((a: TempData, b: TempData): number => {
-    return a.temp - b.temp
-  })
+  const temps = tempData
+    ?.slice()
+    ?.sort((a: TemperatureData, b: TemperatureData): number => {
+      return a.temp - b.temp
+    })
 
   const min = temps.at(0)
   const max = temps.at(-1)

@@ -10,16 +10,16 @@ import {
 } from 'vitest'
 import createFetchMock from 'vitest-fetch-mock'
 import { render, screen, act } from '@testing-library/react'
-import { TempData } from '../../lib/TempApi'
+import { TemperatureData } from '../../lib/IoTApi'
 import Home from './Home'
 
 describe('Home', () => {
   const fetchMocker = createFetchMock(vi)
   const date = new Date(2023, 11, 6, 12, 0, 0, 0)
 
-  const minTemp: TempData = { temp: 0, time: 1 }
-  const maxTemp: TempData = { temp: 20, time: 2 }
-  const mocks: TempData[] = [minTemp, maxTemp]
+  const minTemp: TemperatureData = { temp: 0, time: 1 }
+  const maxTemp: TemperatureData = { temp: 20, time: 2 }
+  const mocks: TemperatureData[] = [minTemp, maxTemp]
 
   beforeAll(() => fetchMocker.enableMocks())
   beforeEach(() => {

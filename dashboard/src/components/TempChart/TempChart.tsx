@@ -7,9 +7,11 @@ import {
   Title,
   Tooltip,
   Legend,
+  ScriptableContext,
+  Filler,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import { TempData } from '../../lib/TempApi'
+import { TemperatureData } from '../../lib/IoTApi'
 import { DateRangeOptions } from '../DateRangePicker/DateRangePicker'
 import './TempChart.css'
 
@@ -21,10 +23,26 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
+  Filler,
 )
 
 const options = {
   responsive: true,
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+  elements: {
+    line: {
+      tension: 0.35,
+    },
+  },
+  interaction: {
+    intersect: true,
+  },
   plugins: {
     legend: {
       display: false,
@@ -41,20 +59,31 @@ const options = {
 }
 
 interface TempChartProps {
-  tempData: TempData[]
+  tempData: TemperatureData[]
   rangeOption: DateRangeOptions
 }
 
 const TempChart = ({ tempData }: TempChartProps) => {
-  const labels = tempData.map((x) => new Date(x.time).getHours())
   const data = {
-    labels: labels,
+    labels: tempData.map((x) => new Date(x.time).getHours()),
     datasets: [
       {
         label: 'Temp',
         data: tempData.map((x) => x.temp),
+        //fill: 'start',
         borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        // backgroundColor: (context: ScriptableContext<'line'>) => {
+        //   const ctx = context.chart.ctx
+        //   const gradient = ctx.createLinearGradient(
+        //     0,
+        //     0,
+        //     0,
+        //     context.chart.height,
+        //   )
+        //   gradient.addColorStop(0, 'rgba(255, 0, 0, 0.35)')
+        //   gradient.addColorStop(1, 'rgba(0, 0, 255, 0.35)')
+        //   return gradient
+        // },
       },
     ],
   }

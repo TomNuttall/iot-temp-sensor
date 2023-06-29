@@ -1,14 +1,14 @@
-export interface TempData {
+export interface TemperatureData {
   time: number
   temp: number
 }
 
-export const TempApiEndpoints = {
+export const IoTApiEndpoints = {
   local: 'http://localhost:3000/dev',
   live: 'https://api.iot.tomnuttall.dev',
 }
 
-export class TempApi {
+export class IoTApi {
   public static useLocalHost(): boolean {
     const prod =
       process.env.NODE_ENV === 'production' ||
@@ -20,13 +20,11 @@ export class TempApi {
   public static async get(
     from: number = 0,
     to: number = new Date().valueOf(),
-  ): Promise<TempData[]> {
+  ): Promise<TemperatureData[]> {
     const response = await fetch(
       encodeURI(
         `${
-          TempApi.useLocalHost()
-            ? TempApiEndpoints.local
-            : TempApiEndpoints.live
+          IoTApi.useLocalHost() ? IoTApiEndpoints.local : IoTApiEndpoints.live
         }?from=${from}&to=${to}`,
       ),
     )

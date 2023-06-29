@@ -8,11 +8,11 @@ import {
   afterEach,
 } from 'vitest'
 import createFetchMock from 'vitest-fetch-mock'
-import { TempApi, TempData } from './TempApi'
+import { IoTApi, TemperatureData } from './IoTApi'
 
-describe('TempApi', () => {
+describe('IoTApi', () => {
   const fetchMocker = createFetchMock(vi)
-  const mocks: TempData[] = [{ time: 5, temp: 10 }]
+  const mocks: TemperatureData[] = [{ time: 5, temp: 10 }]
 
   beforeAll(() => fetchMocker.enableMocks())
   afterEach(() => fetchMocker.resetMocks())
@@ -23,7 +23,7 @@ describe('TempApi', () => {
     fetchMocker.doMock(JSON.stringify(mocks))
 
     // Act
-    const res = await TempApi.get()
+    const res = await IoTApi.get()
 
     // Assert
     expect(fetchMocker).toBeCalledTimes(1)
@@ -35,7 +35,7 @@ describe('TempApi', () => {
     fetchMocker.doMock(JSON.stringify(mocks))
 
     // Act
-    const res = await TempApi.get(0, 10)
+    const res = await IoTApi.get(0, 10)
 
     // Assert
     expect(fetchMocker).toBeCalledTimes(1)

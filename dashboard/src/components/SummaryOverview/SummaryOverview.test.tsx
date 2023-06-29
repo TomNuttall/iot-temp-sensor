@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { TempData } from '../../lib/TempApi'
+import { TemperatureData } from '../../lib/IoTApi'
 import SummaryOverview from '.'
 
 describe('SummaryOverview', () => {
   it('renders with no TempData', async () => {
     // Arrange
-    const tempData: TempData[] = []
+    const tempData: TemperatureData[] = []
 
     // Act
     render(<SummaryOverview tempData={tempData} />)
@@ -20,7 +20,7 @@ describe('SummaryOverview', () => {
     // Arrange
     const minTemp = { temp: 0, time: 1 }
     const maxTemp = { temp: 20, time: 1 }
-    const tempData: TempData[] = [maxTemp, minTemp]
+    const tempData: TemperatureData[] = [maxTemp, minTemp]
 
     // Act
     render(<SummaryOverview tempData={tempData} />)

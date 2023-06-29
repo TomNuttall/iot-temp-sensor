@@ -1,15 +1,15 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { DateRangeOptions } from '../DateRangePicker/DateRangePicker'
-import { TempData } from '../../lib/TempApi'
+import { TemperatureData } from '../../lib/IoTApi'
 import TempChart from './TempChart'
 
 describe('TempChart', () => {
   it('renders with tempData', async () => {
     // Arrange
-    const minTemp: TempData = { temp: 0, time: 1 }
-    const maxTemp: TempData = { temp: 20, time: 2 }
-    const tempData: TempData[] = [minTemp, maxTemp]
+    const minTemp: TemperatureData = { temp: 0, time: 1 }
+    const maxTemp: TemperatureData = { temp: 20, time: 2 }
+    const tempData: TemperatureData[] = [minTemp, maxTemp]
     const rangeOption: DateRangeOptions = 'Today'
 
     // Act
@@ -21,7 +21,7 @@ describe('TempChart', () => {
 
   it('renders with no tempdata', async () => {
     // Arrange
-    const tempData: TempData[] = []
+    const tempData: TemperatureData[] = []
     const rangeOption: DateRangeOptions = 'Today'
 
     // Act

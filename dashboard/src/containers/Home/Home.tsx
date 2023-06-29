@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { TempData, TempApi } from '../../lib/TempApi'
+import { TemperatureData, IoTApi } from '../../lib/IoTApi'
 import { DateRangeOptions } from '../../components/DateRangePicker/DateRangePicker'
 import DateRangePicker from '../../components/DateRangePicker'
 import SummaryOverview from '../../components/SummaryOverview'
 import TempChart from '../../components/TempChart'
 
 export const Home = () => {
-  const [tempData, setTempData] = useState<TempData[]>([])
+  const [tempData, setTempData] = useState<TemperatureData[]>([])
   const [rangeOption, setRangeOption] = useState<DateRangeOptions>('Today')
 
   const onDateChange = async (
@@ -14,7 +14,7 @@ export const Home = () => {
     to: number,
     rangeOption: DateRangeOptions,
   ) => {
-    const data = await TempApi.get(from, to)
+    const data = await IoTApi.get(from, to)
 
     setTempData(data)
     setRangeOption(rangeOption)
