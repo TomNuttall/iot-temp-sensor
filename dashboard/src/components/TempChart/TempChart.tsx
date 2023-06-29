@@ -7,8 +7,8 @@ import {
   Title,
   Tooltip,
   Legend,
-  ScriptableContext,
-  Filler,
+  //ScriptableContext,
+  //Filler,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import { TemperatureData } from '../../lib/IoTApi'
@@ -23,7 +23,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler,
+  //Filler,
 )
 
 const options = {
