@@ -135,3 +135,6 @@ Resources:
                   - 's3:PutObject'
                   - 's3:PutObjectAcl'
                 Resource: !Sub arn:aws:s3:::${S3Bucket}/*
+              - Effect: 'Allow'
+                Action: 'cloudfront:CreateInvalidation'
+                Resource: !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${CDN}'
