@@ -15,8 +15,10 @@
 
 .summary-overview__min {
   background-color: #747bff;
+  color: white;
 }
 
 .summary-overview__max {
   background-color: red;
+  color: white;
 }
