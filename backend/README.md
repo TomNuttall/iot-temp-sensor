@@ -1,8 +1,10 @@
 # Backend
+**API Gateway with Lambda integration reads DynamoDB table**
 
 ## Overview ##
-- API Gateway with Lambda integration reads DynamoDB table and returns data
-- Docker and serverless offline used for local development
+- Uses query string for date range querys on DynamoDB table
+- Docker compose uses amazon/dynamodb-local image.
+- Serverless offline used for local lambda/api gateway.
 
 ## Requirements
 - [Docker](https://www.docker.com)
