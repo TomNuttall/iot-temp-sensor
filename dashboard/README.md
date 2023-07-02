@@ -19,8 +19,8 @@ Can connect to localhost api (if backend running) or live api.
 VITE_USE_LOCALHOST=true
 ```
 
-### Testing
-
+### Test
+Run unit tests
 ```bash
 yarn test
 ```
