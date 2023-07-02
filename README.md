@@ -1,32 +1,46 @@
-# IoT Temp Sensor
-
-**Demo project to help learn more about AWS**
+# IoT Demo Project
 
 ## Project Overview
 
-[Date Source](microcontroller/README.md)
+### :sun_behind_small_cloud: Temperature Sensor
+> :book: [Date Source Readme](microcontroller/README.md)
 
-- Esp32 microcontroller connected to a temperature sensor
-- Reads temperature once a minute
-- Every 30 mins average temperature sent to AWS IoT Core
-- IoT Topic Rule adds message to DynamoDB table
+- Esp32 microcontroller connected to a temperature sensor.
+- Reading sent to AWS IoT Core and message added to DynamoDB table.
 
-[Backend](backend/README.md)
+### 🛠️ AWS Backend
+> :book: [Backend Readme](backend/README.md)
 
-- API Gateway with Lambda integration reads DynamoDB table and returns data
-- Docker and serverless offline used for local development
+- API Gateway with Lambda integration reads DynamoDB table and returns data.
 
-[Frontend](dashboard/README.md)
+### 📈 React Frontend
+> :book: [Dashboard Readme](dashboard/README.md)
 
-- React dashboard calls API with query string date range to display temperature data
-- ChartJs used for displaying graphs
-- Deployed to S3 bucket and uses CloudFront
+- React dashboard consumes API with date picking.
+- ChartJS used for displaying graphs.
 
-[Infastructure](infastructure/README.md)
+### :bricks: Infastructure
+> :book: [Infastructure Readme](infastructure/README.md)
 
-- CloudFormation templates for AWS infastructure
-- GitHub actions to deploy frontend and backend changes on main branch push
+- CloudFormation templates used to deploy AWS infastructure
+- GitHub actions deploy dashboard to S3 bucket and backend lambda.
 
+## Usage
+
+### Backend
+Start up local DynamoDB docker image and local lambda.
+```
+cd backend
+yarn local-db
+yarn dev
+```
+
+### Frontend
+Start frontend and connect to local backend.
+```
+cd dashboard
+yarn dev
+```
 ## Demo
 
 https://iot.tomnuttall.dev
