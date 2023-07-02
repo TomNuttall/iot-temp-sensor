@@ -1,4 +1,4 @@
-const table_schema = require('./db/schema.json')
+const table_schema = require('../infastructure/db/schema.json')
 
 module.exports = {
   tables: [
