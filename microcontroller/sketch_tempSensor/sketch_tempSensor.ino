@@ -28,7 +28,7 @@ TaskHandle_t Core1Task;
 TaskHandle_t Core2Task;
 std::mutex Mutex;
 
-int readingPool[READING_POOL_SIZE];
+float readingPool[READING_POOL_SIZE];
 int readingPoolIndex = 0;
 
 
@@ -169,7 +169,7 @@ void commsTask(void* pvParameters) {
       for (int i = 0; i < READING_POOL_SIZE; ++i) {
         avgTemp += readingPool[i];
       }
-      avgTemp /= READING_POOL_SIZE;
+      avgTemp /= (float)READING_POOL_SIZE;
     }
 
     char date[11];
