@@ -3,8 +3,10 @@
 ## Overview
 - CloudFormation templates used to deploy infastructure on AWS.
   - Cloudfront-cert must be used on us-east-1 region.
-- GitHub action runs on push to main branch and will deploy dashboard to s3 bucket and deploy lambda package.
+- GitHub action runs on push to main branch.
+  - Builds frontend, runs unit tests then deploys to S3 Buckets.
   - Creates cloudfront invalidation on index.html after deploying to s3 bucket.
+  - Runs lambda unit tests then deploys Lambda.
 
 ## Architecture Diagram
 
