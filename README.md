@@ -7,7 +7,7 @@
 > :book: [Date Source Readme](microcontroller/README.md)
 
 - Esp32 microcontroller connected to a temperature sensor.
-- Reading sent to AWS IoT Core and message added to DynamoDB table.
+- Average Reading sent to AWS IoT Core and message added to DynamoDB table.
 
 ### 🛠️ AWS Backend
 
@@ -33,13 +33,13 @@
 
 > :book: [Local DB Readme](local-db/README.md)
 
-- Docker image for local DynamoDB table.
+- Docker image for local DynamoDB tables.
 
 ## Usage
 
 ### Local Db
 
-Start up local DynamoDB docker image
+Start up (and populate) local DynamoDB docker image
 
 ```
 cd local-db
