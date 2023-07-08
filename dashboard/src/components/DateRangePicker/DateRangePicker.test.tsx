@@ -1,10 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { startOfDay, endOfDay } from 'date-fns'
+import { zonedTimeToUtc } from 'date-fns-tz'
 import DateRangePicker from '.'
 
 describe('DateRangePicker', () => {
-  const date = new Date(2023, 11, 6, 12, 0, 0, 0)
+  const date = new Date()
 
   beforeEach(() => {
     vi.useFakeTimers({ shouldAdvanceTime: true, toFake: ['Date'] })
@@ -45,8 +46,9 @@ describe('DateRangePicker', () => {
     // Act
     render(<DateRangePicker onDateChange={mock} />)
 
-    const from = startOfDay(date).valueOf()
-    const to = endOfDay(date).valueOf()
+    const from = zonedTimeToUtc(startOfDay(date), 'Etc/UTC').valueOf()
+    const to = zonedTimeToUtc(endOfDay(date), 'Etc/UTC').valueOf()
+
     expect(mock).toBeCalledWith(from, to)
   })
 })
