@@ -12,8 +12,8 @@ import {
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import { TemperatureData } from '../../lib/IoTApi'
-import { DateRangeOptions } from '../DateRangePicker/DateRangePicker'
-import './TempChart.css'
+
+import './TempChart.scss'
 
 ChartJS.register(
   CategoryScale,
@@ -60,7 +60,6 @@ const options = {
 
 interface TempChartProps {
   tempData: TemperatureData[]
-  rangeOption: DateRangeOptions
 }
 
 const TempChart = ({ tempData }: TempChartProps) => {

@@ -1,5 +1,5 @@
 import { TemperatureData } from '../../lib/IoTApi'
-import './SummaryOverview.css'
+import './SummaryOverview.scss'
 
 interface SummaryOverviewProps {
   tempData: TemperatureData[]

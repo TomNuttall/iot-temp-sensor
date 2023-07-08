@@ -1,0 +1,14 @@
+.date-range-picker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+
+  &__range {
+    position: absolute;
+    top: 0px;
+
+    background: white;
+    z-index: 10;
+  }
+}

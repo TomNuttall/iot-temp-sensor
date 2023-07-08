@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { startOfDay, startOfHour } from 'date-fns'
-import userEvent from '@testing-library/user-event'
+import { startOfDay, endOfDay } from 'date-fns'
 import DateRangePicker from '.'
 
 describe('DateRangePicker', () => {
@@ -24,7 +23,7 @@ describe('DateRangePicker', () => {
     render(<DateRangePicker onDateChange={mock} />)
 
     // Assert
-    const element = await screen.findByText('Today')
+    const element = await screen.findByText('Choose Date Range')
     expect(element).toBeInTheDocument()
   })
 
@@ -47,22 +46,7 @@ describe('DateRangePicker', () => {
     render(<DateRangePicker onDateChange={mock} />)
 
     const from = startOfDay(date).valueOf()
-    const to = startOfHour(date).valueOf()
-    expect(mock).toBeCalledWith(from, to, 'Today')
-  })
-
-  it('calls callback on button press', async () => {
-    // Arrange
-    const mock = vi.fn()
-
-    // Act
-    render(<DateRangePicker onDateChange={mock} />)
-
-    expect(mock).toHaveBeenCalledTimes(1)
-
-    const button = await screen.findByText('Today')
-    await userEvent.click(button)
-
-    expect(mock).toHaveBeenCalledTimes(2)
+    const to = endOfDay(date).valueOf()
+    expect(mock).toBeCalledWith(from, to)
   })
 })

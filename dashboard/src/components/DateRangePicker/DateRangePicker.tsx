@@ -1,64 +1,67 @@
-import { useEffect } from 'react'
-import { startOfDay, startOfHour, subDays } from 'date-fns'
+import { useEffect, useState } from 'react'
+import { startOfDay, endOfDay } from 'date-fns'
 import { zonedTimeToUtc } from 'date-fns-tz'
-import './DateRangePicker.css'
+import { DateRange, DayPicker } from 'react-day-picker'
+import 'react-day-picker/dist/style.css'
+import './DateRangePicker.scss'
 
-export type DateRangeOptions =
-  | 'Today'
-  | 'Yesterday'
-  | 'Last 3 Days'
-  | 'LastWeek'
-
-interface DateRangeProps {
-  onDateChange: (
-    from: number,
-    to: number,
-    rangeOption: DateRangeOptions,
-  ) => Promise<void>
+interface DateRangePickerProps {
+  onDateChange: (from: number, to: number) => Promise<void>
 }
 
-const DateRangePicker = ({ onDateChange }: DateRangeProps) => {
+const DateRangePicker = ({ onDateChange }: DateRangePickerProps) => {
+  const [range, setRange] = useState<DateRange | undefined>()
+  const [rangeMessage, setRangeMessage] = useState<string>('')
+  const [menuVisible, setMenuVisible] = useState<boolean>(false)
+
   useEffect(() => {
-    dateSelect('Today')
+    dateSelect({ from: new Date() })
   }, [])
 
-  const dateSelect = (rangeOption: DateRangeOptions) => {
-    let to = new Date()
-    let from = new Date()
+  useEffect(() => {
+    if (!range) return
 
-    switch (rangeOption) {
-      case 'Today':
-        to = startOfHour(to)
-        from = startOfDay(from)
-        break
+    dateSelect(range)
+    setRangeMessage(
+      `${range?.from ? range.from.toLocaleDateString() : ''} ${
+        range?.to ? ` - ${range.to.toLocaleDateString()}` : ''
+      }`,
+    )
+  }, [range])
 
-      case 'Yesterday':
-        to = startOfDay(to)
-        from = startOfDay(subDays(from, 1))
-        break
+  const dateSelect = (range: DateRange) => {
+    if (range?.from === undefined) return
 
-      case 'Last 3 Days':
-        to = startOfHour(to)
-        from = startOfDay(subDays(from, 2))
-        break
+    let from = zonedTimeToUtc(startOfDay(range.from), 'Etc/UTC')
+    let to = zonedTimeToUtc(endOfDay(range.to ?? range.from), 'Etc/UTC')
 
-      case 'LastWeek':
-        to = startOfHour(to)
-        from = startOfDay(subDays(from, 6))
-        break
-    }
-
-    from = zonedTimeToUtc(from, 'Etc/UTC')
-    to = zonedTimeToUtc(to, 'Etc/UTC')
-    onDateChange(from.valueOf(), to.valueOf(), rangeOption)
+    onDateChange(from.valueOf(), to.valueOf())
   }
 
   return (
     <div className="date-range-picker">
-      <button onClick={() => dateSelect('Today')}>Today</button>
-      <button onClick={() => dateSelect('Yesterday')}>Yesterday</button>
-      <button onClick={() => dateSelect('Last 3 Days')}>Last 3 Days</button>
-      <button onClick={() => dateSelect('LastWeek')}>Last Week</button>
+      <button
+        aria-haspopup="true"
+        aria-expanded={menuVisible}
+        onClick={() => setMenuVisible(!menuVisible)}
+      >
+        Choose Date Range
+      </button>
+      {menuVisible && (
+        <div className="date-range-picker__range" role="menu">
+          <DayPicker
+            weekStartsOn={1}
+            mode="range"
+            max={7}
+            selected={range}
+            onSelect={setRange}
+            fromDate={new Date(2023, 4, 12)}
+            toDate={new Date()}
+          />
+        </div>
+      )}
+
+      <p className="date-range-picker__summary">{rangeMessage}</p>
     </div>
   )
 }
