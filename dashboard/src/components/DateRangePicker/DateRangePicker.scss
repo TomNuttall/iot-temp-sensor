@@ -4,11 +4,28 @@
   justify-content: center;
   position: relative;
 
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    justify-content: center;
+  }
+
   &__range {
     position: absolute;
-    top: 0px;
+    left: 50%;
+    margin-left: -140px;
+    top: 50px;
 
-    background: white;
+    background-color: #1a1a1a;
     z-index: 10;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .date-range-picker {
+    &__range {
+      background-color: #ffffff;
+    }
   }
 }

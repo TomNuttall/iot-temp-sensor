@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { startOfDay, endOfDay } from 'date-fns'
+import { startOfDay, endOfDay, subDays, startOfHour } from 'date-fns'
 import { zonedTimeToUtc } from 'date-fns-tz'
 import { DateRange, DayPicker } from 'react-day-picker'
 import 'react-day-picker/dist/style.css'
@@ -33,20 +33,43 @@ const DateRangePicker = ({ onDateChange }: DateRangePickerProps) => {
     if (range?.from === undefined) return
 
     let from = zonedTimeToUtc(startOfDay(range.from), 'Etc/UTC')
-    let to = zonedTimeToUtc(endOfDay(range.to ?? range.from), 'Etc/UTC')
+    let to = zonedTimeToUtc(
+      range.to ? endOfDay(range.to) : startOfHour(range.from),
+      'Etc/UTC',
+    )
 
     onDateChange(from.valueOf(), to.valueOf())
   }
 
   return (
     <div className="date-range-picker">
-      <button
-        aria-haspopup="true"
-        aria-expanded={menuVisible}
-        onClick={() => setMenuVisible(!menuVisible)}
-      >
-        Choose Date Range
-      </button>
+      <div className="date-range-picker__buttons">
+        <button onClick={() => dateSelect({ from: new Date() })}>Today</button>
+        <button
+          onClick={() =>
+            dateSelect({
+              from: subDays(new Date(), 1),
+              to: subDays(new Date(), 1),
+            })
+          }
+        >
+          Yesterday
+        </button>
+        <button
+          onClick={() =>
+            dateSelect({ from: subDays(new Date(), 6), to: new Date() })
+          }
+        >
+          Last Week
+        </button>
+        <button
+          aria-haspopup="true"
+          aria-expanded={menuVisible}
+          onClick={() => setMenuVisible(!menuVisible)}
+        >
+          Choose Date Range
+        </button>
+      </div>
       {menuVisible && (
         <div className="date-range-picker__range" role="menu">
           <DayPicker

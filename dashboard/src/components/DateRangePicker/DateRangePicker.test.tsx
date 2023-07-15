@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { startOfDay, endOfDay } from 'date-fns'
+import { startOfDay, startOfHour } from 'date-fns'
 import { zonedTimeToUtc } from 'date-fns-tz'
 import DateRangePicker from '.'
 
@@ -47,7 +47,7 @@ describe('DateRangePicker', () => {
     render(<DateRangePicker onDateChange={mock} />)
 
     const from = zonedTimeToUtc(startOfDay(date), 'Etc/UTC').valueOf()
-    const to = zonedTimeToUtc(endOfDay(date), 'Etc/UTC').valueOf()
+    const to = zonedTimeToUtc(startOfHour(date), 'Etc/UTC').valueOf()
 
     expect(mock).toBeCalledWith(from, to)
   })
