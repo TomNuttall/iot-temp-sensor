@@ -24,7 +24,7 @@ describe('DateRangePicker', () => {
     render(<DateRangePicker onDateChange={mock} />)
 
     // Assert
-    const element = await screen.findByText('Choose Date Range')
+    const element = await screen.findByText('Yesterday')
     expect(element).toBeInTheDocument()
   })
 

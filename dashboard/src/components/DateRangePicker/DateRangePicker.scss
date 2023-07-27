@@ -1,8 +1,10 @@
 .date-range-picker {
   display: flex;
   flex-direction: column;
+  row-gap: 10px;
   justify-content: center;
   position: relative;
+  margin-bottom: 10px;
 
   &__buttons {
     display: flex;
