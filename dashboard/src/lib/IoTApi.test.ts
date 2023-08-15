@@ -1,44 +1,44 @@
-import {
-  describe,
-  it,
-  expect,
-  vi,
-  beforeAll,
-  afterAll,
-  afterEach,
-} from 'vitest'
-import createFetchMock from 'vitest-fetch-mock'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { IoTApi, TemperatureData } from './IoTApi'
+import axios from 'axios'
+
+vi.mock('axios')
 
 describe('IoTApi', () => {
-  const fetchMocker = createFetchMock(vi)
   const mocks: TemperatureData[] = [{ time: 5, temp: 10 }]
 
-  beforeAll(() => fetchMocker.enableMocks())
-  afterEach(() => fetchMocker.resetMocks())
-  afterAll(() => fetchMocker.disableMocks())
+  beforeEach(() => {
+    //@ts-ignore
+    axios.get.mockReset()
+  })
 
   it('calls api with no params', async () => {
     // Arrange
-    fetchMocker.doMock(JSON.stringify(mocks))
+    //@ts-ignore
+    axios.get.mockResolvedValue({
+      data: mocks,
+    })
 
     // Act
     const res = await IoTApi.get()
 
     // Assert
-    expect(fetchMocker).toBeCalledTimes(1)
-    expect(res).toHaveLength(mocks.length)
+    expect(axios.get).toBeCalledTimes(1)
+    expect(res).toStrictEqual(mocks)
   })
 
   it('calls api with params', async () => {
     // Arrange
-    fetchMocker.doMock(JSON.stringify(mocks))
+    //@ts-ignore
+    axios.get.mockResolvedValue({
+      data: mocks,
+    })
 
     // Act
     const res = await IoTApi.get(0, 10)
 
     // Assert
-    expect(fetchMocker).toBeCalledTimes(1)
-    expect(res).toHaveLength(mocks.length)
+    expect(axios.get).toBeCalledTimes(1)
+    expect(res).toStrictEqual(mocks)
   })
 })

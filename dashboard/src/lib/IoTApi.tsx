@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export interface TemperatureData {
   time: number
   temp: number
@@ -21,14 +23,14 @@ export class IoTApi {
     from: number = 0,
     to: number = new Date().valueOf(),
   ): Promise<TemperatureData[]> {
-    const response = await fetch(
+    const response = await axios.get(
       encodeURI(
         `${
           IoTApi.useLocalHost() ? IoTApiEndpoints.local : IoTApiEndpoints.live
         }?from=${from}&to=${to}`,
       ),
     )
-    const data = await response.json()
-    return data
+    //const data = await response.json()
+    return response.data
   }
 }
