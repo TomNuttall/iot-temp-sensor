@@ -64,7 +64,13 @@ interface TempChartProps {
 
 const TempChart = ({ tempData }: TempChartProps) => {
   const data = {
-    labels: tempData.map((x) => new Date(x.time).getHours()),
+    labels: tempData.map((x) => {
+      const timeStamp = new Date(x.time)
+      return `${timeStamp.getHours()}:${timeStamp
+        .getMinutes()
+        .toString()
+        .padEnd(2, '0')}`
+    }),
     datasets: [
       {
         label: 'Temp',

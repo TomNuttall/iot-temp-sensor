@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { startOfDay, endOfDay, subDays, startOfHour } from 'date-fns'
 import { zonedTimeToUtc } from 'date-fns-tz'
 import './DateRangePicker.scss'
@@ -8,6 +8,9 @@ interface DateRangePickerProps {
 }
 
 const DateRangePicker = ({ onDateChange }: DateRangePickerProps) => {
+  const [fromDate, setFromDate] = useState<Date>(new Date())
+  const [toDate, setToDate] = useState<Date>(new Date())
+
   useEffect(() => {
     dateSelect({ from: new Date() })
   }, [])
@@ -21,12 +24,19 @@ const DateRangePicker = ({ onDateChange }: DateRangePickerProps) => {
       'Etc/UTC',
     )
 
+    setFromDate(from)
+    setToDate(to)
     onDateChange(from.valueOf(), to.valueOf())
   }
 
   return (
     <div className="date-range-picker">
-      <div className="date-range-picker__buttons">
+      <h2 className="date-range-picker__title">Select Date Range</h2>
+      <div
+        className="date-range-picker__buttons"
+        role="group"
+        aria-label="Date range buttons"
+      >
         <button onClick={() => dateSelect({ from: new Date() })}>Today</button>
         <button
           onClick={() =>
@@ -46,6 +56,7 @@ const DateRangePicker = ({ onDateChange }: DateRangePickerProps) => {
           Last Week
         </button>
       </div>
+      <p className="date-range-picker__date">{`${fromDate.toLocaleDateString()} - ${toDate.toLocaleDateString()}`}</p>
     </div>
   )
 }
