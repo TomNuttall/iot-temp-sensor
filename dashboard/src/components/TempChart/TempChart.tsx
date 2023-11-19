@@ -66,10 +66,10 @@ const TempChart = ({ tempData }: TempChartProps) => {
   const data = {
     labels: tempData.map((x) => {
       const timeStamp = new Date(x.time)
-      return `${timeStamp.getHours()}:${timeStamp
-        .getMinutes()
-        .toString()
-        .padEnd(2, '0')}`
+      return `${timeStamp.toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+      })}`
     }),
     datasets: [
       {
