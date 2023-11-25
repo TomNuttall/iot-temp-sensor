@@ -5,32 +5,34 @@ export interface TemperatureData {
   temp: number
 }
 
-export const IoTApiEndpoints = {
+const IoTApiEndpoints = {
   local: 'http://localhost:3000/dev',
   live: 'https://api.iot.tomnuttall.dev',
 }
 
 export class IoTApi {
-  public static useLocalHost(): boolean {
+  private static endPoint: string
+
+  private static setEndPoint() {
     const prod =
       process.env.NODE_ENV === 'production' ||
       import.meta.env?.VITE_USE_LOCALHOST === 'false'
 
-    return !prod
+    IoTApi.endPoint = prod ? IoTApiEndpoints.live : IoTApiEndpoints.local
   }
 
   public static async get(
     from: number = 0,
     to: number = new Date().valueOf(),
   ): Promise<TemperatureData[]> {
+    if (!IoTApi.endPoint) {
+      IoTApi.setEndPoint()
+    }
+
     const response = await axios.get(
-      encodeURI(
-        `${
-          IoTApi.useLocalHost() ? IoTApiEndpoints.local : IoTApiEndpoints.live
-        }?from=${from}&to=${to}`,
-      ),
+      encodeURI(`${IoTApi.endPoint}?from=${from}&to=${to}`),
     )
-    //const data = await response.json()
+
     return response.data
   }
 }

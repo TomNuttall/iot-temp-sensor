@@ -1,11 +1,12 @@
 import { TemperatureData } from '../../lib/IoTApi'
+import { getTemperatureColour } from '../../lib/Helpers'
 import './SummaryOverview.scss'
 
 interface SummaryOverviewProps {
   tempData: TemperatureData[]
 }
 
-const SummaryOverview = ({ tempData }: SummaryOverviewProps) => {
+const SummaryOverview: React.FC<SummaryOverviewProps> = ({ tempData }) => {
   const temps = tempData
     ?.slice()
     ?.sort((a: TemperatureData, b: TemperatureData): number => {
@@ -17,10 +18,16 @@ const SummaryOverview = ({ tempData }: SummaryOverviewProps) => {
 
   return (
     <div className="summary-overview">
-      <div className="summary-overview__label summary-overview__min">
+      <div
+        className="summary-overview__label"
+        style={{ backgroundColor: getTemperatureColour(min?.temp ?? 0) }}
+      >
         {`Min ${min?.temp ? min.temp.toFixed(2) : 0}`}
       </div>
-      <div className="summary-overview__label summary-overview__max">
+      <div
+        className="summary-overview__label"
+        style={{ backgroundColor: getTemperatureColour(max?.temp ?? 0) }}
+      >
         {`Max ${max?.temp ? max.temp.toFixed(2) : 0}`}
       </div>
     </div>

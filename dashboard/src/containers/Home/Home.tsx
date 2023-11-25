@@ -4,7 +4,7 @@ import DateRangePicker from '../../components/DateRangePicker'
 import SummaryOverview from '../../components/SummaryOverview'
 import TempChart from '../../components/TempChart'
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const [tempData, setTempData] = useState<TemperatureData[]>([])
 
   const onDateChange = async (from: number, to: number) => {

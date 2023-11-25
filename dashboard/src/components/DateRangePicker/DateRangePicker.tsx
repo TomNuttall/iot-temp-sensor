@@ -7,7 +7,7 @@ interface DateRangePickerProps {
   onDateChange: (from: number, to: number) => Promise<void>
 }
 
-const DateRangePicker = ({ onDateChange }: DateRangePickerProps) => {
+const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
   const [fromDate, setFromDate] = useState<Date>(new Date())
   const [toDate, setToDate] = useState<Date>(new Date())
 

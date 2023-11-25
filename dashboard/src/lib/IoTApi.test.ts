@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { IoTApi, TemperatureData } from './IoTApi'
+import { vi } from 'vitest'
 import axios from 'axios'
+import { IoTApi, TemperatureData } from './IoTApi'
 
 vi.mock('axios')
 

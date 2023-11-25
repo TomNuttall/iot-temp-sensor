@@ -1,7 +1,7 @@
 import Home from './containers/Home'
 import './App.css'
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <>
       <Home />

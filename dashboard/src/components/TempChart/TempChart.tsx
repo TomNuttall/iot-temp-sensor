@@ -7,11 +7,10 @@ import {
   Title,
   Tooltip,
   Legend,
-  //ScriptableContext,
-  //Filler,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import { TemperatureData } from '../../lib/IoTApi'
+import { getTemperatureColour } from '../../lib/Helpers'
 
 import './TempChart.scss'
 
@@ -23,7 +22,6 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  //Filler,
 )
 
 const options = {
@@ -62,33 +60,25 @@ interface TempChartProps {
   tempData: TemperatureData[]
 }
 
-const TempChart = ({ tempData }: TempChartProps) => {
+const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
   const data = {
     labels: tempData.map((x) => {
       const timeStamp = new Date(x.time)
-      return `${timeStamp.toLocaleTimeString('en-GB', {
+      return timeStamp.toLocaleTimeString('en-GB', {
         hour: '2-digit',
         minute: '2-digit',
-      })}`
+      })
     }),
     datasets: [
       {
         label: 'Temp',
         data: tempData.map((x) => x.temp),
-        //fill: 'start',
-        borderColor: 'rgb(255, 99, 132)',
-        // backgroundColor: (context: ScriptableContext<'line'>) => {
-        //   const ctx = context.chart.ctx
-        //   const gradient = ctx.createLinearGradient(
-        //     0,
-        //     0,
-        //     0,
-        //     context.chart.height,
-        //   )
-        //   gradient.addColorStop(0, 'rgba(255, 0, 0, 0.35)')
-        //   gradient.addColorStop(1, 'rgba(0, 0, 255, 0.35)')
-        //   return gradient
-        // },
+        segment: {
+          borderColor: (context: any) => {
+            const value = tempData[context['p0DataIndex']].temp
+            return getTemperatureColour(Math.floor(value))
+          },
+        },
       },
     ],
   }
