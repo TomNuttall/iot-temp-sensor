@@ -15,6 +15,7 @@ const SummaryOverview: React.FC<SummaryOverviewProps> = ({ tempData }) => {
 
   const min = temps.at(0)
   const max = temps.at(-1)
+  const current = tempData.at(-1)
 
   return (
     <div className="summary-overview">
@@ -29,6 +30,12 @@ const SummaryOverview: React.FC<SummaryOverviewProps> = ({ tempData }) => {
         style={{ backgroundColor: getTemperatureColour(max?.temp ?? 0) }}
       >
         {`Max ${max?.temp ? max.temp.toFixed(2) : 0}`}
+      </div>
+      <div
+        className="summary-overview__label"
+        style={{ backgroundColor: getTemperatureColour(current?.temp ?? 0) }}
+      >
+        {`Latest ${current?.temp ? current.temp.toFixed(2) : 0}`}
       </div>
     </div>
   )

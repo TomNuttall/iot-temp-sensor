@@ -15,9 +15,9 @@ export const Home: React.FC = () => {
 
   return (
     <div data-testid="home">
-      <DateRangePicker onDateChange={onDateChange} />
       <SummaryOverview tempData={tempData} />
       <TempChart tempData={tempData} />
+      <DateRangePicker onDateChange={onDateChange} />
     </div>
   )
 }
