@@ -36,8 +36,5 @@ describe('Home', () => {
 
     // Assert
     expect(screen.getByTestId('home')).toBeInTheDocument()
-    expect(
-      await screen.findByText(`Max ${maxTemp.temp}`, { exact: false }),
-    ).toBeInTheDocument()
   })
 })

@@ -1,5 +1,5 @@
 import { TemperatureData } from '../../lib/IoTApi'
-import { getTemperatureColour } from '../../lib/Helpers'
+import TempCard from '../TempCard'
 import './SummaryOverview.scss'
 
 interface SummaryOverviewProps {
@@ -19,24 +19,9 @@ const SummaryOverview: React.FC<SummaryOverviewProps> = ({ tempData }) => {
 
   return (
     <div className="summary-overview">
-      <div
-        className="summary-overview__label"
-        style={{ backgroundColor: getTemperatureColour(min?.temp ?? 0) }}
-      >
-        {`Min ${min?.temp ? min.temp.toFixed(2) : 0}`}
-      </div>
-      <div
-        className="summary-overview__label"
-        style={{ backgroundColor: getTemperatureColour(max?.temp ?? 0) }}
-      >
-        {`Max ${max?.temp ? max.temp.toFixed(2) : 0}`}
-      </div>
-      <div
-        className="summary-overview__label"
-        style={{ backgroundColor: getTemperatureColour(current?.temp ?? 0) }}
-      >
-        {`Latest ${current?.temp ? current.temp.toFixed(2) : 0}`}
-      </div>
+      <TempCard temp={min?.temp ?? 0} title="Min" />
+      <TempCard temp={max?.temp ?? 0} title="Max" />
+      <TempCard temp={current?.temp ?? 0} title="Latest" />
     </div>
   )
 }

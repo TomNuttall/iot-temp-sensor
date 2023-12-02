@@ -31,14 +31,23 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
 
   return (
     <div className="date-range-picker">
-      <h2 className="date-range-picker__title">Select Date Range</h2>
+      <div className="date-range-picker__overview">
+        <p className="date-range-picker__title">Date Temp</p>
+        <p className="date-range-picker__date">{`${fromDate.toLocaleDateString()} - ${toDate.toLocaleDateString()}`}</p>
+      </div>
       <div
-        className="date-range-picker__buttons"
+        className="date-range-picker__button-group"
         role="group"
         aria-label="Date range buttons"
       >
-        <button onClick={() => dateSelect({ from: new Date() })}>Today</button>
         <button
+          className="date-range-picker__button"
+          onClick={() => dateSelect({ from: new Date() })}
+        >
+          Today
+        </button>
+        <button
+          className="date-range-picker__button"
           onClick={() =>
             dateSelect({
               from: subDays(new Date(), 1),
@@ -49,6 +58,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
           Yesterday
         </button>
         <button
+          className="date-range-picker__button"
           onClick={() =>
             dateSelect({ from: subDays(new Date(), 6), to: new Date() })
           }
@@ -56,7 +66,6 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
           Last Week
         </button>
       </div>
-      <p className="date-range-picker__date">{`${fromDate.toLocaleDateString()} - ${toDate.toLocaleDateString()}`}</p>
     </div>
   )
 }

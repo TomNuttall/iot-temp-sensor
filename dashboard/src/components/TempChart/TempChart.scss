@@ -1,15 +1,9 @@
 .temp-chart {
-  display: flex;
-  justify-content: center;
-  padding: 2rem;
-
-  width: 90vw;
-  height: 70vh;
+  width: 100%;
 }
 
-@media only screen and (max-width: 600px) {
-  .temp-chart {
-    width: 90vw;
-    height: auto;
-  }
-}
+// @media only screen and (max-width: 600px) {
+//   .temp-chart {
+//     width: 100%;
+//   }
+// }

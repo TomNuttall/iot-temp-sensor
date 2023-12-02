@@ -1,0 +1,30 @@
+.temp-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  color: white;
+  padding: 1.5rem;
+
+  &__title {
+    font-size: 1.1rem;
+  }
+
+  &__temp {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .temp-card {
+    padding: 1rem;
+
+    &__title {
+      font-size: 1rem;
+    }
+
+    &__temp {
+      font-size: 1.3rem;
+    }
+  }
+}
