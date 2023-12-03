@@ -25,7 +25,8 @@ ChartJS.register(
 )
 
 const options = {
-  responsive: true,
+  maintainAspectRatio: false,
+  aspectRatio: 1,
   scales: {
     x: {
       grid: {
