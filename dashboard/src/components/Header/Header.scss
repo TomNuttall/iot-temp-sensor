@@ -4,15 +4,14 @@
   margin-bottom: 2rem;
   padding: 1rem 2rem;
 
-  background-color: #dedede;
+  color: var(--primarycolor);
+  background-color: var(--secondarycolor);
+
+  & a {
+    color: var(--primarycolor);
+  }
 
   &__title {
     font-weight: 700;
   }
 }
-
-// @media only screen and (max-width: 600px) {
-//   .header {
-//     margin-bottom: 3rem;
-//   }
-// }
