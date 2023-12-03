@@ -9,7 +9,11 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  color-scheme: light dark;
+  color: #213547;
+  background-color: #f4f4f4;
+  --primarycolor: white;
+  --secondarycolor: #213547;
+  /* color-scheme: light; */
 }
 
 body {
@@ -17,7 +21,7 @@ body {
   padding: 0;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #f4f4f4;
@@ -33,7 +37,7 @@ body {
     --primarycolor: #213547;
     --secondarycolor: white;
   }
-}
+} */
 
 & p {
   margin: 0;
