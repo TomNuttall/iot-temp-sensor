@@ -9,7 +9,7 @@
   &__panel {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 2rem;
     background-color: var(--primarycolor);
     border-radius: 0.5rem;
     padding: 2rem;
@@ -22,7 +22,7 @@
 
     &__panel {
       padding: 1rem;
-      gap: 1rem;
+      gap: 1.5rem;
     }
   }
 }

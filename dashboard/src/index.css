@@ -22,7 +22,7 @@ body {
     color: #213547;
     background-color: #f4f4f4;
     --primarycolor: white;
-    --secondarycolor: black;
+    --secondarycolor: #213547;
   }
 }
 
@@ -30,7 +30,7 @@ body {
   :root {
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
-    --primarycolor: black;
+    --primarycolor: #213547;
     --secondarycolor: white;
   }
 }

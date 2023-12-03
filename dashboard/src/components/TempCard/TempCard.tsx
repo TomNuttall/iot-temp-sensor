@@ -16,7 +16,7 @@ const TempCard: React.FC<TempCardProps> = ({ temp, timestamp, title }) => {
   return (
     <div
       className="temp-card"
-      style={{ backgroundColor: getTemperatureColour(temp) }}
+      style={{ backgroundColor: getTemperatureColour(temp), color: 'white' }}
     >
       <div>
         <span className="temp-card__title">{title}</span>

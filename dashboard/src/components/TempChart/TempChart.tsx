@@ -33,6 +33,11 @@ const options = {
         display: false,
       },
     },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
   },
   elements: {
     line: {

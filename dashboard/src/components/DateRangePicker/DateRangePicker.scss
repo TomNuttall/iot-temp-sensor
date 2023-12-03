@@ -16,7 +16,7 @@
 
   &__date {
     font-size: 0.8rem;
-    color: gray;
+    color: #757474;
   }
 
   &__button-group {
@@ -51,31 +51,15 @@
 @media only screen and (max-width: 600px) {
   .date-range-picker {
     &__overview {
-      flex-direction: column;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
     &__title {
       font-size: 1.3rem;
     }
 
-    &__button-group {
-      display: none;
-      flex-direction: column;
-    }
-
     &__button {
-      &:first-child {
-        border-radius: 0.5rem 0.5rem 0 0;
-        border: 1px solid var(--secondarycolor);
-        border-bottom: none;
-      }
-
-      &:last-child {
-        border-radius: 0 0 0.5rem 0.5rem;
-        border: 1px solid var(--secondaryrcolor);
-        border-top: none;
-      }
+      padding: 0.5rem 1rem;
     }
   }
 }

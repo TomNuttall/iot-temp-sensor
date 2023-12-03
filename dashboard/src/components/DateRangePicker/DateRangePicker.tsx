@@ -29,11 +29,17 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
     onDateChange(from.valueOf(), to.valueOf())
   }
 
+  const fromDateString = fromDate.toLocaleDateString()
+  const toDateString = toDate.toLocaleDateString()
   return (
     <div className="date-range-picker">
       <div className="date-range-picker__overview">
         <p className="date-range-picker__title">Date Temp</p>
-        <p className="date-range-picker__date">{`${fromDate.toLocaleDateString()} - ${toDate.toLocaleDateString()}`}</p>
+        <p className="date-range-picker__date">{`${
+          fromDateString === toDateString
+            ? fromDateString
+            : `${fromDateString} - ${toDateString}`
+        }`}</p>
       </div>
       <div
         className="date-range-picker__button-group"
