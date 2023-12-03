@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 1rem 2rem;
+
+  color: var(--secondarycolor);
+  background-color: var(--primarycolor);
+
+  &__title {
+    font-weight: 700;
+  }
+}

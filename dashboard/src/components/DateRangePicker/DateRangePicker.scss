@@ -26,14 +26,14 @@
 
   &__button {
     padding: 0.5rem 1.5rem;
-    border: 1px solid var(--buttonbordercolor);
-    color: var(--buttonhovercolor);
-    background-color: var(--buttoncolor);
+    border: 1px solid var(--secondarycolor);
+    color: var(--secondarycolor);
+    background-color: var(--primarycolor);
     cursor: pointer;
 
     &:hover {
-      color: var(--buttoncolor);
-      background-color: var(--buttonhovercolor);
+      color: var(--primarycolor);
+      background-color: var(--secondarycolor);
     }
 
     &:first-child {
@@ -60,19 +60,20 @@
     }
 
     &__button-group {
+      display: none;
       flex-direction: column;
     }
 
     &__button {
       &:first-child {
         border-radius: 0.5rem 0.5rem 0 0;
-        border: 1px solid var(--buttonbordercolor);
+        border: 1px solid var(--secondarycolor);
         border-bottom: none;
       }
 
       &:last-child {
         border-radius: 0 0 0.5rem 0.5rem;
-        border: 1px solid var(--buttonbordercolor);
+        border: 1px solid var(--secondaryrcolor);
         border-top: none;
       }
     }

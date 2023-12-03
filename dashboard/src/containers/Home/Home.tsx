@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { TemperatureData, IoTApi } from '../../lib/IoTApi'
 import DateRangePicker from '../../components/DateRangePicker'
+import Header from '../../components/Header'
 import SummaryOverview from '../../components/SummaryOverview'
 import TempChart from '../../components/TempChart'
 
@@ -17,11 +18,17 @@ export const Home: React.FC = () => {
 
   return (
     <div data-testid="home" className="home">
-      <SummaryOverview tempData={tempData} />
+      <Header
+        title="IoT Demo Project"
+        repo="https://github.com/TomNuttall/iot-temp-sensor"
+      />
+      <div className="home__content">
+        <SummaryOverview tempData={tempData} />
 
-      <div className="home__panel">
-        <DateRangePicker onDateChange={onDateChange} />
-        <TempChart tempData={tempData} />
+        <div className="home__panel">
+          <DateRangePicker onDateChange={onDateChange} />
+          <TempChart tempData={tempData} />
+        </div>
       </div>
     </div>
   )
