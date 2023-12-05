@@ -18,7 +18,7 @@ Creates a local DynamoDB table and [prefills with random data](./populate-items.
 yarn dev
 ```
 
-Can inspect and edit local db table in browser
+Inspect and edit local db table in browser
 
 ```
 http://localhost:8001
