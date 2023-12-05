@@ -3,8 +3,6 @@ import { TemperatureData, IoTApi } from '../../lib/IoTApi'
 import DateRangePicker from '../../components/DateRangePicker'
 import SummaryOverview from '../../components/SummaryOverview'
 import TempChart from '../../components/TempChart'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 
 import './Home.scss'
 
