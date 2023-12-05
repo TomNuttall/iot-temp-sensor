@@ -12,7 +12,7 @@
 
 ## Usage
 
-Creates a local DynamoDB table and prefills with random data [See populate-items.js](./populate-items.js)
+Creates a local DynamoDB table and [prefills with random data](./populate-items.js)
 
 ```bash
 yarn dev
