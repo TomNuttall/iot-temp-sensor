@@ -16,14 +16,14 @@ const TempCard: React.FC<TempCardProps> = ({ temp, timestamp, title }) => {
   return (
     <div
       className="temp-card"
-      style={{ backgroundColor: getTemperatureColour(temp), color: 'white' }}
+      style={{ borderColor: getTemperatureColour(temp) }}
     >
       <div>
         <span className="temp-card__title">{title}</span>
         &nbsp;
         <span className="temp-card__time">{time}</span>
       </div>
-      <p className="temp-card__temp">{temp.toFixed(2)}</p>
+      <p className="temp-card__temp">{temp.toFixed(2)}&deg;</p>
       <div></div>
     </div>
   )

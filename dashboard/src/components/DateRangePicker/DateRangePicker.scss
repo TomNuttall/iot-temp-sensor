@@ -9,19 +9,20 @@
     margin-bottom: 0.5rem;
   }
 
-  &__title {
-    font-size: 1.7rem;
-    font-weight: 500;
-  }
-
   &__date {
-    font-size: 0.8rem;
-    color: #757474;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
   }
 
   &__button-group {
     display: flex;
     flex-direction: row;
+  }
+
+  &__active {
+    color: var(--primarycolor) !important;
+    background-color: var(--secondarycolor) !important;
   }
 
   &__button {
@@ -30,11 +31,6 @@
     color: var(--secondarycolor);
     background-color: var(--primarycolor);
     cursor: pointer;
-
-    &:hover {
-      color: var(--primarycolor);
-      background-color: var(--secondarycolor);
-    }
 
     &:first-child {
       border-radius: 0.5rem 0 0 0.5rem;
@@ -52,10 +48,6 @@
   .date-range-picker {
     &__overview {
       margin-bottom: 0.5rem;
-    }
-
-    &__title {
-      font-size: 1.3rem;
     }
 
     &__button {

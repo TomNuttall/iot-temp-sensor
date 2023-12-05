@@ -1,12 +1,19 @@
 import { TemperatureData } from '../../lib/IoTApi'
 import TempCard from '../TempCard'
+import Skeleton from 'react-loading-skeleton'
+
+import 'react-loading-skeleton/dist/skeleton.css'
 import './SummaryOverview.scss'
 
 interface SummaryOverviewProps {
+  loading: boolean
   tempData: TemperatureData[]
 }
 
-const SummaryOverview: React.FC<SummaryOverviewProps> = ({ tempData }) => {
+const SummaryOverview: React.FC<SummaryOverviewProps> = ({
+  loading,
+  tempData,
+}) => {
   const temps = tempData
     ?.slice()
     ?.sort((a: TemperatureData, b: TemperatureData): number => {
@@ -18,15 +25,36 @@ const SummaryOverview: React.FC<SummaryOverviewProps> = ({ tempData }) => {
   const current = tempData.at(-1)
 
   return (
-    <div className="summary-overview">
-      <TempCard temp={min?.temp ?? 0} timestamp={min?.time ?? 0} title="Min" />
-      <TempCard temp={max?.temp ?? 0} timestamp={max?.time ?? 0} title="Max" />
-      <TempCard
-        temp={current?.temp ?? 0}
-        timestamp={current?.time ?? 0}
-        title="Latest"
-      />
-    </div>
+    <>
+      {loading ? (
+        <div
+          data-testid="summary-overview-loading"
+          className="summary-overview"
+        >
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </div>
+      ) : (
+        <div className="summary-overview">
+          <TempCard
+            temp={min?.temp ?? 0}
+            timestamp={min?.time ?? 0}
+            title="Min"
+          />
+          <TempCard
+            temp={max?.temp ?? 0}
+            timestamp={max?.time ?? 0}
+            title="Max"
+          />
+          <TempCard
+            temp={current?.temp ?? 0}
+            timestamp={current?.time ?? 0}
+            title="Latest"
+          />
+        </div>
+      )}
+    </>
   )
 }
 

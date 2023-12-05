@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { startOfDay, endOfDay, subDays, startOfHour } from 'date-fns'
 import { zonedTimeToUtc } from 'date-fns-tz'
 import './DateRangePicker.scss'
@@ -10,10 +10,17 @@ interface DateRangePickerProps {
 const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
   const [fromDate, setFromDate] = useState<Date>(new Date())
   const [toDate, setToDate] = useState<Date>(new Date())
+  const [activeButton, setActiveButton] = useState<string>('Today')
+
+  const ref = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     dateSelect({ from: new Date() })
   }, [])
+
+  useEffect(() => {
+    ref?.current?.focus()
+  }, [ref])
 
   const dateSelect = (range: { from?: Date; to?: Date }) => {
     if (range?.from === undefined) return
@@ -34,7 +41,6 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
   return (
     <div className="date-range-picker">
       <div className="date-range-picker__overview">
-        <p className="date-range-picker__title">Date Temp</p>
         <p className="date-range-picker__date">{`${
           fromDateString === toDateString
             ? fromDateString
@@ -47,27 +53,39 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
         aria-label="Date range buttons"
       >
         <button
-          className="date-range-picker__button"
-          onClick={() => dateSelect({ from: new Date() })}
+          className={`date-range-picker__button ${
+            activeButton === 'Today' ? 'date-range-picker__active' : ''
+          }`}
+          onClick={() => {
+            setActiveButton('Today')
+            dateSelect({ from: new Date() })
+          }}
+          ref={ref}
         >
           Today
         </button>
         <button
-          className="date-range-picker__button"
-          onClick={() =>
+          className={`date-range-picker__button ${
+            activeButton === 'Yesterday' ? 'date-range-picker__active' : ''
+          }`}
+          onClick={() => {
+            setActiveButton('Yesterday')
             dateSelect({
               from: subDays(new Date(), 1),
               to: subDays(new Date(), 1),
             })
-          }
+          }}
         >
           Yesterday
         </button>
         <button
-          className="date-range-picker__button"
-          onClick={() =>
+          className={`date-range-picker__button ${
+            activeButton === 'Last Week' ? 'date-range-picker__active' : ''
+          }`}
+          onClick={() => {
+            setActiveButton('Last Week')
             dateSelect({ from: subDays(new Date(), 6), to: new Date() })
-          }
+          }}
         >
           Last Week
         </button>
