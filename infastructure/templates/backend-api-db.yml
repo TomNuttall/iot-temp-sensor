@@ -108,6 +108,7 @@ Resources:
       Runtime: nodejs20.x
       Handler: index.handler
       Timeout: 60
+      MemorySize: 256
       Role: !GetAtt LambdaRole.Arn
     DependsOn:
       - LambdaRole
