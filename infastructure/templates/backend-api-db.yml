@@ -105,8 +105,9 @@ Resources:
             };
             callback(null, response);
           };
-      Runtime: nodejs18.x
+      Runtime: nodejs20.x
       Handler: index.handler
+      Timeout: 60
       Role: !GetAtt LambdaRole.Arn
     DependsOn:
       - LambdaRole
