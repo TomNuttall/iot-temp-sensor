@@ -37,37 +37,39 @@ describe('lambda', () => {
     // Assert
     expect(res.statusCode).toBe(200)
 
-    const jsonBody = JSON.parse(res.body)
-    expect(jsonBody).toHaveLength(1)
+    const data = JSON.parse(res.body)
+    expect(data).toHaveLength(1)
   })
 
   it('checks query string parameters', async () => {
     // Arrange
+    const date1 = new Date('June 4, 2023')
+    const date2 = new Date('June 5, 2023')
     ddbMock
       .on(QueryCommand, {
         ExpressionAttributeValues: {
-          ':queryDate': '01/06/2023',
+          ':queryDate': date1.toLocaleDateString('en-GB'),
         },
       })
       .resolves({
         Items: [
           {
-            date: '01/06/2023',
-            time: 1,
+            date: date1.toLocaleDateString('en-GB'),
+            time: Math.floor(date1.getTime() / 1000),
             temp: 10,
           },
         ],
       })
       .on(QueryCommand, {
         ExpressionAttributeValues: {
-          ':queryDate': '02/06/2023',
+          ':queryDate': date2.toLocaleDateString('en-GB'),
         },
       })
       .resolves({
         Items: [
           {
-            date: '02/06/2023',
-            time: 5,
+            date: date2.toLocaleDateString('en-GB'),
+            time: Math.floor(date2.getTime() / 1000),
             temp: 10,
           },
         ],
@@ -75,22 +77,25 @@ describe('lambda', () => {
 
     const event = {
       queryStringParameters: {
-        from: String(0),
-        to: String(new Date().valueOf()),
+        from: String(new Date('June 1, 2023').valueOf()),
+        to: String(new Date('June 6, 2023').valueOf()),
       },
     }
 
     // Act
     const res = await handler(event)
-    const data = JSON.parse(res.body)
 
     // Assert
+    const data = JSON.parse(res.body)
     expect(data.length).toBe(2)
-    const filteredData = data.filter(
-      (item) =>
-        item.time < event.queryStringParameters.from ||
-        item.time > event.queryStringParameters.to,
-    )
+
+    const filteredData = data.filter((item) => {
+      const time = item.time * 1000
+      return (
+        time < event.queryStringParameters.from ||
+        time > event.queryStringParameters.to
+      )
+    })
     expect(filteredData.length).toBe(0)
   })
 })
