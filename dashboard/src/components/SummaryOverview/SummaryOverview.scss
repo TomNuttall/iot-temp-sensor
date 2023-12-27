@@ -11,5 +11,9 @@
 @media only screen and (max-width: 600px) {
   .summary-overview {
     gap: 0.5rem;
+
+    .react-loading-skeleton {
+      height: 120px;
+    }
   }
 }

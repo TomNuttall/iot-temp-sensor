@@ -22,6 +22,7 @@
   &__active {
     color: var(--primarycolor) !important;
     background-color: var(--secondarycolor) !important;
+    z-index: 1;
   }
 
   &__button {
