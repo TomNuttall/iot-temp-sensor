@@ -2,12 +2,6 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient, QueryCommand } from '@aws-sdk/lib-dynamodb'
 
 const createClient = () => {
-  if (process.env.MOCK_DYNAMODB_ENDPOINT) {
-    return new DynamoDBClient({
-      region: 'local',
-      endpoint: process.env.MOCK_DYNAMODB_ENDPOINT,
-    })
-  }
   if (process.env.IS_OFFLINE) {
     return new DynamoDBClient({
       region: 'localhost',
@@ -18,8 +12,7 @@ const createClient = () => {
   }
 }
 
-const client = createClient()
-const dynamo = DynamoDBDocumentClient.from(client)
+const ddbClient = DynamoDBDocumentClient.from(createClient())
 
 export const handler = async (event) => {
   const query = event.queryStringParameters
@@ -32,8 +25,8 @@ export const handler = async (event) => {
   const dateTo = query?.to ? new Date(Number(query.to)) : new Date()
 
   const results = []
-  while (dateFrom < dateTo) {
-    const res = await dynamo.send(
+  while (dateFrom <= dateTo) {
+    const res = await ddbClient.send(
       new QueryCommand({
         TableName: 'demo-db-iot-backend',
         KeyConditionExpression: '#date = :queryDate',
@@ -44,7 +37,9 @@ export const handler = async (event) => {
       }),
     )
 
-    results.push(...res.Items)
+    if (res?.Items?.length > 0) {
+      results.push(...res.Items)
+    }
     dateFrom.setDate(dateFrom.getDate() + 1)
   }
 
