@@ -45,6 +45,8 @@ describe('lambda', () => {
     // Arrange
     const date1 = new Date('June 4, 2023')
     const date2 = new Date('June 5, 2023')
+    const date3 = new Date('June 6, 2023')
+
     ddbMock
       .on(QueryCommand, {
         ExpressionAttributeValues: {
@@ -74,11 +76,25 @@ describe('lambda', () => {
           },
         ],
       })
+      .on(QueryCommand, {
+        ExpressionAttributeValues: {
+          ':queryDate': date3.toLocaleDateString('en-GB'),
+        },
+      })
+      .resolves({
+        Items: [
+          {
+            date: date3.toLocaleDateString('en-GB'),
+            time: Math.floor(date3.getTime() / 1000),
+            temp: 10,
+          },
+        ],
+      })
 
     const event = {
       queryStringParameters: {
-        from: String(new Date('June 1, 2023').valueOf()),
-        to: String(new Date('June 6, 2023').valueOf()),
+        from: String(new Date('June 4, 2023').valueOf()),
+        to: String(new Date('June 5, 2023').valueOf()),
       },
     }
 
