@@ -27,7 +27,7 @@ with Diagram("", filename="aws_architecture-diagram", outformat="png"):
           s3_bucket = S3("S3") 
           s3_bucket - React("React App")
 
-        cdn >> ACM("ACM")
+        cdn - ACM("ACM")
         cdn >> s3_bucket
 
     cluster_att = { "bgcolor": "transparent", "pencolor": "transparent" }
@@ -37,7 +37,8 @@ with Diagram("", filename="aws_architecture-diagram", outformat="png"):
         lambda_function = Lambda("Lambda")
         ddb = Dynamodb("Dynamo DB")
       
-        api >> [ACM("ACM"), lambda_function]
+        api - ACM("ACM")
+        api >> lambda_function
 
         lambda_function >> Cloudwatch("CloudWatch")
         lambda_function >> Edge(label="Query table by date") >> ddb
@@ -53,7 +54,7 @@ with Diagram("", filename="aws_architecture-diagram", outformat="png"):
   iot_device >> Edge(label="Temperature sensor sends average every 30 mins") >> iot_mq
 
   github_action_s3 >> Edge(taillabel="\t\tGets bucket role") >> iam_role_s3
-  github_action_s3 >> Edge(taillabel="\t\tDeploys frontend code to s3 and invalidate cloudfront cache") >> s3_bucket
+  github_action_s3 >> Edge(taillabel="\t\tDeploys react app to S3 and invalidate cloudfront cache") >> s3_bucket
 
   github_action_lambda >> Edge(taillabel="'\t\tGets lambda role") >> iam_role_lambda
   github_action_lambda >> Edge(taillabel="\t\tDeploys lambda") >> lambda_function
