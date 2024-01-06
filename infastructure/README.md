@@ -15,10 +15,20 @@
 
 ## Architecture Diagram
 
+Backend
 <img
-  src='../docs/aws_architecture-diagram.png'
+  src='../docs/backend_diagram.png'
   raw=true
-  alt='AWS Architecture Diagram'
-  height="500px"
-  width="auto"
+  alt='AWS Backend Architecture Diagram'
+  width="100%"
+  height="auto"
+/>
+
+Frontend
+<img
+  src='../docs/frontend_diagram.png'
+  raw=true
+  alt='AWS Frontend Architecture Diagram'
+  width="100%"
+  height="auto"
 />
