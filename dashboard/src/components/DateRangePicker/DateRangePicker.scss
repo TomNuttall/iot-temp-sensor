@@ -32,6 +32,12 @@
     background-color: var(--primarycolor);
     cursor: pointer;
 
+    &:hover {
+      color: var(--primarycolor);
+      background-color: var(--secondarycolor);
+      opacity: 0.6;
+    }
+
     &:first-child {
       border-radius: 0.5rem 0 0 0.5rem;
       border-right: none;
