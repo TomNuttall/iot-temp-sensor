@@ -10,6 +10,15 @@
   & a {
     color: var(--primarycolor);
     text-underline-offset: 0.25rem;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:focus {
+      outline: solid 2px white;
+      outline-offset: 4px;
+    }
   }
 
   &__title {
