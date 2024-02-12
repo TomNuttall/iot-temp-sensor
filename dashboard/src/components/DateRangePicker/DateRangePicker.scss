@@ -23,6 +23,9 @@
     color: var(--primarycolor) !important;
     background-color: var(--secondarycolor) !important;
     z-index: 1;
+    font-weight: 900;
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
   }
 
   &__button {
@@ -33,9 +36,14 @@
     cursor: pointer;
 
     &:hover {
-      color: var(--primarycolor);
       background-color: var(--secondarycolor);
-      opacity: 0.6;
+      color: var(--primarycolor);
+    }
+
+    &:focus {
+      outline: solid 2px #3f51b5;
+      outline-offset: 2px;
+      z-index: 1;
     }
 
     &:first-child {
