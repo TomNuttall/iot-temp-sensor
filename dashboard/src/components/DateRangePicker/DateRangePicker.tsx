@@ -8,8 +8,6 @@ interface DateRangePickerProps {
 }
 
 const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
-  const [fromDate, setFromDate] = useState<Date>(new Date())
-  const [toDate, setToDate] = useState<Date>(new Date())
   const [activeButton, setActiveButton] = useState<string>('Today')
 
   const ref = useRef<HTMLButtonElement>(null)
@@ -31,22 +29,10 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
       'Etc/UTC',
     )
 
-    setFromDate(from)
-    setToDate(to)
     onDateChange(from.valueOf(), to.valueOf())
   }
-
-  const fromDateString = fromDate.toLocaleDateString()
-  const toDateString = toDate.toLocaleDateString()
   return (
     <div className="date-range-picker">
-      <div className="date-range-picker__overview">
-        <p className="date-range-picker__date">{`${
-          fromDateString === toDateString
-            ? fromDateString
-            : `${fromDateString} - ${toDateString}`
-        }`}</p>
-      </div>
       <div
         className="date-range-picker__button-group"
         role="group"
