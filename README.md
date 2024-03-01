@@ -1,4 +1,4 @@
-# IoT Demo Project
+# IoT Temp Sensor
 
 Demo Project: Dashboard to view temperature readings sent from IoT device.
 
