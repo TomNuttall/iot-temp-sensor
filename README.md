@@ -1,7 +1,5 @@
 # IoT Temp Sensor
 
-Demo Project: Dashboard to view temperature readings sent from IoT device.
-
 ## Project Overview
 
 ### :sun_behind_small_cloud: Temperature Sensor
