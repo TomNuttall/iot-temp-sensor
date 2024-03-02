@@ -1,9 +1,11 @@
 # Data Source
+
 **Esp32 microcontroller connected to a temperature sensor**
 
 ## Overview
+
 - Core 1 Task
-  -  Reads temperature once a minute.
+  - Reads temperature once a minute.
 - Core 2 Task
   - Publishes MQTT message with average temperature every 30 mins.
 - AWS IoT Core Topic Rule adds message to DynamoDB table.
@@ -32,7 +34,7 @@ Some additional libraries are required
 ## Circuit Diagram
 
 <img
-  src='../docs/esp32_circuit-diagram.svg'
+  src='../diagrams/esp32_circuit-diagram.svg'
   raw=true
   alt='Circuit Diagram'
   height="300px"

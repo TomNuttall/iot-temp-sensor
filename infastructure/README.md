@@ -17,7 +17,7 @@
 
 Backend
 <img
-  src='../docs/iot_diagram.png'
+  src='../diagrams/iot_diagram.png'
   raw=true
   alt='IOT Architecture Diagram'
   width="100%"
@@ -26,7 +26,7 @@ Backend
 
 Backend
 <img
-  src='../docs/backend_diagram.png'
+  src='../diagrams/backend_diagram.png'
   raw=true
   alt='AWS Backend Architecture Diagram'
   width="100%"
@@ -35,7 +35,7 @@ Backend
 
 Frontend
 <img
-  src='../docs/frontend_diagram.png'
+  src='../diagrams/frontend_diagram.png'
   raw=true
   alt='AWS Frontend Architecture Diagram'
   width="100%"
