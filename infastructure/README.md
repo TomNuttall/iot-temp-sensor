@@ -17,6 +17,15 @@
 
 Backend
 <img
+  src='../docs/iot_diagram.png'
+  raw=true
+  alt='IOT Architecture Diagram'
+  width="100%"
+  height="auto"
+/>
+
+Backend
+<img
   src='../docs/backend_diagram.png'
   raw=true
   alt='AWS Backend Architecture Diagram'

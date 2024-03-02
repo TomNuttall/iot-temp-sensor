@@ -24,6 +24,7 @@ pip install diagrams
 ## Generate architecture diagram
 
 ```bash
+python iot_diagram.py
 python backend_diagram.py
 python frontend_diagram.py
 ```
