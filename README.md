@@ -63,7 +63,3 @@ Start frontend and connect to local backend.
 cd dashboard
 yarn dev
 ```
-
-## Demo
-
-https://iot.tomnuttall.dev
