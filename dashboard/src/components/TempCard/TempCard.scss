@@ -3,8 +3,8 @@
   flex-direction: column;
   border-radius: 0.5rem;
   padding: 1.5rem 1.5rem 1rem 1.5rem;
-  background-color: white;
-  box-shadow: 0px 4px 16px -4px rgba(0, 0, 0, 0.1);
+  background-color: var(--brand-primary);
+  box-shadow: 0px 4px 16px -4px var(--brand-shadow);
   border-bottom: 1.5rem solid;
 
   &__title {
@@ -19,6 +19,7 @@
   &__temp {
     font-size: 2rem;
     font-weight: 700;
+    margin: 0;
   }
 }
 

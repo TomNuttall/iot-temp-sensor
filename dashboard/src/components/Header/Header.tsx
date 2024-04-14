@@ -1,3 +1,4 @@
+import ThemeToggle from '../ThemeToggle'
 import './Header.scss'
 
 interface HeaderProps {
@@ -9,7 +10,10 @@ const Header: React.FC<HeaderProps> = ({ title, repo }) => {
   return (
     <div className="header">
       <div className="header__title">{title}</div>
-      <a href={repo}>GitHub</a>
+      <div className="header__links">
+        <ThemeToggle />
+        <a href={repo}>GitHub</a>
+      </div>
     </div>
   )
 }

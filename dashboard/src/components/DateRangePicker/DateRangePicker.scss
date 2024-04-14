@@ -9,8 +9,8 @@
   }
 
   &__active {
-    color: var(--primarycolor) !important;
-    background-color: var(--secondarycolor) !important;
+    color: var(--brand-primary) !important;
+    background-color: var(--brand-secondary) !important;
     z-index: 1;
     font-weight: 900;
     text-decoration: underline;
@@ -19,18 +19,18 @@
 
   &__button {
     padding: 0.5rem 1.5rem;
-    border: 1px solid var(--secondarycolor);
-    color: var(--secondarycolor);
-    background-color: var(--primarycolor);
+    border: 1px solid var(--brand-secondary);
+    color: var(--brand-secondary);
+    background-color: var(--brand-primary);
     cursor: pointer;
 
     &:hover {
-      background-color: var(--secondarycolor);
-      color: var(--primarycolor);
+      background-color: var(--brand-secondary);
+      color: var(--brand-primary);
     }
 
     &:focus {
-      outline: solid 2px #3f51b5;
+      outline: solid 2px var(--brand-focus);
       outline-offset: 2px;
       z-index: 1;
     }
