@@ -1,28 +1,67 @@
-import { useEffect } from 'react'
-import '@theme-toggles/react/css/Within.css'
-import { Within } from '@theme-toggles/react'
+import { useState, useEffect } from 'react'
+import { DarkModeSwitch, defaultProperties } from 'react-toggle-dark-mode'
+
+import './ThemeToggle.scss'
 
 const ThemeToggle: React.FC = () => {
+  const [darkTheme, setDarkTheme] = useState<boolean>(false)
+  const [noAnimate, setNoAnimate] = useState<boolean>(false)
+
+  const onColorSchemeChange = (e: { matches: boolean }) => {
+    setDarkTheme(e.matches)
+  }
+
+  const onMotionPreferenceChange = (e: { matches: boolean }) => {
+    setNoAnimate(e.matches)
+  }
+
   useEffect(() => {
     const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
-    onToggle(colorScheme.matches)
+    setDarkTheme(colorScheme.matches)
 
-    colorScheme.addEventListener('change', onChange)
-    return () => colorScheme.removeEventListener('change', onChange)
+    const motionPreference = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    )
+    setNoAnimate(motionPreference.matches)
+
+    colorScheme.addEventListener('change', onColorSchemeChange)
+    motionPreference.addEventListener('change', onMotionPreferenceChange)
+
+    return () => {
+      colorScheme.removeEventListener('change', onColorSchemeChange)
+      motionPreference.removeEventListener('change', onMotionPreferenceChange)
+    }
   }, [])
 
-  const onChange = (e: { matches: boolean }) => {
-    onToggle(e.matches)
-  }
-
-  const onToggle = (toggled: boolean) => {
+  useEffect(() => {
     document.documentElement.setAttribute(
       'color-scheme',
-      toggled ? 'dark' : 'light',
+      darkTheme ? 'dark' : 'light',
     )
+  }, [darkTheme])
+
+  const animationProperties = { ...defaultProperties }
+  if (noAnimate) {
+    animationProperties.springConfig = {
+      mass: 0,
+      tension: 0,
+      friction: 0,
+    }
   }
 
-  return <Within duration={750} onToggle={onToggle} placeholder={undefined} />
+  return (
+    <button
+      className="theme-toggle"
+      aria-label="Toggle theme"
+      onClick={() => setDarkTheme(!darkTheme)}
+    >
+      <DarkModeSwitch
+        checked={darkTheme}
+        onChange={() => {}}
+        animationProperties={animationProperties}
+      />
+    </button>
+  )
 }
 
 export default ThemeToggle

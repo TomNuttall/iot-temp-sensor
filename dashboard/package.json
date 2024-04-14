@@ -12,14 +12,15 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@theme-toggles/react": "^4.1.0",
     "chart.js": "^4.3.0",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "react-loading-skeleton": "^3.3.1"
+    "react-loading-skeleton": "^3.3.1",
+    "react-toggle-dark-mode": "^1.1.1",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
