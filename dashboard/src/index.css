@@ -4,10 +4,10 @@
   --brand-text: #213547;
   --brand-focus: #213547;
   --brand-background: #f4f4f4;
-
   --brand-primary: white;
   --brand-secondary: #213547;
   --brand-shadow: rgba(var(--brand-secondary), 0.1);
+  --brand-icon: #24292f;
 }
 
 [color-scheme='dark'] {
@@ -19,6 +19,7 @@
   --brand-primary: #1f1a24;
   --brand-secondary: white;
   --brand-shadow: rgba(var(--brand-secondary), 0.7);
+  --brand-icon: white;
 }
 
 :root {

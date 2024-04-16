@@ -1,4 +1,5 @@
 import ThemeToggle from '../ThemeToggle'
+import GitHubLogo from '../../assets'
 import './Header.scss'
 
 interface HeaderProps {
@@ -12,7 +13,9 @@ const Header: React.FC<HeaderProps> = ({ title, repo }) => {
       <div className="header__title">{title}</div>
       <div className="header__links">
         <ThemeToggle />
-        <a href={repo}>GitHub</a>
+        <a href={repo}>
+          <GitHubLogo title="GitHub Project" />
+        </a>
       </div>
     </div>
   )

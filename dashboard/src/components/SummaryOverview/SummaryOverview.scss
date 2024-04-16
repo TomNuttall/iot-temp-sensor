@@ -5,6 +5,8 @@
 
   .react-loading-skeleton {
     height: 140px;
+    --base-color: var(--brand-primary);
+    --highlight-color: var(--brand-background);
   }
 }
 
