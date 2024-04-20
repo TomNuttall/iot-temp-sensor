@@ -5,14 +5,14 @@
   padding: 1rem 2rem;
 
   background-color: var(--brand-primary);
-  box-shadow: 0px 4px 16px -4px var(--brand-shadow);
+  box-shadow: 0px 0.25rem 1rem -0.25rem var(--brand-shadow);
 
   & a {
     line-height: 1rem;
 
     &:focus {
-      outline: solid 2px var(--brand-focus);
-      outline-offset: 4px;
+      outline: solid 0.125rem var(--brand-focus);
+      outline-offset: 0.25rem;
     }
   }
 

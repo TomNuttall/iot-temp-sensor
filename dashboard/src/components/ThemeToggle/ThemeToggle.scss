@@ -3,7 +3,7 @@
   display: flex;
 
   &:focus {
-    outline: solid 2px var(--brand-focus);
-    outline-offset: 4px;
+    outline: solid 0.125rem var(--brand-focus);
+    outline-offset: 0.25rem;
   }
 }

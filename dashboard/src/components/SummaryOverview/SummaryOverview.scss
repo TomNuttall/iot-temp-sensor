@@ -3,8 +3,13 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.75rem;
 
+  span {
+    line-height: 1;
+  }
+
   .react-loading-skeleton {
-    height: 140px;
+    border-radius: 0.5rem;
+    height: 8.5rem;
     --base-color: var(--brand-primary);
     --highlight-color: var(--brand-background);
   }
@@ -15,7 +20,7 @@
     gap: 0.5rem;
 
     .react-loading-skeleton {
-      height: 120px;
+      height: 7.5rem;
     }
   }
 }
