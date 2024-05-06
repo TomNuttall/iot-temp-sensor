@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -67,6 +68,25 @@ interface TempChartProps {
 }
 
 const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
+  const [noAnimate, setNoAnimate] = useState<boolean>(true)
+
+  useEffect(() => {
+    const onMotionPreferenceChange = (e: { matches: boolean }) => {
+      setNoAnimate(e.matches)
+    }
+
+    const motionPreference = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    )
+    setNoAnimate(motionPreference.matches)
+
+    motionPreference.addEventListener('change', onMotionPreferenceChange)
+
+    return () => {
+      motionPreference.removeEventListener('change', onMotionPreferenceChange)
+    }
+  }, [])
+
   const data = {
     labels: tempData.map((x) => {
       const timeStamp = new Date(x.time)
@@ -91,7 +111,15 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
 
   return (
     <div className="temp-chart" data-testid="temp-chart">
-      <Line options={options} data={data} />
+      <Line
+        options={{
+          ...options,
+          animation: {
+            duration: noAnimate ? 0 : 1000,
+          },
+        }}
+        data={data}
+      />
     </div>
   )
 }
