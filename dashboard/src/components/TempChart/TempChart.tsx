@@ -87,28 +87,23 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
     }
   }, [])
 
-  // const labels = [time.map((x) => {
+  const length = tempData.length > 0 ? tempData[0].values.length : 0
+  const labels = Array(length)
+    .fill(1)
+    .map((_, index: number) => index)
+  console.log(labels)
+
+  // labels: vals.map((x: TemperatureData) => {
   //   const timeStamp = new Date(x.time)
   //   return timeStamp.toLocaleTimeString('en-GB', {
   //     hour: '2-digit',
   //     minute: '2-digit',
   //   })
-  // })]
-  const labels = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    21, 22, 23,
-  ]
+  // }),
 
-  const vals = tempData.length > 0 ? tempData[0].values : []
   const data = {
     labels,
-    // labels: vals.map((x: TemperatureData) => {
-    //   const timeStamp = new Date(x.time)
-    //   return timeStamp.toLocaleTimeString('en-GB', {
-    //     hour: '2-digit',
-    //     minute: '2-digit',
-    //   })
-    // }),
+
     datasets: tempData.map((series: TemperatureSeries) => {
       return {
         label: series.date,

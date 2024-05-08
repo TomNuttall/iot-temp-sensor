@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { TemperatureSeries, TemperatureData } from '../../lib/IoTApi'
+import { TemperatureSeries } from '../../lib/IoTApi'
 import SummaryOverview from '.'
 
 describe('SummaryOverview', () => {
