@@ -1,12 +1,12 @@
 import { vi } from 'vitest'
 import axios from 'axios'
-import { IoTApi, TemperatureRange } from './IoTApi'
+import { IoTApi, TemperatureSeries } from './IoTApi'
 
 vi.mock('axios')
 
 describe('IoTApi', () => {
-  const mocks: TemperatureRange[] = [
-    { date: '2024-01-01', value: [{ time: 5, temp: 10 }] },
+  const mocks: TemperatureSeries[] = [
+    { date: '2024-01-01', values: [{ time: 5, temp: 10 }] },
   ]
 
   beforeEach(() => {
