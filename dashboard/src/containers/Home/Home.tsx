@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TemperatureData, IoTApi } from '../../lib/IoTApi'
+import { TemperatureSeries, IoTApi } from '../../lib/IoTApi'
 import DateRangePicker from '../../components/DateRangePicker'
 import SummaryOverview from '../../components/SummaryOverview'
 import TempChart from '../../components/TempChart'
@@ -7,7 +7,7 @@ import TempChart from '../../components/TempChart'
 import './Home.scss'
 
 export const Home: React.FC = () => {
-  const [tempData, setTempData] = useState<TemperatureData[]>([])
+  const [tempData, setTempData] = useState<TemperatureSeries[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   const onDateChange = async (from: number, to: number) => {

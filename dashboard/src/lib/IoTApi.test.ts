@@ -1,11 +1,13 @@
 import { vi } from 'vitest'
 import axios from 'axios'
-import { IoTApi, TemperatureData } from './IoTApi'
+import { IoTApi, TemperatureRange } from './IoTApi'
 
 vi.mock('axios')
 
 describe('IoTApi', () => {
-  const mocks: TemperatureData[] = [{ time: 5, temp: 10 }]
+  const mocks: TemperatureRange[] = [
+    { date: '2024-01-01', value: [{ time: 5, temp: 10 }] },
+  ]
 
   beforeEach(() => {
     //@ts-ignore
@@ -23,7 +25,7 @@ describe('IoTApi', () => {
     const res = await IoTApi.get()
 
     // Assert
-    expect(axios.get).toBeCalledTimes(1)
+    expect(axios.get).toHaveBeenCalledTimes(1)
     expect(res).toStrictEqual(mocks)
   })
 
@@ -38,7 +40,7 @@ describe('IoTApi', () => {
     const res = await IoTApi.get(0, 10)
 
     // Assert
-    expect(axios.get).toBeCalledTimes(1)
+    expect(axios.get).toHaveBeenCalledTimes(1)
     expect(res).toStrictEqual(mocks)
   })
 })

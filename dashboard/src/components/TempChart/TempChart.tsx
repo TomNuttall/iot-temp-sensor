@@ -10,7 +10,7 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import { TemperatureData } from '../../lib/IoTApi'
+import { TemperatureSeries, TemperatureData } from '../../lib/IoTApi'
 import { getTemperatureColour } from '../../lib/Helpers'
 
 import './TempChart.scss'
@@ -64,7 +64,7 @@ const options = {
 }
 
 interface TempChartProps {
-  tempData: TemperatureData[]
+  tempData: TemperatureSeries[]
 }
 
 const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
@@ -87,26 +87,40 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
     }
   }, [])
 
+  // const labels = [time.map((x) => {
+  //   const timeStamp = new Date(x.time)
+  //   return timeStamp.toLocaleTimeString('en-GB', {
+  //     hour: '2-digit',
+  //     minute: '2-digit',
+  //   })
+  // })]
+  const labels = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23,
+  ]
+
+  const vals = tempData.length > 0 ? tempData[0].values : []
   const data = {
-    labels: tempData.map((x) => {
-      const timeStamp = new Date(x.time)
-      return timeStamp.toLocaleTimeString('en-GB', {
-        hour: '2-digit',
-        minute: '2-digit',
-      })
-    }),
-    datasets: [
-      {
-        label: 'Temp',
-        data: tempData.map((x) => x.temp),
+    labels,
+    // labels: vals.map((x: TemperatureData) => {
+    //   const timeStamp = new Date(x.time)
+    //   return timeStamp.toLocaleTimeString('en-GB', {
+    //     hour: '2-digit',
+    //     minute: '2-digit',
+    //   })
+    // }),
+    datasets: tempData.map((series: TemperatureSeries) => {
+      return {
+        label: series.date,
+        data: series.values.map((data: TemperatureData) => data.temp),
         segment: {
           borderColor: (context: any) => {
-            const value = tempData[context['p0DataIndex']].temp
-            return getTemperatureColour(Math.floor(value))
+            const value = Math.floor(context?.p0?.raw)
+            return getTemperatureColour(value)
           },
         },
-      },
-    ],
+      }
+    }),
   }
 
   return (

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, act } from '@testing-library/react'
-import { TemperatureData } from '../../lib/IoTApi'
+import { TemperatureSeries, TemperatureData } from '../../lib/IoTApi'
 import Home from './Home'
 import axios from 'axios'
 
@@ -11,7 +11,7 @@ describe('Home', () => {
 
   const minTemp: TemperatureData = { temp: 0, time: 1 }
   const maxTemp: TemperatureData = { temp: 20, time: 2 }
-  const mocks: TemperatureData[] = [minTemp, maxTemp]
+  const mocks: TemperatureSeries[] = [{ date: '', values: [minTemp, maxTemp] }]
 
   beforeEach(() => {
     vi.useFakeTimers({ shouldAdvanceTime: true, toFake: ['Date'] })

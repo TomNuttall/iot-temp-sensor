@@ -1,5 +1,10 @@
 import axios from 'axios'
 
+export interface TemperatureSeries {
+  date: string
+  values: TemperatureData[]
+}
+
 export interface TemperatureData {
   time: number
   temp: number
@@ -24,7 +29,7 @@ export class IoTApi {
   public static async get(
     from: number = 0,
     to: number = new Date().valueOf(),
-  ): Promise<TemperatureData[]> {
+  ): Promise<TemperatureSeries[]> {
     if (!IoTApi.endPoint) {
       IoTApi.setEndPoint()
     }

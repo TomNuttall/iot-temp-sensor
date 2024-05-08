@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { TemperatureData } from '../../lib/IoTApi'
+import { TemperatureSeries, TemperatureData } from '../../lib/IoTApi'
 import SummaryOverview from '.'
 
 describe('SummaryOverview', () => {
   it('renders with loading', async () => {
     // Arrange
-    const tempData: TemperatureData[] = []
+    const tempData: TemperatureSeries[] = []
     const loading = true
 
     // Act
@@ -19,7 +19,7 @@ describe('SummaryOverview', () => {
 
   it('renders with no TempData', async () => {
     // Arrange
-    const tempData: TemperatureData[] = []
+    const tempData: TemperatureSeries[] = []
     const loading = false
 
     // Act
@@ -33,7 +33,9 @@ describe('SummaryOverview', () => {
     // Arrange
     const minTemp = { temp: 0, time: 1 }
     const maxTemp = { temp: 20, time: 2 }
-    const tempData: TemperatureData[] = [maxTemp, minTemp]
+    const tempData: TemperatureSeries[] = [
+      { date: '', values: [maxTemp, minTemp] },
+    ]
     const loading = false
 
     // Act
