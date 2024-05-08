@@ -1,16 +1,18 @@
 import { mockClient } from 'aws-sdk-client-mock'
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient, QueryCommand } from '@aws-sdk/lib-dynamodb'
-
-import { handler } from '../lambda/index'
+import { Controller } from '../src/controller'
 
 const ddbMock = mockClient(DynamoDBDocumentClient)
+const ddbClient = DynamoDBDocumentClient.from(new DynamoDBClient())
+const controller = new Controller(ddbClient)
 
-describe('lambda', () => {
+describe('Controller', () => {
   beforeEach(() => {
     ddbMock.reset()
   })
 
-  it('checks succesful response', async () => {
+  it('returns data for today if no query string parameters', async () => {
     // Arrange
     const date = new Date()
     ddbMock
@@ -29,23 +31,18 @@ describe('lambda', () => {
         ],
       })
 
-    const event = { queryStringParameters: {} }
-
     // Act
-    const res = await handler(event)
+    const data = await controller.get()
 
     // Assert
-    expect(res.statusCode).toBe(200)
-
-    const data = JSON.parse(res.body)
-    expect(data).toHaveLength(1)
+    expect(data.length).toBe(1)
   })
 
-  it('checks query string parameters', async () => {
+  it('returns data for query string parameters', async () => {
     // Arrange
-    const date1 = new Date('June 4, 2023')
-    const date2 = new Date('June 5, 2023')
-    const date3 = new Date('June 6, 2023')
+    const date1 = new Date('2023-06-04')
+    const date2 = new Date('2023-06-05')
+    const date3 = new Date('2023-06-06')
 
     ddbMock
       .on(QueryCommand, {
@@ -91,27 +88,25 @@ describe('lambda', () => {
         ],
       })
 
-    const event = {
-      queryStringParameters: {
-        from: String(new Date('June 4, 2023').valueOf()),
-        to: String(new Date('June 5, 2023').valueOf()),
-      },
-    }
+    const from = String(new Date('2023-06-04').valueOf())
+    const to = String(new Date('2023-06-06').valueOf())
 
     // Act
-    const res = await handler(event)
+    const data = await controller.get(from, to)
 
     // Assert
-    const data = JSON.parse(res.body)
-    expect(data.length).toBe(2)
+    expect(data.length).toBe(3)
+  })
 
-    const filteredData = data.filter((item) => {
-      const time = item.time * 1000
-      return (
-        time < event.queryStringParameters.from ||
-        time > event.queryStringParameters.to
-      )
-    })
-    expect(filteredData.length).toBe(0)
+  it('returns no data for old dates', async () => {
+    // Arrange
+    const from = String(new Date('2020-01-01').valueOf())
+    const to = String(new Date('2020-01-02').valueOf())
+
+    // Act
+    const data = await controller.get(from, to)
+
+    // Assert
+    expect(data.length).toBe(0)
   })
 })

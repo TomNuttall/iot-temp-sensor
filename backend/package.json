@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.352.0",

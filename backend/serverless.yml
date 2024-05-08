@@ -12,7 +12,7 @@ plugins:
 
 functions:
   lambda:
-    handler: './src/lambda/index.handler'
+    handler: './src/index.handler'
     events:
       - http:
           method: GET
