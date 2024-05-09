@@ -20,6 +20,7 @@ const transformer = new Transformer()
 
 export const handler = async (event) => {
   const query = event.multiValueQueryStringParameters
+  console.log(query?.date)
 
   const results = await controller.get(query?.date)
   const items = transformer.transformDates(results)
@@ -29,7 +30,7 @@ export const handler = async (event) => {
     body: JSON.stringify(items),
     headers: {
       'content-Type': 'application/json',
-      // 'cache-control': 'max-age=31536000',
+      'cache-control': 'max-age=1800',
     },
   }
 
