@@ -19,10 +19,12 @@ const controller = new Controller(ddbClient)
 const transformer = new Transformer()
 
 export const handler = async (event) => {
-  const query = event.multiValueQueryStringParameters
-  console.log(query?.date)
+  const query =
+    event.multiValueQueryStringParameters?.date ??
+    event.queryStringParameters?.date?.split(',')
+  console.log(query)
 
-  const results = await controller.get(query?.date)
+  const results = await controller.get(query)
   const items = transformer.transformDates(results)
 
   const response = {
