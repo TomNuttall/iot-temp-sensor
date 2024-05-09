@@ -40,71 +40,95 @@ describe('Controller', () => {
 
   it('returns data for query string parameters', async () => {
     // Arrange
-    const date1 = new Date('2023-06-04')
-    const date2 = new Date('2023-06-05')
-    const date3 = new Date('2023-06-06')
+    const dates = [
+      new Date('2024-01-01'),
+      new Date('2024-01-02'),
+      new Date('2024-01-03'),
+    ]
 
-    ddbMock
-      .on(QueryCommand, {
-        ExpressionAttributeValues: {
-          ':queryDate': date1.toLocaleDateString('en-GB'),
-        },
-      })
-      .resolves({
-        Items: [
-          {
-            date: date1.toLocaleDateString('en-GB'),
-            time: Math.floor(date1.getTime() / 1000),
-            temp: 10,
+    dates.forEach((date) => {
+      ddbMock
+        .on(QueryCommand, {
+          ExpressionAttributeValues: {
+            ':queryDate': date.toLocaleDateString('en-GB'),
           },
-        ],
-      })
-      .on(QueryCommand, {
-        ExpressionAttributeValues: {
-          ':queryDate': date2.toLocaleDateString('en-GB'),
-        },
-      })
-      .resolves({
-        Items: [
-          {
-            date: date2.toLocaleDateString('en-GB'),
-            time: Math.floor(date2.getTime() / 1000),
-            temp: 10,
-          },
-        ],
-      })
-      .on(QueryCommand, {
-        ExpressionAttributeValues: {
-          ':queryDate': date3.toLocaleDateString('en-GB'),
-        },
-      })
-      .resolves({
-        Items: [
-          {
-            date: date3.toLocaleDateString('en-GB'),
-            time: Math.floor(date3.getTime() / 1000),
-            temp: 10,
-          },
-        ],
-      })
-
-    const from = String(new Date('2023-06-04').valueOf())
-    const to = String(new Date('2023-06-06').valueOf())
+        })
+        .resolves({
+          Items: [
+            {
+              date: date.toLocaleDateString('en-GB'),
+              time: Math.floor(date.getTime() / 1000),
+              temp: 10,
+            },
+          ],
+        })
+    })
 
     // Act
-    const data = await controller.get(from, to)
+    const dateParams = dates.map((date) => date.toLocaleDateString('en-GB'))
+    const data = await controller.get(dateParams)
 
     // Assert
     expect(data.length).toBe(3)
   })
 
-  it('returns no data for old dates', async () => {
+  it('returns data for query string parameters with cap at 7 dates', async () => {
     // Arrange
-    const from = String(new Date('2020-01-01').valueOf())
-    const to = String(new Date('2020-01-02').valueOf())
+    const dates = [
+      new Date('2024-01-01'),
+      new Date('2024-01-02'),
+      new Date('2024-01-03'),
+      new Date('2024-01-04'),
+      new Date('2024-01-05'),
+      new Date('2024-01-06'),
+      new Date('2024-01-07'),
+      new Date('2024-01-08'),
+      new Date('2024-01-09'),
+    ]
+
+    dates.forEach((date) => {
+      ddbMock
+        .on(QueryCommand, {
+          ExpressionAttributeValues: {
+            ':queryDate': date.toLocaleDateString('en-GB'),
+          },
+        })
+        .resolves({
+          Items: [
+            {
+              date: date.toLocaleDateString('en-GB'),
+              time: Math.floor(date.getTime() / 1000),
+              temp: 10,
+            },
+          ],
+        })
+    })
 
     // Act
-    const data = await controller.get(from, to)
+    const dateParams = dates.map((date) => date.toLocaleDateString('en-GB'))
+    const data = await controller.get(dateParams)
+
+    // Assert
+    expect(data.length).toBe(7)
+  })
+
+  it('returns no data for old dates', async () => {
+    // Arrange
+    const dates = [new Date('2020-01-01').toLocaleDateString('en-GB')]
+
+    // Act
+    const data = await controller.get(dates)
+
+    // Assert
+    expect(data.length).toBe(0)
+  })
+
+  it('returns no data for invalid parameter', async () => {
+    // Arrange
+    const dates = 'nondate'
+
+    // Act
+    const data = await controller.get(dates)
 
     // Assert
     expect(data.length).toBe(0)

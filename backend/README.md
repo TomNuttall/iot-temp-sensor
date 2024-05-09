@@ -18,7 +18,7 @@ yarn dev
 Test api in browser or curl
 
 ```
-curl http://localhost:3000/dev?from=0
+curl http://localhost:3000/dev?date=01%2F01%2F2024date=01%2F02%2F2024
 ```
 
 Unit tests

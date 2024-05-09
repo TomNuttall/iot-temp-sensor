@@ -2,19 +2,15 @@ export class Transformer {
   constructor() {}
 
   transformDates(results) {
-    if (!results) return []
+    const items = results.map((row) => {
+      const date = row[0]?.date
+      const values = row.map((item) => {
+        const { time, temp } = item
+        return { time, temp }
+      })
+      return { date, values }
+    })
 
-    const items = results?.reduce((acc, item) => {
-      const { date, time, temp } = item
-
-      if (!(date in acc)) {
-        acc[date] = { date, values: [] }
-      }
-
-      acc[date].values.push({ time, temp })
-      return acc
-    }, {})
-
-    return Object.values(items)
+    return items
   }
 }

@@ -7,30 +7,39 @@ export class Controller {
     this.ddbClient = ddbClient
   }
 
-  async get(from, to) {
-    let dateFrom = from ? new Date(Number(from)) : new Date()
-    if (dateFrom < RECORD_BEGIN) {
-      dateFrom = RECORD_BEGIN
+  async get(dates) {
+    if (!dates) {
+      dates = [new Date().toLocaleDateString('en-GB')]
     }
-    const dateTo = to ? new Date(Number(to)) : new Date()
+
+    // A week should be the longest series for comparisons
+    const processDates = dates.slice(0, 7)
 
     const results = []
-    while (dateFrom <= dateTo) {
+    for (let date of processDates) {
+      try {
+        const dateCheck = Date.parse(date)
+
+        if (isNaN(dateCheck)) return []
+
+        if (dateCheck < RECORD_BEGIN) continue
+      } catch (e) {
+        console.error(e)
+        return []
+      }
+
       const res = await this.ddbClient.send(
         new QueryCommand({
           TableName: 'demo-db-iot-backend',
           KeyConditionExpression: '#date = :queryDate',
           ExpressionAttributeNames: { '#date': 'date' },
-          ExpressionAttributeValues: {
-            ':queryDate': dateFrom.toLocaleDateString('en-GB'),
-          },
+          ExpressionAttributeValues: { ':queryDate': date },
         }),
       )
 
-      if (res?.Items?.length > 0) {
-        results.push(...res.Items)
+      if (res?.Items) {
+        results.push(res.Items)
       }
-      dateFrom.setDate(dateFrom.getDate() + 1)
     }
 
     return results

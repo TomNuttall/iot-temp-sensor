@@ -19,9 +19,9 @@ const controller = new Controller(ddbClient)
 const transformer = new Transformer()
 
 export const handler = async (event) => {
-  const query = event.queryStringParameters
+  const query = event.multiValueQueryStringParameters
 
-  const results = await controller.get(query?.from, query?.to)
+  const results = await controller.get(query?.date)
   const items = transformer.transformDates(results)
 
   const response = {
@@ -29,7 +29,7 @@ export const handler = async (event) => {
     body: JSON.stringify(items),
     headers: {
       'content-Type': 'application/json',
-      'cache-control': 'max-age=31536000',
+      // 'cache-control': 'max-age=31536000',
     },
   }
 
