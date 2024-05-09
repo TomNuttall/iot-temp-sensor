@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, act } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { TemperatureSeries, TemperatureData } from '../../lib/IoTApi'
 import Home from './Home'
 import axios from 'axios'
@@ -32,7 +33,13 @@ describe('Home', () => {
     })
 
     // Act
-    await act(async () => render(<Home />))
+    await act(async () =>
+      render(
+        <MemoryRouter>
+          <Home />
+        </MemoryRouter>,
+      ),
+    )
 
     // Assert
     expect(screen.getByTestId('home')).toBeInTheDocument()

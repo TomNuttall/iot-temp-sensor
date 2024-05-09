@@ -91,7 +91,6 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
   const labels = Array(length)
     .fill(1)
     .map((_, index: number) => index)
-  console.log(labels)
 
   // labels: vals.map((x: TemperatureData) => {
   //   const timeStamp = new Date(x.time)
@@ -103,10 +102,9 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
 
   const data = {
     labels,
-
     datasets: tempData.map((series: TemperatureSeries) => {
       return {
-        label: series.date,
+        label: `${series.date}`,
         data: series.values.map((data: TemperatureData) => data.temp),
         segment: {
           borderColor: (context: any) => {

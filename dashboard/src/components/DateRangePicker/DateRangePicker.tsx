@@ -4,7 +4,7 @@ import { zonedTimeToUtc } from 'date-fns-tz'
 import './DateRangePicker.scss'
 
 interface DateRangePickerProps {
-  onDateChange: (from: number, to: number) => Promise<void>
+  onDateChange: (data: { from: string; to: string }) => void
 }
 
 const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
@@ -29,7 +29,10 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
       'Etc/UTC',
     )
 
-    onDateChange(from.valueOf(), to.valueOf())
+    onDateChange({
+      from: from.valueOf().toString(),
+      to: to.valueOf().toString(),
+    })
   }
   return (
     <div className="date-range-picker">

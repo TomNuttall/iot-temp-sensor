@@ -46,9 +46,11 @@ describe('DateRangePicker', () => {
     // Act
     render(<DateRangePicker onDateChange={mock} />)
 
-    const from = zonedTimeToUtc(startOfDay(date), 'Etc/UTC').valueOf()
-    const to = zonedTimeToUtc(startOfHour(date), 'Etc/UTC').valueOf()
+    const from = zonedTimeToUtc(startOfDay(date), 'Etc/UTC')
+      .valueOf()
+      .toString()
+    const to = zonedTimeToUtc(startOfHour(date), 'Etc/UTC').valueOf().toString()
 
-    expect(mock).toBeCalledWith(from, to)
+    expect(mock).toHaveBeenCalledWith({ from, to })
   })
 })
