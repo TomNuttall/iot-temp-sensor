@@ -1,14 +1,15 @@
 {
   "name": "infastructure",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.352.0",
     "date-fns": "^2.30.0"
   },
   "scripts": {
-    "dev": "docker-compose up -d && yarn && yarn populate-table",
-    "populate-table": "node populate-items.js"
+    "dev": "docker-compose up -d && yarn populate-table",
+    "stop": "docker-compose down",
+    "populate-table": "node --no-warnings=ExperimentalWarning populate-items.js"
   }
 }
