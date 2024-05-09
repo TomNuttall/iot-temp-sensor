@@ -31,7 +31,9 @@ export class IoTApi {
       IoTApi.setEndPoint()
     }
 
-    const uri = `${IoTApi.endPoint}?date=${dates?.join('&date=')}`
+    const uri = `${IoTApi.endPoint}${
+      dates && dates.length > 0 ? `?date=${dates?.join('&date=')}` : ''
+    }`
     const response = await axios.get(encodeURI(uri))
     return response.data
   }
