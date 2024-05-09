@@ -4,7 +4,9 @@ import { DarkModeSwitch, defaultProperties } from 'react-toggle-dark-mode'
 import './ThemeToggle.scss'
 
 const ThemeToggle: React.FC = () => {
-  const [darkTheme, setDarkTheme] = useState<boolean>(false)
+  const [darkTheme, setDarkTheme] = useState<boolean>(
+    window.matchMedia('(prefers-color-scheme: dark)').matches,
+  )
   const [noAnimate, setNoAnimate] = useState<boolean>(false)
 
   const onColorSchemeChange = (e: { matches: boolean }) => {

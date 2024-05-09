@@ -1,6 +1,5 @@
 [color-scheme='light'] {
   color-scheme: light;
-
   --brand-text: #213547;
   --brand-focus: #213547;
   --brand-background: #f4f4f4;
@@ -35,6 +34,8 @@
 
   color: var(--brand-text);
   background-color: var(--brand-background);
+
+  color-scheme: light dark;
 }
 
 body {
