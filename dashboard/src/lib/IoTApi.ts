@@ -26,18 +26,13 @@ export class IoTApi {
     IoTApi.endPoint = prod ? IoTApiEndpoints.live : IoTApiEndpoints.local
   }
 
-  public static async get(
-    from: number = 0,
-    to: number = new Date().valueOf(),
-  ): Promise<TemperatureSeries[]> {
+  public static async get(dates?: string[]): Promise<TemperatureSeries[]> {
     if (!IoTApi.endPoint) {
       IoTApi.setEndPoint()
     }
 
-    const response = await axios.get(
-      encodeURI(`${IoTApi.endPoint}?from=${from}&to=${to}`),
-    )
-
+    const uri = `${IoTApi.endPoint}?date=${dates?.join('&date=')}`
+    const response = await axios.get(encodeURI(uri))
     return response.data
   }
 }

@@ -5,8 +5,9 @@ import { IoTApi, TemperatureSeries } from './IoTApi'
 vi.mock('axios')
 
 describe('IoTApi', () => {
+  const dates = ['01/01/2024']
   const mocks: TemperatureSeries[] = [
-    { date: '2024-01-01', values: [{ time: 5, temp: 10 }] },
+    { date: dates[0], values: [{ time: 5, temp: 10 }] },
   ]
 
   beforeEach(() => {
@@ -37,7 +38,7 @@ describe('IoTApi', () => {
     })
 
     // Act
-    const res = await IoTApi.get(0, 10)
+    const res = await IoTApi.get(dates)
 
     // Assert
     expect(axios.get).toHaveBeenCalledTimes(1)

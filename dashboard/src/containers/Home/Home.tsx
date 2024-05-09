@@ -14,9 +14,10 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const from = Number(searchParams.get('from')) ?? 0
-      const to = Number(searchParams.get('to')) ?? 0
-      const data = await IoTApi.get(from, to)
+      const dates = searchParams.getAll('date') ?? [
+        new Date().toLocaleDateString('en-GB'),
+      ]
+      const data = await IoTApi.get(dates)
 
       setTempData(data)
       setLoading(false)

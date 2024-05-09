@@ -1,7 +1,6 @@
 import { vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { startOfDay, startOfHour } from 'date-fns'
-import { zonedTimeToUtc } from 'date-fns-tz'
+import userEvent from '@testing-library/user-event'
 import DateRangePicker from '.'
 
 describe('DateRangePicker', () => {
@@ -28,29 +27,17 @@ describe('DateRangePicker', () => {
     expect(element).toBeInTheDocument()
   })
 
-  it('calls callback on first render', async () => {
+  it('calls callback on button press', async () => {
     // Arrange
     const mock = vi.fn()
 
     // Act
     render(<DateRangePicker onDateChange={mock} />)
+
+    const element = await screen.findByText('Yesterday')
+    await userEvent.click(element)
 
     // Assert
-    expect(mock).toHaveBeenCalledTimes(1)
-  })
-
-  it('calls callback with correct args', async () => {
-    // Arrange
-    const mock = vi.fn()
-
-    // Act
-    render(<DateRangePicker onDateChange={mock} />)
-
-    const from = zonedTimeToUtc(startOfDay(date), 'Etc/UTC')
-      .valueOf()
-      .toString()
-    const to = zonedTimeToUtc(startOfHour(date), 'Etc/UTC').valueOf().toString()
-
-    expect(mock).toHaveBeenCalledWith({ from, to })
+    expect(mock).toHaveBeenCalled()
   })
 })

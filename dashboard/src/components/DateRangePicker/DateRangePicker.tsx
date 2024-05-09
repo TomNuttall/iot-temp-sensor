@@ -1,10 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
-import { startOfDay, endOfDay, subDays, startOfHour } from 'date-fns'
-import { zonedTimeToUtc } from 'date-fns-tz'
+import { subDays } from 'date-fns'
 import './DateRangePicker.scss'
 
 interface DateRangePickerProps {
-  onDateChange: (data: { from: string; to: string }) => void
+  onDateChange: (params: { date: string[] }) => void
 }
 
 const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
@@ -13,27 +12,9 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
   const ref = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    dateSelect({ from: new Date() })
-  }, [])
-
-  useEffect(() => {
     ref?.current?.focus()
   }, [ref])
 
-  const dateSelect = (range: { from?: Date; to?: Date }) => {
-    if (range?.from === undefined) return
-
-    let from = zonedTimeToUtc(startOfDay(range.from), 'Etc/UTC')
-    let to = zonedTimeToUtc(
-      range.to ? endOfDay(range.to) : startOfHour(range.from),
-      'Etc/UTC',
-    )
-
-    onDateChange({
-      from: from.valueOf().toString(),
-      to: to.valueOf().toString(),
-    })
-  }
   return (
     <div className="date-range-picker">
       <div
@@ -47,7 +28,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
           }`}
           onClick={() => {
             setActiveButton('Today')
-            dateSelect({ from: new Date() })
+            onDateChange({ date: [new Date().toLocaleDateString('en-GB')] })
           }}
           ref={ref}
         >
@@ -59,9 +40,8 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
           }`}
           onClick={() => {
             setActiveButton('Yesterday')
-            dateSelect({
-              from: subDays(new Date(), 1),
-              to: subDays(new Date(), 1),
+            onDateChange({
+              date: [subDays(new Date(), 1).toLocaleDateString('en-GB')],
             })
           }}
         >
@@ -73,7 +53,13 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
           }`}
           onClick={() => {
             setActiveButton('Last Week')
-            dateSelect({ from: subDays(new Date(), 6), to: new Date() })
+            onDateChange({
+              date: new Array(7)
+                .fill(0)
+                .map((_, index: number) =>
+                  subDays(new Date(), index).toLocaleDateString('en-GB'),
+                ),
+            })
           }}
         >
           Last Week
