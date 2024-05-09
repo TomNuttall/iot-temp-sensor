@@ -1,7 +1,5 @@
 import { QueryCommand } from '@aws-sdk/lib-dynamodb'
 
-const RECORD_BEGIN = new Date('2023-05-12')
-
 export class Controller {
   constructor(ddbClient) {
     this.ddbClient = ddbClient
@@ -17,16 +15,14 @@ export class Controller {
 
     const results = []
     for (let date of processDates) {
-      try {
-        const dateCheck = Date.parse(date)
+      // try {
+      //   const [day, month, year] = date.split('/')
 
-        if (isNaN(dateCheck)) return []
-
-        if (dateCheck < RECORD_BEGIN) continue
-      } catch (e) {
-        console.error(e)
-        return []
-      }
+      //   if (!day || !month || !year) continue
+      // } catch (e) {
+      //   console.error(e)
+      //   return []
+      // }
 
       const res = await this.ddbClient.send(
         new QueryCommand({

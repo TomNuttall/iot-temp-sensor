@@ -123,6 +123,19 @@ describe('Controller', () => {
     expect(data.length).toBe(0)
   })
 
+  it('returns no data for future dates', async () => {
+    // Arrange
+    const now = new Date()
+    now.setDate(now.getDate() + 1)
+    const dates = [now.toLocaleDateString('en-GB')]
+
+    // Act
+    const data = await controller.get(dates)
+
+    // Assert
+    expect(data.length).toBe(0)
+  })
+
   it('returns no data for invalid parameter', async () => {
     // Arrange
     const dates = 'nondate'
