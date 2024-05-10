@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
   Chart as ChartJS,
+  ChartOptions,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -23,6 +24,7 @@ ChartJS.register(
   Legend,
 )
 
+// const options: ChartOptions<line> = {
 const options = {
   maintainAspectRatio: false,
   aspectRatio: 1,
@@ -37,11 +39,11 @@ const options = {
       grid: {
         display: true,
       },
-      title: {
-        display: true,
-        text: 'Temperature',
-      },
     },
+  },
+  interaction: {
+    mode: 'index',
+    intersect: false,
   },
   elements: {
     line: {

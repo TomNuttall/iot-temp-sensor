@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { TemperatureSeries, IoTApi } from '../../lib/IoTApi'
+import CalenderPicker from '../../components/CalenderPicker'
 import DateRangePicker from '../../components/DateRangePicker'
 import SummaryOverview from '../../components/SummaryOverview'
 import TempChart from '../../components/TempChart'
@@ -33,8 +34,18 @@ export const Home: React.FC = () => {
       <SummaryOverview loading={loading} tempData={tempData} />
 
       <div className="home__panel">
-        <TempChart tempData={tempData} />
-        <DateRangePicker onDateChange={setSearchParams} />
+        <div className="home__grid-a">
+          <CalenderPicker
+            date={searchParams.getAll('date')}
+            onDateChange={setSearchParams}
+          />
+        </div>
+        <div className="home__grid-b">
+          <DateRangePicker onDateChange={setSearchParams} />
+        </div>
+        <div className="home__grid-c">
+          <TempChart tempData={tempData} />
+        </div>
       </div>
     </div>
   )

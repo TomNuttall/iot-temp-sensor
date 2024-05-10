@@ -8,7 +8,10 @@ interface TempCardProps {
 }
 
 const TempCard: React.FC<TempCardProps> = ({ temp, timestamp, title }) => {
-  const time = new Date(timestamp).toLocaleTimeString('en-GB', {
+  const dateObj = new Date(timestamp)
+
+  //const date = dateObj.toLocaleDateString('en-GB')
+  const time = dateObj.toLocaleTimeString('en-GB', {
     hour: '2-digit',
     minute: '2-digit',
   })

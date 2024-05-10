@@ -7,13 +7,28 @@
   padding: 0 3rem 3rem 3rem;
 
   &__panel {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    display: grid;
+    grid-template-areas:
+      'a c c'
+      'b c c';
+    column-gap: 2rem;
+
     background-color: var(--brand-primary);
     box-shadow: 0px 0.25rem 1rem -0.25rem var(--brand-shadow);
     border-radius: 0.5rem;
     padding: 2rem;
+  }
+
+  &__grid-a {
+    grid-area: a;
+  }
+
+  &__grid-b {
+    grid-area: b;
+  }
+
+  &__grid-c {
+    grid-area: c;
   }
 }
 
@@ -22,6 +37,11 @@
     padding: 0 0.75rem;
 
     &__panel {
+      grid-template-areas:
+        'c'
+        'b'
+        'a';
+      column-gap: 2rem;
       padding: 1rem;
       gap: 1.5rem;
     }
