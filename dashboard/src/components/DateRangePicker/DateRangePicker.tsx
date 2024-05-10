@@ -58,7 +58,8 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
                 .fill(0)
                 .map((_, index: number) =>
                   subDays(new Date(), index).toLocaleDateString('en-GB'),
-                ),
+                )
+                .reverse(),
             })
           }}
         >

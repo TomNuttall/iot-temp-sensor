@@ -5,7 +5,6 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-  Title,
   Tooltip,
   Legend,
 } from 'chart.js'
@@ -20,7 +19,6 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
-  Title,
   Tooltip,
   Legend,
 )
@@ -36,29 +34,13 @@ const options = {
     },
     y: {
       grid: {
-        display: false,
+        display: true,
       },
     },
   },
   elements: {
     line: {
       tension: 0.35,
-    },
-  },
-  interaction: {
-    intersect: true,
-  },
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-    scales: {
-      y: {
-        display: false,
-      },
     },
   },
 }
@@ -123,6 +105,11 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
           ...options,
           animation: {
             duration: noAnimate ? 0 : 1000,
+          },
+          plugins: {
+            legend: {
+              display: tempData?.length > 1,
+            },
           },
         }}
         data={data}

@@ -8,8 +8,8 @@
     "date-fns": "^2.30.0"
   },
   "scripts": {
-    "dev": "docker-compose up -d && yarn populate-table",
+    "start": "docker-compose up -d",
     "stop": "docker-compose down",
-    "populate-table": "node --no-warnings=ExperimentalWarning populate-items.js"
+    "dev": "node --no-warnings=ExperimentalWarning populate-items.js"
   }
 }
