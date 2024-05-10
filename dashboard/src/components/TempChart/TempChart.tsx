@@ -26,6 +26,7 @@ ChartJS.register(
 const options = {
   maintainAspectRatio: false,
   aspectRatio: 1,
+  responsive: true,
   scales: {
     x: {
       grid: {
@@ -36,11 +37,22 @@ const options = {
       grid: {
         display: true,
       },
+      title: {
+        display: true,
+        text: 'Temperature',
+      },
     },
   },
   elements: {
     line: {
       tension: 0.35,
+    },
+  },
+  plugins: {
+    legend: {
+      labels: {
+        usePointStyle: true,
+      },
     },
   },
 }
@@ -69,6 +81,7 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
     }
   }, [])
 
+  const multiSeries = tempData.length > 1
   const length = tempData.length > 0 ? tempData[0].values.length : 0
   const labels = Array(length)
     .fill(1)
@@ -84,13 +97,19 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
 
   const data = {
     labels,
-    datasets: tempData.map((series: TemperatureSeries) => {
+    datasets: tempData.map((series: TemperatureSeries, index: number) => {
       return {
         label: `${series.date}`,
         data: series.values.map((data: TemperatureData) => data.temp),
+        borderDash: [index, index],
+        borderColor: multiSeries ? getTemperatureColour(index) : undefined,
+        backgroundColor: multiSeries ? getTemperatureColour(index) : undefined,
+        pointStyle: 'circle',
+        pointRadius: 3,
+        pointHoverRadius: 6,
         segment: {
           borderColor: (context: any) => {
-            const value = Math.floor(context?.p0?.raw)
+            const value = multiSeries ? index : Math.floor(context?.p0?.raw)
             return getTemperatureColour(value)
           },
         },
@@ -108,7 +127,11 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
           },
           plugins: {
             legend: {
-              display: tempData?.length > 1,
+              display: multiSeries,
+              labels: {
+                usePointStyle: true,
+              },
+              position: 'bottom',
             },
           },
         }}
