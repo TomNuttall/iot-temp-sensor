@@ -40,10 +40,7 @@ const options = {
       },
     },
   },
-  interaction: {
-    mode: 'index',
-    intersect: false,
-  },
+
   elements: {
     line: {
       tension: 0.35,
@@ -134,6 +131,10 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
               },
               position: 'bottom',
             },
+          },
+          interaction: {
+            mode: 'index',
+            intersect: false,
           },
         }}
         data={data}
