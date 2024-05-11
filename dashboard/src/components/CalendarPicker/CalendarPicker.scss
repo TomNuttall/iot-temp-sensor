@@ -1,0 +1,25 @@
+.calendar-picker {
+  display: flex;
+  justify-content: center;
+}
+
+::backdrop {
+  backdrop-filter: blur(2px);
+}
+
+dialog[open] {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+dialog {
+  opacity: 0;
+  transition: opacity 0.5s ease-out, overlay 0.7s ease-out allow-discrete,
+    display 0.7s ease-out allow-discrete;
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+  }
+}

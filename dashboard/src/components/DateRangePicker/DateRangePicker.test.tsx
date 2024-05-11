@@ -4,23 +4,18 @@ import userEvent from '@testing-library/user-event'
 import DateRangePicker from '.'
 
 describe('DateRangePicker', () => {
-  const date = new Date()
-
-  beforeEach(() => {
-    vi.useFakeTimers({ shouldAdvanceTime: true, toFake: ['Date'] })
-    vi.setSystemTime(date)
-  })
-
-  afterEach(() => {
-    vi.useRealTimers()
-  })
-
   it('renders with buttons', async () => {
     // Arrange
-    const mock = vi.fn()
+    const selectedDates: string[] = ['15/01/2024']
+    const onDateChange = vi.fn()
 
     // Act
-    render(<DateRangePicker onDateChange={mock} />)
+    render(
+      <DateRangePicker
+        selectedDates={selectedDates}
+        onDateChange={onDateChange}
+      />,
+    )
 
     // Assert
     const element = await screen.findByText('Yesterday')
@@ -29,15 +24,21 @@ describe('DateRangePicker', () => {
 
   it('calls callback on button press', async () => {
     // Arrange
-    const mock = vi.fn()
+    const selectedDates: string[] = ['15/01/2024']
+    const onDateChange = vi.fn()
 
     // Act
-    render(<DateRangePicker onDateChange={mock} />)
+    render(
+      <DateRangePicker
+        selectedDates={selectedDates}
+        onDateChange={onDateChange}
+      />,
+    )
 
     const element = await screen.findByText('Yesterday')
     await userEvent.click(element)
 
     // Assert
-    expect(mock).toHaveBeenCalled()
+    expect(onDateChange).toHaveBeenCalled()
   })
 })

@@ -1,13 +1,19 @@
 import { useEffect, useState, useRef } from 'react'
 import { subDays } from 'date-fns'
+import CalendarPicker from '../CalendarPicker'
 import './DateRangePicker.scss'
 
 interface DateRangePickerProps {
+  selectedDates: string[]
   onDateChange: (params: { date: string[] }) => void
 }
 
-const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
+const DateRangePicker: React.FC<DateRangePickerProps> = ({
+  selectedDates,
+  onDateChange,
+}) => {
   const [activeButton, setActiveButton] = useState<string>('Today')
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
   const ref = useRef<HTMLButtonElement>(null)
 
@@ -65,7 +71,20 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateChange }) => {
         >
           Last Week
         </button>
+        <button
+          className="date-range-picker__button"
+          onClick={() => setIsDialogOpen(true)}
+        >
+          Select Dates
+        </button>
       </div>
+
+      <CalendarPicker
+        isDialogOpen={isDialogOpen}
+        onCloseDialog={() => setIsDialogOpen(false)}
+        selectedDates={selectedDates}
+        onDateChange={onDateChange}
+      />
     </div>
   )
 }

@@ -57,6 +57,7 @@ const options = {
 
 interface TempChartProps {
   tempData: TemperatureSeries[]
+  setFilteredTempData: (data: TemperatureSeries[]) => void
 }
 
 const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
@@ -115,6 +116,21 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
     }),
   }
 
+  // const onLegendClick = (e, legendItem) => {
+  //   let datasetIndex = legendItem.datasetIndex
+  //   let ci = this.chart,
+  //     metaSets = []
+
+  //   for (let i = 0; i < ci.data.datasets.length; i++) {
+  //     metaSets.push(ci.getDatasetMeta(i))
+  //   }
+
+  //   metaSets.forEach(function (meta) {
+  //     meta.hidden = meta.index === datasetIndex ? false : true
+  //   })
+  //   ci.update()
+  // }
+
   return (
     <div className="temp-chart" data-testid="temp-chart" aria-hidden>
       <Line
@@ -125,6 +141,7 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
           },
           plugins: {
             legend: {
+              // onClick: onLegendClick,
               display: multiSeries,
               labels: {
                 usePointStyle: true,
