@@ -44,16 +44,19 @@ const SummaryOverview: React.FC<SummaryOverviewProps> = ({
             temp={min?.temp ?? 0}
             timestamp={min?.time ?? 0}
             title="Min"
+            altDescription="Minimum Temperature"
           />
           <TempCard
             temp={max?.temp ?? 0}
             timestamp={max?.time ?? 0}
             title="Max"
+            altDescription="Maximum Temperature"
           />
           <TempCard
             temp={current?.temp ?? 0}
             timestamp={current?.time ?? 0}
             title="Latest"
+            altDescription="Latest Temperature"
           />
         </div>
       )}

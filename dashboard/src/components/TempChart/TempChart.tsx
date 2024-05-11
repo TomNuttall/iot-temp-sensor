@@ -116,7 +116,7 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
   }
 
   return (
-    <div className="temp-chart" data-testid="temp-chart">
+    <div className="temp-chart" data-testid="temp-chart" aria-hidden>
       <Line
         options={{
           ...options,

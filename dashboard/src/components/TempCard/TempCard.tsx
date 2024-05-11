@@ -5,9 +5,15 @@ interface TempCardProps {
   temp: number
   timestamp: number
   title: string
+  altDescription: string
 }
 
-const TempCard: React.FC<TempCardProps> = ({ temp, timestamp, title }) => {
+const TempCard: React.FC<TempCardProps> = ({
+  temp,
+  timestamp,
+  title,
+  altDescription,
+}) => {
   const dateObj = new Date(timestamp)
 
   //const date = dateObj.toLocaleDateString('en-GB')
@@ -20,14 +26,17 @@ const TempCard: React.FC<TempCardProps> = ({ temp, timestamp, title }) => {
     <div
       className="temp-card"
       style={{ borderColor: getTemperatureColour(temp) }}
+      aria-live="polite"
+      aria-label={`${altDescription} ${temp.toFixed(2)} degrees at ${time}`}
     >
-      <div>
+      <div aria-hidden>
         <span className="temp-card__title">{title}</span>
         &nbsp;
         <span className="temp-card__time">{time}</span>
       </div>
-      <p className="temp-card__temp">{temp.toFixed(2)}&deg;</p>
-      <div></div>
+      <p aria-hidden className="temp-card__temp">
+        {temp.toFixed(2)}&deg;
+      </p>
     </div>
   )
 }
