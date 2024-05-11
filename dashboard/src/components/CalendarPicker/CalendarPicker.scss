@@ -1,6 +1,11 @@
 .calendar-picker {
   display: flex;
   justify-content: center;
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 ::backdrop {

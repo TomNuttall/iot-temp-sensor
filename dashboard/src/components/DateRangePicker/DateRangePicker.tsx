@@ -12,7 +12,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
   selectedDates,
   onDateChange,
 }) => {
-  const [activeButton, setActiveButton] = useState<string>('Today')
+  const [activeButton, setActiveButton] = useState<string>('')
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
   const ref = useRef<HTMLButtonElement>(null)
@@ -73,7 +73,10 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
         </button>
         <button
           className="date-range-picker__button"
-          onClick={() => setIsDialogOpen(true)}
+          onClick={() => {
+            setActiveButton('')
+            setIsDialogOpen(true)
+          }}
         >
           Select Dates
         </button>

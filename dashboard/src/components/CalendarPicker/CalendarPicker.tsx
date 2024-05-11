@@ -80,8 +80,10 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
             selected={selected}
             onSelect={onSelect}
           />
-          <button onClick={onReset}>Reset</button>
-          <button onClick={onCloseDialog}>Close</button>
+          <div className="calendar-picker__controls">
+            <button onClick={onReset}>Reset</button>
+            <button onClick={onCloseDialog}>Close</button>
+          </div>
         </dialog>
       )}
     </div>
