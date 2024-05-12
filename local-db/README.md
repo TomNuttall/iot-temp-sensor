@@ -15,6 +15,7 @@
 Creates a local DynamoDB table and [prefills with random data](./populate-items.js)
 
 ```bash
+yarn start
 yarn dev
 ```
 

@@ -41,20 +41,20 @@ const SummaryOverview: React.FC<SummaryOverviewProps> = ({
       ) : (
         <div className="summary-overview">
           <TempCard
-            temp={min?.temp ?? 0}
-            timestamp={min?.time ?? 0}
+            temp={min?.temp}
+            timestamp={min?.time}
             title="Min"
             altDescription="Minimum Temperature"
           />
           <TempCard
-            temp={max?.temp ?? 0}
-            timestamp={max?.time ?? 0}
+            temp={max?.temp}
+            timestamp={max?.time}
             title="Max"
             altDescription="Maximum Temperature"
           />
           <TempCard
-            temp={current?.temp ?? 0}
-            timestamp={current?.time ?? 0}
+            temp={current?.temp}
+            timestamp={current?.time}
             title="Latest"
             altDescription="Latest Temperature"
           />

@@ -2,8 +2,8 @@ import { getTemperatureColour } from '../../lib/Helpers'
 import './TempCard.scss'
 
 interface TempCardProps {
-  temp: number
-  timestamp: number
+  temp: number | undefined
+  timestamp: number | undefined
   title: string
   altDescription: string
 }
@@ -14,20 +14,28 @@ const TempCard: React.FC<TempCardProps> = ({
   title,
   altDescription,
 }) => {
-  const dateObj = new Date(timestamp)
+  let time: string = ''
+  if (timestamp) {
+    const dateObj = new Date(timestamp)
 
-  //const date = dateObj.toLocaleDateString('en-GB')
-  const time = dateObj.toLocaleTimeString('en-GB', {
-    hour: '2-digit',
-    minute: '2-digit',
-  })
+    //const date = dateObj.toLocaleDateString('en-GB')
+    time = dateObj.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  }
+  const borderColor: string = temp ? getTemperatureColour(temp) : ''
+  const tempReading: string = temp ? temp.toFixed(2) : '0.00'
+  const ariaLabel = `${altDescription} ${
+    temp ? `${tempReading} degrees` : ''
+  } at ${time}`
 
   return (
     <div
       className="temp-card"
-      style={{ borderColor: getTemperatureColour(temp) }}
+      style={{ borderColor }}
       aria-live="polite"
-      aria-label={`${altDescription} ${temp.toFixed(2)} degrees at ${time}`}
+      aria-label={ariaLabel}
     >
       <div aria-hidden>
         <span className="temp-card__title">{title}</span>
@@ -35,7 +43,7 @@ const TempCard: React.FC<TempCardProps> = ({
         <span className="temp-card__time">{time}</span>
       </div>
       <p aria-hidden className="temp-card__temp">
-        {temp.toFixed(2)}&deg;
+        {tempReading}&deg;
       </p>
     </div>
   )

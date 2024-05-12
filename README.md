@@ -43,6 +43,7 @@ Start up (and populate) local DynamoDB docker image
 
 ```
 cd local-db
+yarn start
 yarn dev
 ```
 

@@ -2,6 +2,11 @@
   all: unset;
   display: flex;
 
+  &:hover {
+    background-color: unset;
+    color: unset;
+  }
+
   &:focus {
     outline: solid 0.125rem var(--brand-focus);
     outline-offset: 0.25rem;

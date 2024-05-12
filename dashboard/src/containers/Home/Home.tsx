@@ -49,9 +49,7 @@ export const Home: React.FC = () => {
           tempData={tempData}
           setFilteredTempData={setFilteredTempData}
         />
-      </div>
 
-      <div className="home__panel">
         <DateRangePicker
           selectedDates={selectedDates}
           onDateChange={setSearchParams}
