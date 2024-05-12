@@ -32,7 +32,6 @@ export const handler = async (event) => {
     body: JSON.stringify(items),
     headers: {
       'content-Type': 'application/json',
-      'cache-control': 'max-age=1800',
     },
   }
 

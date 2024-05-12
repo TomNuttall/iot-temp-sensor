@@ -1,13 +1,31 @@
 import { QueryCommand } from '@aws-sdk/lib-dynamodb'
+import { isValid } from 'date-fns'
+import { parse } from 'date-fns/parse'
+
+const RECORD_BEGIN = new Date('2023-05-12')
 
 export class Controller {
   constructor(ddbClient) {
     this.ddbClient = ddbClient
   }
 
+  #validateDate(date, today) {
+    const dateObj = parse(date, 'dd/MM/yyyy', new Date())
+
+    let valid = isValid(dateObj)
+    if (valid) {
+      if (dateObj < RECORD_BEGIN || dateObj > today) {
+        valid = false
+      }
+    }
+
+    return valid
+  }
+
   async get(dates) {
+    const today = new Date()
     if (!dates) {
-      dates = [new Date().toLocaleDateString('en-GB')]
+      dates = [today.toLocaleDateString('en-GB')]
     }
 
     // A week should be the longest series for comparisons
@@ -15,14 +33,9 @@ export class Controller {
 
     const results = []
     for (let date of processDates) {
-      // try {
-      //   const [day, month, year] = date.split('/')
-
-      //   if (!day || !month || !year) continue
-      // } catch (e) {
-      //   console.error(e)
-      //   return []
-      // }
+      if (!this.#validateDate(date, today)) {
+        return []
+      }
 
       const res = await this.ddbClient.send(
         new QueryCommand({

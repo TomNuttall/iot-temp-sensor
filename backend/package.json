@@ -14,5 +14,8 @@
   "scripts": {
     "dev": "sls offline",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+  },
+  "dependencies": {
+    "date-fns": "^3.6.0"
   }
 }
