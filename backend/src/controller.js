@@ -1,6 +1,4 @@
 import { QueryCommand } from '@aws-sdk/lib-dynamodb'
-import { isValid } from 'date-fns'
-import { parse } from 'date-fns/parse'
 
 const RECORD_BEGIN = new Date('2023-05-12')
 
@@ -9,10 +7,11 @@ export class Controller {
     this.ddbClient = ddbClient
   }
 
-  #validateDate(date, today) {
-    const dateObj = parse(date, 'dd/MM/yyyy', new Date())
+  #validateDate(localDateString, today) {
+    const [date, monthIndex, year] = localDateString.split('/')
+    const dateObj = new Date(year, monthIndex - 1, date)
 
-    let valid = isValid(dateObj)
+    let valid = !isNaN(dateObj)
     if (valid) {
       if (dateObj < RECORD_BEGIN || dateObj > today) {
         valid = false
