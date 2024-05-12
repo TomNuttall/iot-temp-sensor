@@ -23,10 +23,9 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
   const dialogId = useId()
   const headerId = useId()
 
-  const selected = selectedDates.map((date: string) => {
-    const time = parse(date, 'dd/MM/yyyy', new Date())
-    return new Date(time)
-  })
+  const selected = selectedDates.map(
+    (date: string): Date => parse(date, 'dd/MM/yyyy', new Date()),
+  )
 
   useEffect(() => {
     const handleBodyScroll = (isOpen: boolean) => {

@@ -1,4 +1,3 @@
-import { vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { TemperatureSeries, TemperatureData } from '../../lib/IoTApi'
 import TempChart from './TempChart'
@@ -11,15 +10,9 @@ describe('TempChart', () => {
     const tempData: TemperatureSeries[] = [
       { date: '', values: [minTemp, maxTemp] },
     ]
-    const setFilteredTempData = vi.fn()
 
     // Act
-    render(
-      <TempChart
-        tempData={tempData}
-        setFilteredTempData={setFilteredTempData}
-      />,
-    )
+    render(<TempChart tempData={tempData} />)
 
     // Assert
     expect(screen.getByTestId('temp-chart')).toBeInTheDocument()
@@ -28,15 +21,9 @@ describe('TempChart', () => {
   it('renders with no tempdata', async () => {
     // Arrange
     const tempData: TemperatureSeries[] = []
-    const setFilteredTempData = vi.fn()
 
     // Act
-    render(
-      <TempChart
-        tempData={tempData}
-        setFilteredTempData={setFilteredTempData}
-      />,
-    )
+    render(<TempChart tempData={tempData} />)
 
     // Assert
     expect(screen.getByTestId('temp-chart')).toBeInTheDocument()

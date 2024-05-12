@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useContext } from 'react'
 import {
   Chart as ChartJS,
+  ChartData,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -9,8 +10,13 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
+import {
+  IPreferenceContext,
+  PreferenceContext,
+} from '../../context/PreferenceContext'
 import { TemperatureSeries, TemperatureData } from '../../lib/IoTApi'
 import { getTemperatureColour } from '../../lib/Helpers'
+import { chartConfig } from './config'
 
 import './TempChart.scss'
 
@@ -23,62 +29,12 @@ ChartJS.register(
   Legend,
 )
 
-// const options: ChartOptions<line> = {
-const options = {
-  maintainAspectRatio: false,
-  aspectRatio: 1,
-  responsive: true,
-  scales: {
-    x: {
-      grid: {
-        display: false,
-      },
-    },
-    y: {
-      grid: {
-        display: true,
-      },
-    },
-  },
-
-  elements: {
-    line: {
-      tension: 0.35,
-    },
-  },
-  plugins: {
-    legend: {
-      labels: {
-        usePointStyle: true,
-      },
-    },
-  },
-}
-
 interface TempChartProps {
   tempData: TemperatureSeries[]
-  setFilteredTempData: (data: TemperatureSeries[]) => void
 }
 
 const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
-  const [noAnimate, setNoAnimate] = useState<boolean>(true)
-
-  useEffect(() => {
-    const onMotionPreferenceChange = (e: { matches: boolean }) => {
-      setNoAnimate(e.matches)
-    }
-
-    const motionPreference = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    )
-    setNoAnimate(motionPreference.matches)
-
-    motionPreference.addEventListener('change', onMotionPreferenceChange)
-
-    return () => {
-      motionPreference.removeEventListener('change', onMotionPreferenceChange)
-    }
-  }, [])
+  const { noAnimate } = useContext<IPreferenceContext>(PreferenceContext)
 
   const multiSeries = tempData.length > 1
   const length = tempData.length > 0 ? tempData[0].values.length : 0
@@ -94,7 +50,7 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
   //   })
   // }),
 
-  const data = {
+  const data: ChartData<'line'> = {
     labels,
     datasets: tempData.map((series: TemperatureSeries, index: number) => {
       return {
@@ -120,23 +76,19 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
     <div className="temp-chart" data-testid="temp-chart" aria-hidden>
       <Line
         options={{
-          ...options,
+          ...chartConfig,
           animation: {
             duration: noAnimate ? 0 : 1000,
           },
           plugins: {
             legend: {
-              onClick: () => {},
               display: multiSeries,
+              onClick: () => {},
               labels: {
                 usePointStyle: true,
               },
               position: 'bottom',
             },
-          },
-          interaction: {
-            mode: 'index',
-            intersect: false,
           },
         }}
         data={data}

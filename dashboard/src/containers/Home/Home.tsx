@@ -9,9 +9,6 @@ import './Home.scss'
 
 export const Home: React.FC = () => {
   const [tempData, setTempData] = useState<TemperatureSeries[]>([])
-  const [filteredTempData, setFilteredTempData] = useState<TemperatureSeries[]>(
-    [],
-  )
   const [loading, setLoading] = useState<boolean>(true)
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -21,7 +18,6 @@ export const Home: React.FC = () => {
       if (dates.length === 0) {
         if (!loading) {
           setTempData([])
-          setFilteredTempData([])
           return
         }
 
@@ -31,7 +27,6 @@ export const Home: React.FC = () => {
       const data = await IoTApi.get(dates)
 
       setTempData(data)
-      setFilteredTempData(data)
       setLoading(false)
     }
 
@@ -42,13 +37,10 @@ export const Home: React.FC = () => {
 
   return (
     <div className="home" data-testid="home">
-      <SummaryOverview loading={loading} tempData={filteredTempData} />
+      <SummaryOverview loading={loading} tempData={tempData} />
 
       <div className="home__panel">
-        <TempChart
-          tempData={tempData}
-          setFilteredTempData={setFilteredTempData}
-        />
+        <TempChart tempData={tempData} />
 
         <DateRangePicker
           selectedDates={selectedDates}
