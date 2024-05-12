@@ -1,6 +1,6 @@
 import { ChartOptions } from 'chart.js'
 
-export const chartConfig: ChartOptions<'line'> = {
+export const chartConfig: ChartOptions<'scatter'> = {
   maintainAspectRatio: false,
   aspectRatio: 1,
   responsive: true,
@@ -26,13 +26,4 @@ export const chartConfig: ChartOptions<'line'> = {
     mode: 'index',
     intersect: false,
   },
-  // plugins: {
-  //   legend: {
-  //     onClick: () => {},
-  //     labels: {
-  //       usePointStyle: true,
-  //     },
-  //     position: 'bottom',
-  //   },
-  // },
 }

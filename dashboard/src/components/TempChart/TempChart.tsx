@@ -1,7 +1,10 @@
 import { useContext } from 'react'
+import { format } from 'date-fns/format'
 import {
   Chart as ChartJS,
   ChartData,
+  ChartDataset,
+  Point,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -9,7 +12,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
-import { Line } from 'react-chartjs-2'
+import { Scatter } from 'react-chartjs-2'
 import {
   IPreferenceContext,
   PreferenceContext,
@@ -36,58 +39,72 @@ interface TempChartProps {
 const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
   const { noAnimate } = useContext<IPreferenceContext>(PreferenceContext)
 
-  const multiSeries = tempData.length > 1
-  const length = tempData.length > 0 ? tempData[0].values.length : 0
-  const labels = Array(length)
-    .fill(1)
-    .map((_, index: number) => index)
+  const data: ChartData<'scatter'> = {
+    datasets: tempData.map(
+      (series: TemperatureSeries, index: number): ChartDataset<'scatter'> => {
+        return {
+          label: `${series.date}`,
+          data: series.values.map((data: TemperatureData): Point => {
+            const [hours, mins] = format(data.time, 'HH:mm').split(':')
+            const time = Number(hours) * 60 + Number(mins)
+            return { x: time, y: data.temp }
+          }),
+          backgroundColor: getTemperatureColour(index), // multiSeries ? getTemperatureColour(index) : undefined,
+          pointStyle: 'circle',
+          pointRadius: 3,
+          pointHoverRadius: 6,
+        }
+      },
+    ),
+  }
 
-  // labels: vals.map((x: TemperatureData) => {
-  //   const timeStamp = new Date(x.time)
-  //   return timeStamp.toLocaleTimeString('en-GB', {
-  //     hour: '2-digit',
-  //     minute: '2-digit',
-  //   })
-  // }),
+  const formatToTime = (value: number): string => {
+    const hour = Math.floor(value / 60)
+    const min = Math.floor(value % 60)
+    return `${hour.toString().padStart(2, '0')}:${min
+      .toString()
+      .padStart(2, '0')}`
+  }
 
-  const data: ChartData<'line'> = {
-    labels,
-    datasets: tempData.map((series: TemperatureSeries, index: number) => {
-      return {
-        label: `${series.date}`,
-        data: series.values.map((data: TemperatureData) => data.temp),
-        borderDash: [index, index],
-        borderColor: multiSeries ? getTemperatureColour(index) : undefined,
-        backgroundColor: multiSeries ? getTemperatureColour(index) : undefined,
-        pointStyle: 'circle',
-        pointRadius: 3,
-        pointHoverRadius: 6,
-        segment: {
-          borderColor: (context: any) => {
-            const value = multiSeries ? index : Math.floor(context?.p0?.raw)
-            return getTemperatureColour(value)
-          },
-        },
-      }
-    }),
+  const xAxisCallback = (label: any) => {
+    return formatToTime(label)
+  }
+
+  const tooltipLabelCallback = (item: any): string => {
+    return `${item.dataset.label}: (${formatToTime(
+      item.parsed.x,
+    )}, ${item.parsed.y.toFixed(2)})`
   }
 
   return (
     <div className="temp-chart" data-testid="temp-chart" aria-hidden>
-      <Line
+      <Scatter
         options={{
           ...chartConfig,
           animation: {
             duration: noAnimate ? 0 : 1000,
           },
+          scales: {
+            x: {
+              ticks: {
+                stepSize: 60,
+                callback: xAxisCallback,
+              },
+            },
+          },
           plugins: {
             legend: {
-              display: multiSeries,
+              display: true,
               onClick: () => {},
               labels: {
                 usePointStyle: true,
               },
               position: 'bottom',
+            },
+            tooltip: {
+              callbacks: {
+                label: tooltipLabelCallback,
+              },
             },
           },
         }}
