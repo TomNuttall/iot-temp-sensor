@@ -42,11 +42,14 @@ describe('TempCard', () => {
 
     // Assert
     const dateObj = new Date(timestamp)
+    const date = dateObj.toLocaleDateString('en-GB')
     const time = dateObj.toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
     })
-    const srText = `${altDescription} ${temp.toFixed(2)} degrees at ${time}`
+    const srText = `${altDescription} ${temp.toFixed(
+      2,
+    )} degrees at ${time} on ${date}`
     expect(await screen.findByLabelText(srText)).toBeInTheDocument()
   })
 })
