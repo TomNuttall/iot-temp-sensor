@@ -38,6 +38,11 @@
   color-scheme: light dark;
 }
 
+dialog {
+  color: var(--brand-text);
+  background-color: var(--brand-primary);
+}
+
 body {
   margin: 0;
   padding: 0;

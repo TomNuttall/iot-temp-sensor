@@ -2,6 +2,11 @@
   display: flex;
   justify-content: center;
 
+  &__close {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   &__controls {
     display: flex;
     justify-content: space-between;

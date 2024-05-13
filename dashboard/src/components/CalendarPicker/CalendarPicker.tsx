@@ -1,4 +1,4 @@
-import { useEffect, useRef, useId } from 'react'
+import { useEffect, useState, useRef, useId } from 'react'
 import { DayPicker } from 'react-day-picker'
 import { parse } from 'date-fns/parse'
 import 'react-day-picker/dist/style.css'
@@ -19,13 +19,14 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
   selectedDates,
   onDateChange,
 }) => {
+  const [selected, setSelected] = useState<Date[] | undefined>(
+    selectedDates.map(
+      (date: string): Date => parse(date, 'dd/MM/yyyy', new Date()),
+    ),
+  )
   const dialogRef = useRef<HTMLDialogElement>(null)
   const dialogId = useId()
   const headerId = useId()
-
-  const selected = selectedDates.map(
-    (date: string): Date => parse(date, 'dd/MM/yyyy', new Date()),
-  )
 
   useEffect(() => {
     const handleBodyScroll = (isOpen: boolean) => {
@@ -47,12 +48,21 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
     }
   }, [isDialogOpen])
 
-  const onSelect = (dates: Date[] | undefined) => {
-    if (!dates) return
+  useEffect(() => {
+    setSelected(
+      selectedDates.map(
+        (date: string): Date => parse(date, 'dd/MM/yyyy', new Date()),
+      ),
+    )
+  }, [selectedDates])
 
+  const onSubmit = () => {
     onDateChange({
-      date: dates.map((date: Date) => date.toLocaleDateString('en-GB')),
+      date: selected
+        ? selected.map((date: Date) => date.toLocaleDateString('en-GB'))
+        : [],
     })
+    onCloseDialog()
   }
 
   const onReset = () => {
@@ -70,6 +80,9 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
           aria-labelledby={headerId}
           onClose={onCloseDialog}
         >
+          <div className="calendar-picker__close">
+            <button onClick={onCloseDialog}>X</button>
+          </div>
           <DayPicker
             fromDate={RECORD_BEGIN}
             toDate={new Date()}
@@ -77,11 +90,11 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
             mode="multiple"
             max={7}
             selected={selected}
-            onSelect={onSelect}
+            onSelect={setSelected}
           />
           <div className="calendar-picker__controls">
             <button onClick={onReset}>Reset</button>
-            <button onClick={onCloseDialog}>Close</button>
+            <button onClick={onSubmit}>Select</button>
           </div>
         </dialog>
       )}
