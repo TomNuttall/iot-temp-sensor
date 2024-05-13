@@ -1,10 +1,13 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, act } from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { TemperatureSeries, TemperatureData } from '../../lib/IoTApi'
 import Home from './Home'
+
 import axios from 'axios'
 
+const queryClient = new QueryClient()
 vi.mock('axios')
 
 describe('Home', () => {
@@ -36,7 +39,9 @@ describe('Home', () => {
     await act(async () =>
       render(
         <MemoryRouter>
-          <Home />
+          <QueryClientProvider client={queryClient}>
+            <Home />
+          </QueryClientProvider>
         </MemoryRouter>,
       ),
     )

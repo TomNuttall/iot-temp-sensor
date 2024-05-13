@@ -35,6 +35,6 @@ export class IoTApi {
       dates && dates.length > 0 ? `?date=${dates?.join('&date=')}` : ''
     }`
     const response = await axios.get(encodeURI(uri))
-    return response.data
+    return response.data as TemperatureSeries[]
   }
 }
