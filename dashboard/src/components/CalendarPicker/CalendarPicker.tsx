@@ -81,7 +81,9 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
           onClose={onCloseDialog}
         >
           <div className="calendar-picker__close">
-            <button onClick={onCloseDialog}>X</button>
+            <button aria-label="Close dialog" onClick={onCloseDialog}>
+              X
+            </button>
           </div>
           <DayPicker
             fromDate={RECORD_BEGIN}
