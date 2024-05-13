@@ -15,10 +15,10 @@ const TempCard: React.FC<TempCardProps> = ({
   altDescription,
 }) => {
   let time: string = ''
+  let date: string = ''
   if (timestamp) {
     const dateObj = new Date(timestamp)
-
-    //const date = dateObj.toLocaleDateString('en-GB')
+    date = dateObj.toLocaleDateString('en-GB')
     time = dateObj.toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
@@ -28,7 +28,7 @@ const TempCard: React.FC<TempCardProps> = ({
   const tempReading: string = temp ? temp.toFixed(2) : '0.00'
   const ariaLabel = `${altDescription} ${
     temp ? `${tempReading} degrees` : ''
-  } at ${time}`
+  } at ${time} on ${date}`
 
   return (
     <div
