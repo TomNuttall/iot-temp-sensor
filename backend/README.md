@@ -1,6 +1,6 @@
 # Backend
 
-**API Gateway with Lambda integration reads DynamoDB table**
+API Gateway with Lambda integration reads DynamoDB table
 
 ## Overview
 
