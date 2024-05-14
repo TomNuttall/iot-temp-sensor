@@ -27,6 +27,10 @@ export class IoTApi {
   }
 
   public static async get(dates?: string[]): Promise<TemperatureSeries[]> {
+    if (!dates || dates.length === 0) {
+      return []
+    }
+
     if (!IoTApi.endPoint) {
       IoTApi.setEndPoint()
     }

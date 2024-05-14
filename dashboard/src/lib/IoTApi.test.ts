@@ -15,7 +15,7 @@ describe('IoTApi', () => {
     axios.get.mockReset()
   })
 
-  it('calls api with no params', async () => {
+  it('doesnt not call api with no params', async () => {
     // Arrange
     //@ts-ignore
     axios.get.mockResolvedValue({
@@ -26,8 +26,7 @@ describe('IoTApi', () => {
     const res = await IoTApi.get()
 
     // Assert
-    expect(axios.get).toHaveBeenCalledTimes(1)
-    expect(res).toStrictEqual(mocks)
+    expect(axios.get).toHaveBeenCalledTimes(0)
   })
 
   it('calls api with params', async () => {

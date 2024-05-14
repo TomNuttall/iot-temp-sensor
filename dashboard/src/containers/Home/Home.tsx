@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { TemperatureSeries, IoTApi } from '../../lib/IoTApi'
@@ -9,14 +9,15 @@ import TempChart from '../../components/TempChart'
 import './Home.scss'
 
 export const Home: React.FC = () => {
-  const [firstLoad, setFirstLoad] = useState<boolean>(true)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  let selectedDates: string[] = searchParams.getAll('date')
-  if (firstLoad && selectedDates.length === 0) {
-    selectedDates = [new Date().toLocaleDateString()]
-    setFirstLoad(false)
-  }
+  const selectedDates: string[] = searchParams.getAll('date')
+
+  useEffect(() => {
+    if (selectedDates.length === 0) {
+      setSearchParams({ date: new Date().toLocaleDateString() })
+    }
+  }, [])
 
   const { isLoading, data } = useQuery<TemperatureSeries[] | undefined>({
     queryKey: selectedDates,

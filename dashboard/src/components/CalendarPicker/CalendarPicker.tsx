@@ -66,7 +66,7 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
   }
 
   const onReset = () => {
-    onDateChange({ date: [] })
+    setSelected([])
   }
 
   return (
