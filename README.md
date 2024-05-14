@@ -7,6 +7,12 @@
     height="400px"
   />
   <img
+    src='./screenshots/dark-theme-single.png'
+    alt='Dark theme single date'
+    width="auto"
+    height="400px"
+  />
+  <img
     src='./screenshots/light-theme-multiple.png'
     alt='Light theme multiple dates'
     width="auto"
