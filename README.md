@@ -1,4 +1,7 @@
 # IoT Temp Sensor
+
+Demo Project: IoT device with a temperature sensor sends readings that can then be viewed with a dashboard.
+
 <div>
   <img
     src='./screenshots/light-theme-single.png'
