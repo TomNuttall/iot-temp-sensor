@@ -1,6 +1,6 @@
 # Local DB
 
-**Offline DynamoDB table**
+Offline DynamoDB table
 
 ## Overview
 
