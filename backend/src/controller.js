@@ -23,12 +23,9 @@ export class Controller {
 
   async get(dates) {
     const today = new Date()
-    if (!dates) {
-      dates = [today.toLocaleDateString('en-GB')]
-    }
 
     // A week should be the longest series for comparisons
-    const processDates = dates.slice(0, 7)
+    const processDates = dates?.length > 0 ? dates.slice(0, 7) : []
 
     const results = []
     for (let date of processDates) {

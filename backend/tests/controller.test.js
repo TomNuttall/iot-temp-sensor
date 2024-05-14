@@ -12,32 +12,6 @@ describe('Controller', () => {
     ddbMock.reset()
   })
 
-  it('returns data for today if no query string parameters', async () => {
-    // Arrange
-    const date = new Date()
-    ddbMock
-      .on(QueryCommand, {
-        ExpressionAttributeValues: {
-          ':queryDate': date.toLocaleDateString('en-GB'),
-        },
-      })
-      .resolves({
-        Items: [
-          {
-            date: date.toLocaleDateString('en-GB'),
-            time: Math.floor(date.getTime() / 1000),
-            temp: 10,
-          },
-        ],
-      })
-
-    // Act
-    const data = await controller.get()
-
-    // Assert
-    expect(data.length).toBe(1)
-  })
-
   it('returns data for query string parameters', async () => {
     // Arrange
     const dates = [

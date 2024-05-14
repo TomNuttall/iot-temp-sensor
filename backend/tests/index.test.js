@@ -28,7 +28,9 @@ describe('index', () => {
         ],
       })
 
-    const event = { queryStringParameters: {} }
+    const event = {
+      queryStringParameters: { date: date.toLocaleDateString('en-GB') },
+    }
 
     // Act
     const res = await handler(event)
