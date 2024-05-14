@@ -1,9 +1,11 @@
 # Dashboard
-**Frontend created with Vite, React + TypeScript**
+Frontend created with Vite, React + TypeScript.
 
 ## Overview
 - React dashboard calls API with query string date range to display temperature data
-- ChartJS used for displaying graphs
+- [react-chartjs-2](https://react-chartjs-2.js.org) used for displaying graphs
+- [react-day-picker](https://react-day-picker.js.org) used for selecting mutliple dates
+- [react-query](https://tanstack.com/query/latest/docs/framework/react/overview) + axios used for data fetching
 - Deployed to S3 bucket and uses CloudFront
 
 ## Usage
