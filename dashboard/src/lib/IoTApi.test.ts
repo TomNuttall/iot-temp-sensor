@@ -23,7 +23,7 @@ describe('IoTApi', () => {
     })
 
     // Act
-    const res = await IoTApi.get()
+    await IoTApi.get()
 
     // Assert
     expect(axios.get).toHaveBeenCalledTimes(0)
