@@ -19,26 +19,6 @@
     height="400px"
   />
 </div>
-<div>
-  <img
-    src='./screenshots/dark-theme-single.png'
-    alt='Dark theme single date'
-    width="auto"
-    height="400px"
-  />
-  <img
-    src='./screenshots/dark-theme-multiple.png'
-    alt='Dark theme multiple dates'
-    width="auto"
-    height="400px"
-  />
-  <img
-    src='./screenshots/dark-theme-calendar.png'
-    alt='Dark theme calendar'
-    width="auto"
-    height="400px"
-  />
-</div>
   
 ## Project Overview
 
