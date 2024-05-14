@@ -1,6 +1,6 @@
 # Data Source
 
-**Esp32 microcontroller connected to a temperature sensor**
+Esp32 microcontroller connected to a temperature sensor
 
 ## Overview
 
