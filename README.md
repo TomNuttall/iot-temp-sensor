@@ -61,7 +61,7 @@
 
 - Docker image for local DynamoDB tables.
 
-## Usage
+## Run
 
 ### Local Db
 
