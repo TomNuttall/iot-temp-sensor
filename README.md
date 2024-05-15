@@ -10,20 +10,8 @@ Demo Project: IoT device with a temperature sensor sends readings that can then 
     height="400px"
   />
   <img
-    src='./screenshots/dark-theme-single.png'
-    alt='Dark theme single date'
-    width="auto"
-    height="400px"
-  />
-  <img
-    src='./screenshots/light-theme-multiple.png'
-    alt='Light theme multiple dates'
-    width="auto"
-    height="400px"
-  />
-  <img
-    src='./screenshots/light-theme-calendar.png'
-    alt='Light theme calendar'
+    src='./screenshots/dark-theme-multiple.png'
+    alt='Dark theme multiple dates'
     width="auto"
     height="400px"
   />
