@@ -10,7 +10,7 @@ Offline DynamoDB table
 
 - [Docker](https://www.docker.com)
 
-## Usage
+## Run
 
 Creates a local DynamoDB table and [prefills with random data](./populate-items.js)
 
