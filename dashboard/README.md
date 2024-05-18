@@ -8,7 +8,7 @@ Frontend created with Vite, React + TypeScript.
 - [react-query](https://tanstack.com/query/latest/docs/framework/react/overview) + axios used for data fetching
 - Deployed to S3 bucket and uses CloudFront
 
-## Usage
+## Run
 ```bash
 yarn dev
 ```
