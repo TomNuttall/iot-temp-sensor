@@ -7,7 +7,7 @@ API Gateway with Lambda integration reads DynamoDB table
 - Uses query string for date range querys on DynamoDB table
 - Serverless offline used for local lambda/api gateway.
 
-## Usage
+## Run
 
 ```bash
 yarn dev
