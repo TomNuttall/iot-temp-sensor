@@ -54,30 +54,16 @@ Demo Project: IoT device with a temperature sensor sends readings that can then 
 
 ## Run
 
-### Local Db
-
-Start up (and populate) local DynamoDB docker image
-
-```
-cd local-db
-yarn start
-yarn dev
-```
-
-### Backend
-
-Start up local lambda and connect to local DynamoDB table
+1. Start up (and populate) local DynamoDB docker image
+2. Start up local lambda and connect to local DynamoDB table
 
 ```
-cd backend
-yarn dev
+yarn dev:local-db
+yarn dev:backend
 ```
 
-### Frontend
-
-Start frontend and connect to local backend.
+3. Start frontend and connect to local backend.
 
 ```
-cd dashboard
-yarn dev
+yarn dev:dashboard
 ```

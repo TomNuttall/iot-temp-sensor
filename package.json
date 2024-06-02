@@ -1,0 +1,10 @@
+{
+  "name": "iot-temp-sensor",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:local-db": "cd local-db && yarn start && cd ..",
+    "dev:backend": "cd backend && yarn dev",
+    "dev:dashboard": "cd dashboard && yarn dev"
+  }
+}

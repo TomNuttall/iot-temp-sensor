@@ -16,7 +16,6 @@ Creates a local DynamoDB table and [prefills with random data](./populate-items.
 
 ```bash
 yarn start
-yarn dev
 ```
 
 Inspect and edit local db table in browser
