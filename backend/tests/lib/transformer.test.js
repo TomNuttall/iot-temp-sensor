@@ -1,4 +1,4 @@
-import { Transformer } from '../src/transformer'
+import { Transformer } from '../../src/lib/transformer'
 
 const transformer = new Transformer()
 
