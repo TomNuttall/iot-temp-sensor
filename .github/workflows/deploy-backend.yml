@@ -35,7 +35,8 @@ jobs:
         working-directory: ./backend
 
       - name: Zip lambda package
-        run: zip -rj lambda_package.zip ./backend/src
+        run: zip -r ../../lambda_package.zip *
+        working-directory: ./backend/src
 
       - name: Configure AWS Credentials for Lambda Access
         uses: aws-actions/configure-aws-credentials@v4
