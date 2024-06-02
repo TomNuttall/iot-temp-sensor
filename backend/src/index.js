@@ -1,7 +1,7 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
-import { Controller } from './controller.js'
-import { Transformer } from './transformer.js'
+import { Controller } from './lib/controller.js'
+import { Transformer } from './lib/transformer.js'
 
 const createClient = () => {
   if (process.env.IS_OFFLINE) {
