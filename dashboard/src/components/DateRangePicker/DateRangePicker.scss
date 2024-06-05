@@ -38,5 +38,9 @@
     &__button {
       padding: 0.5rem 1rem;
     }
+
+    &__active {
+      text-underline-offset: 0.15rem;
+    }
   }
 }

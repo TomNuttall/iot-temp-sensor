@@ -20,7 +20,7 @@ const App: React.FC = () => {
         </Routes>
       </PreferenceProvider>
 
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   )
 }

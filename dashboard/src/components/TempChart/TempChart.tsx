@@ -37,7 +37,8 @@ interface TempChartProps {
 }
 
 const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
-  const { noAnimate } = useContext<IPreferenceContext>(PreferenceContext)
+  const { noAnimate, darkTheme } =
+    useContext<IPreferenceContext>(PreferenceContext)
 
   const data: ChartData<'scatter'> = {
     datasets: tempData.map(
@@ -76,6 +77,9 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
     )}, ${item.parsed.y.toFixed(2)})`
   }
 
+  const textColor = darkTheme ? 'rgba(244, 244, 244, 1)' : undefined
+  const gridColor = darkTheme ? 'rgba(244, 244, 244, 0.2)' : undefined
+
   return (
     <div className="temp-chart" data-testid="temp-chart" aria-hidden>
       <Scatter
@@ -86,9 +90,21 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
           },
           scales: {
             x: {
+              grid: {
+                color: gridColor,
+              },
               ticks: {
+                color: textColor,
                 stepSize: 60,
                 callback: xAxisCallback,
+              },
+            },
+            y: {
+              grid: {
+                color: gridColor,
+              },
+              ticks: {
+                color: textColor,
               },
             },
           },
@@ -97,6 +113,7 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
               display: true,
               onClick: () => {},
               labels: {
+                color: textColor,
                 usePointStyle: true,
               },
               position: 'bottom',
