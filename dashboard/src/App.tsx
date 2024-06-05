@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+// import { ReactQueryDevtools } from 'react-query/devtools'
 import Header from './components/Header'
 import Home from './containers/Home'
 import { PreferenceProvider } from './context/PreferenceProvider'
