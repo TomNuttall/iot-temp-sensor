@@ -31,12 +31,12 @@ const TempCard: React.FC<TempCardProps> = ({
   } at ${time} on ${date}`
 
   return (
-    <div
-      className="temp-card"
-      style={{ borderColor }}
-      aria-live="polite"
-      aria-label={ariaLabel}
-    >
+    <div className="temp-card" style={{ borderColor }}>
+      <span
+        className="sr-only"
+        aria-live="polite"
+        aria-label={ariaLabel}
+      ></span>
       <div aria-hidden>
         <span className="temp-card__title">{title}</span>
         &nbsp;
