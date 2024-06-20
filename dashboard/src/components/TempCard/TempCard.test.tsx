@@ -50,6 +50,6 @@ describe('TempCard', () => {
     const srText = `${altDescription} ${temp.toFixed(
       2,
     )} degrees at ${time} on ${date}`
-    expect(await screen.findByLabelText(srText)).toBeInTheDocument()
+    expect(await screen.findByText(srText)).toBeInTheDocument()
   })
 })
