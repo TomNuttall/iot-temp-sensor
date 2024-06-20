@@ -26,7 +26,7 @@ const TempCard: React.FC<TempCardProps> = ({
   }
   const borderColor: string = temp ? getTemperatureColour(temp) : ''
   const tempReading: string = temp ? temp.toFixed(2) : '0.00'
-  const ariaLabel = `${altDescription} ${
+  const srText = `${altDescription} ${
     temp ? `${tempReading} degrees` : ''
   } at ${time} on ${date}`
 
@@ -35,8 +35,7 @@ const TempCard: React.FC<TempCardProps> = ({
       <span
         className="sr-only"
         aria-live="polite"
-        aria-label={ariaLabel}
-      ></span>
+      >{srText}</span>
       <div aria-hidden>
         <span className="temp-card__title">{title}</span>
         &nbsp;
