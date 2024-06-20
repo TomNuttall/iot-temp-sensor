@@ -1,8 +1,9 @@
-import { vi } from 'vitest'
+import { vi, Mock } from 'vitest'
 import axios from 'axios'
 import { IoTApi, TemperatureSeries } from './IoTApi'
 
 vi.mock('axios')
+const mockedAxios = axios.get as Mock
 
 describe('IoTApi', () => {
   const dates = ['01/01/2024']
@@ -11,14 +12,12 @@ describe('IoTApi', () => {
   ]
 
   beforeEach(() => {
-    //@ts-ignore
-    axios.get.mockReset()
+    mockedAxios.mockReset()
   })
 
   it('doesnt not call api with no params', async () => {
     // Arrange
-    //@ts-ignore
-    axios.get.mockResolvedValue({
+    mockedAxios.mockResolvedValue({
       data: mocks,
     })
 
@@ -31,8 +30,7 @@ describe('IoTApi', () => {
 
   it('calls api with params', async () => {
     // Arrange
-    //@ts-ignore
-    axios.get.mockResolvedValue({
+    mockedAxios.mockResolvedValue({
       data: mocks,
     })
 

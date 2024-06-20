@@ -17,7 +17,7 @@ export const Home: React.FC = () => {
     if (selectedDates.length === 0) {
       setSearchParams({ date: new Date().toLocaleDateString() })
     }
-  }, [])
+  })
 
   const { isLoading, data } = useQuery<TemperatureSeries[] | undefined>({
     queryKey: selectedDates,

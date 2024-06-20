@@ -14,8 +14,8 @@ const TempCard: React.FC<TempCardProps> = ({
   title,
   altDescription,
 }) => {
-  let time: string = ''
-  let date: string = ''
+  let time = ''
+  let date = ''
   if (timestamp) {
     const dateObj = new Date(timestamp)
     date = dateObj.toLocaleDateString('en-GB')

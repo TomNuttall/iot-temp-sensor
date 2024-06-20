@@ -16,12 +16,13 @@ export const PreferenceProvider: React.FC<IPreferenceProviderProps> = ({
   )
 
   useEffect(() => {
-    const onThemeToggleChange = (e: any) => setDarkTheme(e.detail)
+    const onThemeToggleChange = (e: CustomEvent<boolean>): void =>
+      setDarkTheme(e.detail)
 
-    const onColorSchemeChange = (e: { matches: boolean }) =>
+    const onColorSchemeChange = (e: { matches: boolean }): void =>
       setDarkTheme(e.matches)
 
-    const onMotionPreferenceChange = (e: { matches: boolean }) =>
+    const onMotionPreferenceChange = (e: { matches: boolean }): void =>
       setNoAnimate(e.matches)
 
     const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
@@ -29,12 +30,18 @@ export const PreferenceProvider: React.FC<IPreferenceProviderProps> = ({
       '(prefers-reduced-motion: reduce)',
     )
 
-    document.addEventListener('toggle-theme', onThemeToggleChange)
+    document.addEventListener(
+      'toggle-theme',
+      onThemeToggleChange as (e: Event) => void,
+    )
     colorScheme.addEventListener('change', onColorSchemeChange)
     motionPreference.addEventListener('change', onMotionPreferenceChange)
 
     return () => {
-      document.removeEventListener('toggle-theme', onThemeToggleChange)
+      document.removeEventListener(
+        'toggle-theme',
+        onThemeToggleChange as (e: Event) => void,
+      )
       colorScheme.removeEventListener('change', onColorSchemeChange)
       motionPreference.removeEventListener('change', onMotionPreferenceChange)
     }

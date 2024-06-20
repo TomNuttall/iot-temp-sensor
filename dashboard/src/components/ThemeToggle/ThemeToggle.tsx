@@ -35,7 +35,7 @@ const ThemeToggle: React.FC = () => {
     >
       <DarkModeSwitch
         checked={darkTheme}
-        onChange={() => {}}
+        onChange={() => undefined}
         animationProperties={animationProperties}
       />
     </button>

@@ -59,7 +59,8 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
     ),
   }
 
-  const formatToTime = (value: number): string => {
+  const formatToTime = (label: string | number): string => {
+    const value = Number(label)
     const hour = Math.floor(value / 60)
     const min = Math.floor(value % 60)
     return `${hour.toString().padStart(2, '0')}:${min
@@ -67,11 +68,14 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
       .padStart(2, '0')}`
   }
 
-  const xAxisCallback = (label: any) => {
+  const xAxisCallback = (label: string | number): string => {
     return formatToTime(label)
   }
 
-  const tooltipLabelCallback = (item: any): string => {
+  const tooltipLabelCallback = (item: {
+    dataset: { label?: string | undefined }
+    parsed: { x: number; y: number }
+  }): string => {
     return `${item.dataset.label}: (${formatToTime(
       item.parsed.x,
     )}, ${item.parsed.y.toFixed(2)})`
@@ -111,7 +115,7 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
           plugins: {
             legend: {
               display: true,
-              onClick: () => {},
+              onClick: () => undefined,
               labels: {
                 color: textColor,
                 usePointStyle: true,
