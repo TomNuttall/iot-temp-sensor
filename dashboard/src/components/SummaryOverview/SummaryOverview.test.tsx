@@ -42,8 +42,8 @@ describe('SummaryOverview', () => {
     render(<SummaryOverview loading={loading} tempData={tempData} />)
 
     // Assert
-    expect(
-      await screen.findByText('20.00', { exact: false }),
-    ).toBeInTheDocument()
+    expect(await screen.findAllByText('20.00', { exact: false })).toHaveLength(
+      2,
+    )
   })
 })
