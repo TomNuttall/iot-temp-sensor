@@ -25,16 +25,18 @@ export const Home: React.FC = () => {
   })
 
   return (
-    <div className="home" data-testid="home">
-      <SummaryOverview loading={isLoading} tempData={data ?? []} />
+    <div className="main-container" data-testid="home">
+      <div className="home">
+        <SummaryOverview loading={isLoading} tempData={data ?? []} />
 
-      <div className="home__panel">
-        <TempChart tempData={data ?? []} />
+        <div className="home__panel">
+          <TempChart tempData={data ?? []} />
 
-        <DateRangePicker
-          selectedDates={selectedDates}
-          onDateChange={setSearchParams}
-        />
+          <DateRangePicker
+            selectedDates={selectedDates}
+            onDateChange={setSearchParams}
+          />
+        </div>
       </div>
     </div>
   )
