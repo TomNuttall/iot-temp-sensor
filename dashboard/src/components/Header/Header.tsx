@@ -9,7 +9,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title, repo }) => {
   return (
-    <div className="header">
+    <header className="header">
       <div className="header__title">{title}</div>
       <div className="header__links">
         <ThemeToggle />
@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ title, repo }) => {
           <GitHubLogo title="GitHub Project" />
         </a>
       </div>
-    </div>
+    </header>
   )
 }
 
