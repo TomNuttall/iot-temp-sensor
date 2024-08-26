@@ -10,7 +10,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title, repo }) => {
   return (
     <header className="header">
-      <div className="header__title">{title}</div>
+      <span className="header__title">{title}</span>
       <div className="header__links">
         <ThemeToggle />
         <a href={repo}>
