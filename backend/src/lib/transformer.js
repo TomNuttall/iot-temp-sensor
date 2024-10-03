@@ -3,10 +3,10 @@ export class Transformer {
 
   transformDates(results) {
     const items = results.map((row) => {
-      const date = row[0]?.date
+      const date = row[0].date.S
       const values = row.map((item) => {
         const { time, temp } = item
-        return { time, temp }
+        return { time: Number(time.N), temp: Number(temp.N) }
       })
       return { date, values }
     })

@@ -10,21 +10,21 @@ describe('transformData', () => {
     const results = [
       [
         {
-          date: date1.toLocaleDateString('en-GB'),
-          time: Math.floor(date1.getTime() / 1000),
-          temp: 10,
+          date: { S: date1.toLocaleDateString('en-GB') },
+          time: { N: Math.floor(date1.getTime() / 1000).toString() },
+          temp: { N: '10' },
         },
         {
-          date: date1.toLocaleDateString('en-GB'),
-          time: Math.floor(date1.getTime() / 1000),
-          temp: 11,
+          date: { S: date1.toLocaleDateString('en-GB') },
+          time: { N: Math.floor(date1.getTime() / 1000).toString() },
+          temp: { N: ' 11' },
         },
       ],
       [
         {
-          date: date2.toLocaleDateString('en-GB'),
-          time: Math.floor(date1.getTime() / 1000),
-          temp: 5,
+          date: { S: date2.toLocaleDateString('en-GB') },
+          time: { N: Math.floor(date1.getTime() / 1000).toString() },
+          temp: { N: '5' },
         },
       ],
     ]

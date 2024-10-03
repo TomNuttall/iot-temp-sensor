@@ -1,4 +1,4 @@
-import { QueryCommand } from '@aws-sdk/lib-dynamodb'
+import { QueryCommand } from '@aws-sdk/client-dynamodb'
 
 const RECORD_BEGIN = new Date('2023-05-12')
 
@@ -33,14 +33,14 @@ export class Controller {
         return []
       }
 
-      const res = await this.ddbClient.send(
-        new QueryCommand({
-          TableName: 'demo-db-iot-backend',
-          KeyConditionExpression: '#date = :queryDate',
-          ExpressionAttributeNames: { '#date': 'date' },
-          ExpressionAttributeValues: { ':queryDate': date },
-        }),
-      )
+      const command = new QueryCommand({
+        TableName: 'demo-db-iot-backend',
+        KeyConditionExpression: '#date = :queryDate',
+        ExpressionAttributeNames: { '#date': 'date' },
+        ExpressionAttributeValues: { ':queryDate': { S: date } },
+      })
+
+      const res = await this.ddbClient.send(command)
 
       if (res?.Items) {
         results.push(res.Items)

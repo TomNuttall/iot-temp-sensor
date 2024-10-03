@@ -1,11 +1,9 @@
 import { mockClient } from 'aws-sdk-client-mock'
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocumentClient, QueryCommand } from '@aws-sdk/lib-dynamodb'
+import { DynamoDBClient, QueryCommand } from '@aws-sdk/client-dynamodb'
 import { Controller } from '../../src/lib/controller'
 
-const ddbMock = mockClient(DynamoDBDocumentClient)
-const ddbClient = DynamoDBDocumentClient.from(new DynamoDBClient())
-const controller = new Controller(ddbClient)
+const ddbMock = mockClient(DynamoDBClient)
+const controller = new Controller(ddbMock)
 
 describe('Controller', () => {
   beforeEach(() => {
@@ -24,15 +22,15 @@ describe('Controller', () => {
       ddbMock
         .on(QueryCommand, {
           ExpressionAttributeValues: {
-            ':queryDate': date.toLocaleDateString('en-GB'),
+            ':queryDate': { S: date.toLocaleDateString('en-GB') },
           },
         })
         .resolves({
           Items: [
             {
-              date: date.toLocaleDateString('en-GB'),
-              time: Math.floor(date.getTime() / 1000),
-              temp: 10,
+              date: { S: date.toLocaleDateString('en-GB') },
+              time: { N: Math.floor(date.getTime() / 1000).toString() },
+              temp: { N: '10' },
             },
           ],
         })
@@ -64,15 +62,15 @@ describe('Controller', () => {
       ddbMock
         .on(QueryCommand, {
           ExpressionAttributeValues: {
-            ':queryDate': date.toLocaleDateString('en-GB'),
+            ':queryDate': { S: date.toLocaleDateString('en-GB') },
           },
         })
         .resolves({
           Items: [
             {
-              date: date.toLocaleDateString('en-GB'),
-              time: Math.floor(date.getTime() / 1000),
-              temp: 10,
+              date: { S: date.toLocaleDateString('en-GB') },
+              time: { N: Math.floor(date.getTime() / 1000).toString() },
+              temp: { N: '10' },
             },
           ],
         })

@@ -1,5 +1,4 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 import { Controller } from './lib/controller.js'
 import { Transformer } from './lib/transformer.js'
 
@@ -14,13 +13,12 @@ const createClient = () => {
   }
 }
 
-const ddbClient = DynamoDBDocumentClient.from(createClient())
-const controller = new Controller(ddbClient)
+const controller = new Controller(createClient())
 const transformer = new Transformer()
 
 export const handler = async (event) => {
   const query =
-    event.multiValueQueryStringParameters?.date ??
+    event.multiValueQueryStringParameters?.date ||
     event.queryStringParameters?.date?.split(',')
   console.log(query)
 
