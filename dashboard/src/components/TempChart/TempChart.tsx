@@ -95,7 +95,6 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
           scales: {
             x: {
               grid: {
-                color: gridColor,
               },
               ticks: {
                 color: textColor,
