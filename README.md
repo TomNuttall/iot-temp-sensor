@@ -37,7 +37,7 @@ Demo Project: IoT device with a temperature sensor sends readings that can then 
 > :book: [Dashboard Readme](/dashboard/README.md)
 
 - React dashboard consumes API with date picking.
-- ChartJS used for displaying graphs.
+- ChartJS used for graphs.
 
 ### :bricks: Infastructure
 
