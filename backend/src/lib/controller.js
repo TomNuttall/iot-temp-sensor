@@ -42,7 +42,7 @@ export class Controller {
 
       const res = await this.ddbClient.send(command)
 
-      if (res?.Items) {
+      if (res?.Items && res?.Items?.length > 0) {
         results.push(res.Items)
       }
     }
