@@ -36,6 +36,9 @@ void setup() {
   memset(readingPool, 0, READING_POOL_SIZE * sizeof(int));
   Serial.begin(9600);
 
+  wifiConnect();
+  awsSetup();
+
   xTaskCreatePinnedToCore(
              sensorsTask, 
              "SensorsTask",  
@@ -157,9 +160,6 @@ void awsConnect() {
 }
 
 void commsTask(void* pvParameters) {
-  wifiConnect();
-  awsSetup();
-
   delay(PUBLISH_READING_DELAY);
 
   while (true) {
@@ -188,8 +188,14 @@ void commsTask(void* pvParameters) {
     client.publish(IOT_PUBLISH_TOPIC, jsonBuffer);
     Serial.print("Published Temperature: ");
     Serial.println(avgTemp);
+ 
+    getTime(date, timeStamp);
+    unsigned long long msTimeStampDelay = (unsigned long long)timeStamp * (unsigned long long)1000;
+    const int connectDelay = (msTimeStampDelay - msTimeStamp);
+    Serial.print("AWS Connect Delay: ");
+    Serial.println(connectDelay);
 
-    delay(PUBLISH_READING_DELAY);
+    delay(PUBLISH_READING_DELAY - connectDelay);
   }
 }
 #endif

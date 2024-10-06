@@ -91,7 +91,7 @@ static const char AWS_CERT_PRIVATE[] PROGMEM = R"KEY(
 
 ## Upload Sketch
 
-- Connect device with a usb data cable.
+- Connect device with a usb _data_ cable.
 - Select the 'ESP32 Dev Module' board in tools.
 - Change upload speed to 115200.
 - Then upload and flash the esp32.
