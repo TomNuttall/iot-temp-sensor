@@ -11,7 +11,7 @@ export interface TemperatureData {
 }
 
 const IoTApiEndpoints = {
-  local: 'http://localhost:3000/dev',
+  local: 'http://localhost:3000/',
   live: 'https://api.iot.tomnuttall.dev',
 }
 

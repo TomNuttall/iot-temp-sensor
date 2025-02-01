@@ -3,10 +3,10 @@ import { Controller } from './lib/controller.js'
 import { Transformer } from './lib/transformer.js'
 
 const createClient = () => {
-  if (process.env.IS_OFFLINE) {
+  if (process.env.AWS_SAM_LOCAL) {
     return new DynamoDBClient({
       region: 'localhost',
-      endpoint: 'http://localhost:8000',
+      endpoint: 'http://host.docker.internal:8000',
     })
   } else {
     return new DynamoDBClient()
@@ -20,7 +20,7 @@ export const handler = async (event) => {
   const query =
     event.multiValueQueryStringParameters?.date ||
     event.queryStringParameters?.date?.split(',')
-  console.log(query)
+  console.info(query)
 
   const results = await controller.get(query)
   const items = transformer.transformDates(results)

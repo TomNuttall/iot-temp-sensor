@@ -1,6 +1,19 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
+Globals:
+  HttpApi:
+    CorsConfiguration:
+      AllowHeaders:
+        - Content-Type
+        - Authorization
+        - Access-Control-Allow-Origin
+      AllowMethods:
+        - 'GET'
+        - 'OPTIONS'
+      AllowOrigins:
+        - '*'
+
 Resources:
   Lambda:
     Type: AWS::Serverless::Function
@@ -14,7 +27,7 @@ Resources:
         - AWSLambdaBasicExecutionRole
       Events:
         Api:
-          Type: Api
+          Type: HttpApi
           Properties:
             Path: /
             Method: GET
