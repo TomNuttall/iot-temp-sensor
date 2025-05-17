@@ -96,4 +96,6 @@ static const char AWS_CERT_PRIVATE[] PROGMEM = R"KEY(
 - Select the usb port '/dev/cu.usbserial-110' in tools/port.
 - Change upload speed in tools/Upload Speed to 115200.
 - Then upload and flash the esp32.
-- Serial Monitor in ArduinoIDE can be used for monitoring logs.
+
+## Logs
+- Serial Monitor in ArduinoIDE can be used for monitoring logs (set to 9600 baud)
