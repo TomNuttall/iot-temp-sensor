@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react'
 import { PreferenceContext } from './PreferenceContext'
 
-interface IPreferenceProviderProps {
-  children: JSX.Element | JSX.Element[]
-}
-
-export const PreferenceProvider: React.FC<IPreferenceProviderProps> = ({
+export const PreferenceProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const [noAnimate, setNoAnimate] = useState<boolean>(
