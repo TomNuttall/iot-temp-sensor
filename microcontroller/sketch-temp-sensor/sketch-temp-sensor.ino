@@ -35,6 +35,7 @@ int readingPoolIndex = 0;
 void setup() {
   memset(readingPool, 0, READING_POOL_SIZE * sizeof(int));
   Serial.begin(9600);
+  Serial.println("Starting...");
 
   wifiConnect();
   awsSetup();

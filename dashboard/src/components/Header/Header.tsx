@@ -9,7 +9,10 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title, repo }) => {
   return (
-    <header className="header">
+    <header className="header container">
+      <a className="header__skip-content" href="#main-content">
+        Skip to main content
+      </a>
       <span className="header__title">{title}</span>
       <div className="header__links">
         <ThemeToggle />

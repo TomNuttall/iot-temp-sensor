@@ -15,9 +15,11 @@ const App: React.FC = () => {
           title="IoT Demo Project"
           repo="https://github.com/TomNuttall/iot-temp-sensor"
         />
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
+        <main id="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </main>
       </PreferenceProvider>
 
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
