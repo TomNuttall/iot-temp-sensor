@@ -11,6 +11,7 @@ import {
   LineElement,
   Tooltip,
   Legend,
+  TooltipItem,
 } from 'chart.js'
 import { Scatter } from 'react-chartjs-2'
 import {
@@ -72,13 +73,15 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
     return formatToTime(label)
   }
 
-  const tooltipLabelCallback = (item: {
-    dataset: { label?: string | undefined }
-    parsed: { x: number; y: number }
-  }): string => {
-    return `${item.dataset.label}: (${formatToTime(
-      item.parsed.x,
-    )}, ${item.parsed.y.toFixed(2)})`
+  const tooltipLabelCallback = ({
+    parsed,
+    dataset,
+  }: TooltipItem<'scatter'>): string | void => {
+    if (!parsed.x || !parsed.y) return
+
+    return `${dataset.label}: (${formatToTime(parsed.x)}, ${parsed.y.toFixed(
+      2,
+    )})`
   }
 
   const textColor = darkTheme ? 'rgba(244, 244, 244, 1)' : undefined
@@ -94,8 +97,7 @@ const TempChart: React.FC<TempChartProps> = ({ tempData }) => {
           },
           scales: {
             x: {
-              grid: {
-              },
+              grid: {},
               ticks: {
                 color: textColor,
                 stepSize: 60,
