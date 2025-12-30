@@ -4,7 +4,7 @@ API Gateway with Lambda integration reads DynamoDB table
 
 ## Overview
 
-- Uses query string for date range querys on DynamoDB table
+- Uses query string for date range queries on DynamoDB table
 - [SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/using-sam-cli-local.html) used for local lambda/api gateway.
 
 ## Run
