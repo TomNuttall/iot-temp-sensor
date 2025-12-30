@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { Transformer } from '../../src/lib/transformer'
 
 const transformer = new Transformer()

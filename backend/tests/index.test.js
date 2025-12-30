@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from 'vitest'
 import { mockClient } from 'aws-sdk-client-mock'
 import { DynamoDBClient, QueryCommand } from '@aws-sdk/client-dynamodb'
 import { handler } from '../src/index'
