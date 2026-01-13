@@ -15,7 +15,7 @@
 
 ## Architecture Diagram
 
-Backend
+IoT Backend
 <img
   src='../diagrams/iot_diagram.png'
   raw=true
@@ -24,7 +24,7 @@ Backend
   height="auto"
 />
 
-Backend
+API Backend
 <img
   src='../diagrams/backend_diagram.png'
   raw=true

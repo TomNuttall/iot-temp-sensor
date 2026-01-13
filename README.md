@@ -21,7 +21,7 @@ IoT device with a temperature sensor sends readings that can then be viewed with
 
 ### :sun_behind_small_cloud: Temperature Sensor
 
-> :book: [Date Source Readme](/microcontroller/README.md)
+> :book: [Data Source Readme](/microcontroller/README.md)
 
 - Esp32 microcontroller connected to a temperature sensor.
 - Average Reading sent to AWS IoT Core and message added to DynamoDB table.
